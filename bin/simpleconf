@@ -23,7 +23,7 @@ groups="`cat $CONFIGHOSTFILE `"
 for g in $groups ; do
     alloweddirs="etc usr/local opt"
     for dir in $alloweddirs ; do
-        current="$SIMPLECONFDIR/$g/$dir"
+        current="$GROUPSDIR/$g/$dir"
         [ -d $current ] && cp -r $current/* /$dir
     done
 done
