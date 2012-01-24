@@ -1,0 +1,29 @@
+#!/bin/bash
+#########################################################
+#	Name: 	simpleconf				#
+#	Description: TODO				#
+#########################################################
+
+set -e
+set -u
+
+
+SIMPLECONFDIR="/data/commun/configs/simpleconf"
+
+CONFIGDIR="$SIMPLECONFDIR/etc"
+CONFIGFILE="$SIMPLECONFDIR/etc/simpleconf.conf"
+CONFIGHOSTFILE="$SIMPLECONFDIR/etc/conf.d/$HOSTNAME.sc"
+
+GROUPSDIR="$SIMPLECONFDIR/groups"
+
+source $CONFIGFILE
+
+groups="`cat $CONFIGHOSTFILE `"
+
+for g in $groups ; do
+    alloweddirs="etc usr/local opt"
+    for dir in $alloweddirs ; do
+        current="$SIMPLECONFDIR/$g/$dir"
+        [ -d $current ] && cp -r $current/* /$dir
+    done
+done
