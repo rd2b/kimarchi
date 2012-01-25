@@ -15,15 +15,23 @@ CONFIGFILE="$SIMPLECONFDIR/etc/simpleconf.conf"
 CONFIGHOSTFILE="$SIMPLECONFDIR/etc/conf.d/$HOSTNAME.sc"
 
 GROUPSDIR="$SIMPLECONFDIR/groups"
+HOSTSDIR="$SIMPLECONFDIR/hosts"
 
 source $CONFIGFILE
 
 groups="`cat $CONFIGHOSTFILE `"
 
+alloweddirs="etc usr/local opt"
+
 for g in $groups ; do
-    alloweddirs="etc usr/local opt"
     for dir in $alloweddirs ; do
         current="$GROUPSDIR/$g/$dir"
         [ -d $current ] && cp -r $current/* /$dir
     done
 done
+
+for dir in $alloweddirs ; do
+    current="$HOSTSDIR/$HOSTNAME/$dir"
+    [ -d $current ] && cp -r $current/* /$dir
+done
+
