@@ -11,6 +11,7 @@ ff02::3 ip6-allhosts
 
 
 192.168.122.101	vm01.acgform.local
+192.168.122.102	vm02.acgform.local
 
 192.168.122.111 db01.acgform.local
 192.168.122.112 db02.acgform.local
