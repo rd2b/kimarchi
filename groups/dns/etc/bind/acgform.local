@@ -1,0 +1,25 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     acgform.local. dns01.acgform.local. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      dns01.acgform.local.
+@       IN      A       192.168.122.10
+ns      IN      A       192.168.122.10
+dns01   IN      A       192.168.122.10
+depot01	IN	A	192.168.122.11
+
+
+db01    IN      A       192.168.122.111
+db02    IN      A       192.168.122.112
+
+vip-db  IN      CNAME   db01.acgform.local.
+
+
+
