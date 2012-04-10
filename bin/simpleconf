@@ -8,7 +8,7 @@ set -e
 set -u
 
 
-SIMPLECONFDIR="/data/commun/configs/simpleconf"
+SIMPLECONFDIR="/var/share/simpleconf"
 
 CONFIGDIR="$SIMPLECONFDIR/etc"
 CONFIGFILE="$SIMPLECONFDIR/etc/simpleconf.conf"
