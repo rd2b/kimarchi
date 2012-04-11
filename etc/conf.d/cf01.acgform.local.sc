@@ -1,2 +1,2 @@
 default
-loghost
+cfengine
