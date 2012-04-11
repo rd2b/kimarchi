@@ -1,6 +1,8 @@
 body common control
 {
-  bundlesequence  => { "update" };
+  bundlesequence  => { "update", "init" };
+  inputs          => { "init.cf" };
+
 }
 #######################################################
 bundle agent update

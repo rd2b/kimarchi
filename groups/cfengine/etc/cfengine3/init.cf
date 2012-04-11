@@ -1,0 +1,8 @@
+bundle agent init
+{
+files:
+  any::
+     "/tmp/test-cfengine3-init"
+    comment => "Exemple creation fichier par cfengine3",
+    create  => "true";
+}
