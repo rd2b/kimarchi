@@ -1,0 +1,15 @@
+bundle agent files
+{
+vars:
+  any::
+    "myfilesrc"    string => "/tmp/testfilecfcopysrc"
+    "myfile"    string => "/tmp/testfilecfcopy"
+    "serverhost" string => "cf01.acgform.local"
+
+
+files:
+    any::
+        "$(myfile)"
+            comment => "copy $(myfilesrc) to $(myfile)",
+            copy_from => secure_cp("$(myfilesrc)","serverhost");
+}
