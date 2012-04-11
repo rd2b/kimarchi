@@ -1,15 +1,13 @@
 body common control
 {
   bundlesequence  => { "update", "init", "pkg", "files" };
-  inputs          => { "init.cf", "pkg.cf", "cfengine_stdlib.cf", "files.cf" };
+  inputs          => { "init.cf", "pkg.cf", "cfengine_stdlib.cf", "files.cf", "cf-serverd.cf" };
 
 }
 
-body server control
-{
-    allowconnects         => { "127.0.0.1" , "::1" };
-    allowallconnects      => { "127.0.0.1" , "::1" };
-    trustkeysfrom         => { "127.0.0.1" , "::1" };
+body agent control {
+# Do not rely on DNS
+    skipidentify => "true";
 }
 
 #######################################################

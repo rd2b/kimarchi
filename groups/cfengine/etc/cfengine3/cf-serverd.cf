@@ -1,0 +1,35 @@
+
+body server control
+{
+    skipverify => { ".*" };
+    allowconnects         => { "127.0.0.1" , "127.0.1.1", "192.168.122.0/24", "::1" };
+    allowallconnects      => { "127.0.0.1" , "127.0.1.1", "192.168.122.0/24", "::1" };
+    trustkeysfrom         => { "127.0.0.1" , "127.0.1.1", "192.168.122.0/24", "::1" };
+    skipverify            => { "192.168.122.0/24" };
+    allowusers        => { "root" };
+}
+
+# ensure server is running.
+bundle agent server {
+    processes:
+
+        "cf-serverd"
+            restart_class => "start_cfserverd";
+
+    commands:
+
+        start_cfserverd::
+            "${sys.workdir}/bin/cf-serverd";
+}
+
+bundle server access_rules() {
+  access:
+        "/tmp"
+            admit => { "127.0.0.1", "127.0.1.1", "192.168.122.*" };
+}
+
+body runagent control {
+    hosts => {
+        "192.168.122.*"
+    };
+}
