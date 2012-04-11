@@ -1,4 +1,3 @@
-::::::::::::::
 bundle agent pkg
 {
 vars:
