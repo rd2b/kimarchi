@@ -7,6 +7,7 @@
 set -e
 set -u
 
+alloweddirs="etc"
 
 SIMPLECONFDIR="/var/cache/simpleconf"
 
@@ -20,8 +21,6 @@ HOSTSDIR="$SIMPLECONFDIR/hosts"
 source $CONFIGFILE
 
 groups="`cat $CONFIGHOSTFILE `"
-
-alloweddirs="etc usr/local opt"
 
 for g in $groups ; do
     for dir in $alloweddirs ; do
