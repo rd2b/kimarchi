@@ -4,6 +4,14 @@ body common control
   inputs          => { "init.cf", "pkg.cf", "cfengine_stdlib.cf", "files.cf" };
 
 }
+
+body server control
+{
+    allowconnects         => { "127.0.0.1" , "::1" };
+    allowallconnects      => { "127.0.0.1" , "::1" };
+    trustkeysfrom         => { "127.0.0.1" , "::1" };
+}
+
 #######################################################
 bundle agent update
 {
@@ -14,3 +22,5 @@ files:
     comment => "Exemple creation fichier par cfengine3",
     create  => "true";
 }
+
+
