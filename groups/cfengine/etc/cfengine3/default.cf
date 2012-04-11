@@ -1,0 +1,21 @@
+bundle agent default
+{
+vars:
+  any::
+    "myfilesrc"    	string => "/tmp/testfilecfcopysrc";
+    "myfile"    	string => "/tmp/testfilecfcopy";
+    "serverhost" 	string => "cf01.acgform.local";
+    "default_etc_src" 	string => "/data/cf-repos/default";
+
+
+files:
+    any::
+        "$(myfile)"
+            comment => "copy $(myfilesrc) to $(myfile)",
+            copy_from => secure_cp("$(myfilesrc)","$(serverhost)");
+        
+        "/etc"
+            comment => "copy $(default_etc_src) to /etc",
+            copy_from => secure_cp("$(default_etc_src)","$(serverhost)"),
+            depth_search => recurse("inf");
+}

@@ -3,7 +3,7 @@ bundle agent pkg
 vars:
 
   any::
-  "packages"  slist  => { "screen", "vim", "rsync" };
+  "packages"  slist  => { "screen", "vim", "rsync", "man" };
 
 packages:
 
