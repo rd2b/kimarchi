@@ -1,0 +1,16 @@
+::::::::::::::
+bundle agent pkg
+{
+vars:
+
+  any::
+  "packages"  slist  => { "screen", "vim", "rsync" };
+
+packages:
+
+  any::
+  "$(packages)"
+    comment => "install $(packages)",
+    package_policy   => "add",
+    package_method   => generic;
+}
