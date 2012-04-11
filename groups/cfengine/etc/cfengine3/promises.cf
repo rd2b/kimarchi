@@ -1,0 +1,14 @@
+body common control
+{
+  bundlesequence  => { "update" };
+}
+#######################################################
+bundle agent update
+{
+files:
+  any::
+     "/tmp/test-cfengine3"
+
+    comment => "Exemple creation fichier par cfengine3",
+    create  => "true";
+}
