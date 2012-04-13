@@ -31,6 +31,8 @@ db02    IN      A       192.168.122.112
 front01	IN	A	192.168.122.121
 front02	IN	A	192.168.122.122
 
+perso01	IN	A	192.168.122.201
+
 vip-db  IN      CNAME   db01.acgform.local.
 
 
