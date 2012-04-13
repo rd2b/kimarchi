@@ -27,13 +27,14 @@ bundle agent update
 vars:
 
  "master_location" string => "/var/lib/cfengine3/masterfiles";
+ "master_server" string => "cf01.acgform.local";
 
 files:
 
-  "/var/lib/cfengine3/inputs"
+  "/etc/cfengine3"
 
     perms => u_p("600"),
-    copy_from => mycopy("$(master_location)","localhost"),
+    copy_from => secure_cp("$(master_location)","$(master_server)"),
     depth_search => recurse("inf"),
     action => uimmediate;
 

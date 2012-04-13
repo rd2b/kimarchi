@@ -29,7 +29,7 @@ body common control
 {
 bundlesequence => { "update" };
 
-inputs => { "update.cf" };
+inputs => { "update.cf", "cfengine_stdlib.cf" };
 }
 
 ############################################
