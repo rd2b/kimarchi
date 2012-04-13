@@ -5,17 +5,16 @@ vars:
     "myfilesrc"    	string => "/tmp/testfilecfcopysrc";
     "myfile"    	string => "/tmp/testfilecfcopy";
     "serverhost" 	string => "cf01.acgform.local";
-    "default_etc_src" 	string => "/data/cf-repos/default";
+    "etc_src" 		string => "/data/cf-repos/default/etc";
 
 
 files:
     any::
         "$(myfile)"
-            comment => "copy $(myfilesrc) to $(myfile)",
+            comment   => "copy $(myfilesrc) to $(myfile)",
             copy_from => secure_cp("$(myfilesrc)","$(serverhost)");
         
-        "/etc"
-            comment => "copy $(default_etc_src) to /etc",
-            copy_from => secure_cp("$(default_etc_src)","$(serverhost)"),
-            depth_search => recurse("inf");
+        "/etc/resolv.conf"
+            comment   => "copy $(etc_src) to /etc",
+            copy_from => secure_cp("$(etc_src)/resolv.conf","$(serverhost)");
 }

@@ -26,6 +26,9 @@ bundle server access_rules() {
   access:
         "/tmp"
             admit => { "127.0.0.1", "127.0.1.1", "192.168.122.*" };
+
+        "/data/cf-repos"
+            admit => { "127.0.0.1", "127.0.1.1", "192.168.122.*" };
 }
 
 body runagent control {
