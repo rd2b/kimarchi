@@ -33,9 +33,3 @@ inputs => { "update.cf", "cfengine_stdlib.cf" };
 }
 
 ############################################
-
-body depth_search recurse(d)
-
-{
-depth => "$(d)";
-}
