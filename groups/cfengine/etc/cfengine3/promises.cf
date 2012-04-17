@@ -1,7 +1,15 @@
 body common control
 {
-  bundlesequence  => { "update", "init", "pkg", "files", "default" };
-  inputs          => { "init.cf", "pkg.cf", "cfengine_stdlib.cf", "files.cf", "default.cf", "cf-serverd.cf" };
+  bundlesequence  => { "update",
+                       "init", 
+                       "pkg", 
+                       "files", 
+                       "default" };
+  inputs          => { "update.cf", 
+                       "init.cf", 
+                       "pkg.cf", "cfengine_stdlib.cf", 
+                       "files.cf", 
+                       "default.cf", "cf-serverd.cf" };
 
 }
 
@@ -9,16 +17,4 @@ body agent control {
 # Do not rely on DNS
     skipidentify => "true";
 }
-
-#######################################################
-bundle agent update
-{
-files:
-  any::
-     "/tmp/test-cfengine3"
-
-    comment => "Exemple creation fichier par cfengine3",
-    create  => "true";
-}
-
 
