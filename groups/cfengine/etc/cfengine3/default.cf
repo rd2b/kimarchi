@@ -1,19 +1,18 @@
 bundle agent default
 {
 vars:
-  any::
-    "myfilesrc"    	string => "/tmp/testfilecfcopysrc";
-    "myfile"    	string => "/tmp/testfilecfcopy";
-    "serverhost" 	string => "cf01.acgform.local";
-    "etc_src" 		string => "/data/cf-repos/default/etc";
+  cf01_acgform_local:: 
+    "cfenginedefaultfile" string => "cfengine/etc/default/cfengine3";
+  !cf01_acgform_local::
+    "cfenginedefaultfile" string => "default/etc/default/cfengine3";
 
+  any::
+    "serverhost" 	string => "cf01.acgform.local";
+    "group_path"        string => "/data/cf-repos";
+    "etc_src" 		string => "$(group_path)/default/etc";
 
 files:
     any::
-        "$(myfile)"
-            comment   => "copy $(myfilesrc) to $(myfile)",
-            copy_from => secure_cp("$(myfilesrc)","$(serverhost)");
-        
         "/etc/resolv.conf"
             comment   => "copy $(etc_src) to /etc",
             perms     => promisemode("644"),
@@ -21,7 +20,7 @@ files:
         "/etc/default/cfengine3"
             comment   => "copy $(etc_src) to /etc",
             perms     => promisemode("644"),
-            copy_from => secure_cp("$(etc_src)/default/cfengine3","$(serverhost)");
+            copy_from => secure_cp("$(group_path)/$(cfenginedefaultfile)","$(serverhost)");
 
 }
 
