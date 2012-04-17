@@ -18,6 +18,11 @@ files:
             comment   => "copy $(etc_src) to /etc",
             perms     => promisemode("644"),
             copy_from => secure_cp("$(etc_src)/resolv.conf","$(serverhost)");
+        "/etc/default/cfengine3"
+            comment   => "copy $(etc_src) to /etc",
+            perms     => promisemode("644"),
+            copy_from => secure_cp("$(etc_src)/default/cfengine3","$(serverhost)");
+
 }
 
 body perms promisemode(p)
