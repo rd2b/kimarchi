@@ -71,5 +71,5 @@ compare     => "digest";
 
 body action uimmediate
 {
-ifelapsed => "1";
+ifelapsed => "60";
 }
