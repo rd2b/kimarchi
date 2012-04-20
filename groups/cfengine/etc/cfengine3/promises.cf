@@ -3,12 +3,11 @@ body common control
   bundlesequence  => { "update",
                        "init", 
                        "pkg", 
-                       "files", 
                        "default" };
+
   inputs          => { "update.cf", 
                        "init.cf", 
                        "pkg.cf", "cfengine_stdlib.cf", 
-                       "files.cf", 
                        "default.cf", "cf-serverd.cf" };
 
 }
