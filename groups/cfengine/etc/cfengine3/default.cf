@@ -1,5 +1,9 @@
 bundle agent default
 {
+classes:
+        "dns_server" or => { "dns01_acgform_local", "dns02_acgform_local" };
+
+
 vars:
   dns01_acgform_local::
     "resolvconf"          string => "dns/etc/resolv.conf" ;
@@ -26,6 +30,9 @@ files:
             comment   => "copy $(etc_src) to /etc",
             perms     => promisemode("644"),
             copy_from => secure_cp("$(group_path)/$(cfenginedefaultfile)","$(serverhost)");
+reports:
+    dns_server::  "I am a DNS";
+    !dns_server:: "I am NOT a DNS";
 
 }
 
