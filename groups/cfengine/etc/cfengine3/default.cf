@@ -1,23 +1,25 @@
 bundle agent default
 {
 classes:
-        "dns_server" or => { "dns01_acgform_local", "dns02_acgform_local" };
+  "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
+  "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
+  "cfmaster" or => { "cf01_acgform_local" };
 
 
 vars:
-  dns01_acgform_local::
+  dns::
     "resolvconf"          string => "dns/etc/resolv.conf" ;
-  !dns01_acgform_local::
+  !dns::
     "resolvconf"          string => "default/etc/resolv.conf" ;
 
-  cf01_acgform_local:: 
+  cfmaster:: 
     "cfenginedefaultfile" string => "cfengine/etc/default/cfengine3";
-  !cf01_acgform_local::
+  !cfmaster::
     "cfenginedefaultfile" string => "default/etc/default/cfengine3";
 
   any::
     "serverhost" 	string => "cf01.acgform.local";
-    "group_path"        string => "/data/cf-repos";
+    "group_path"    string => "/data/cf-repos";
     "etc_src" 		string => "$(group_path)/default/etc";
 
 files:
@@ -30,9 +32,13 @@ files:
             comment   => "copy $(etc_src) to /etc",
             perms     => promisemode("644"),
             copy_from => secure_cp("$(group_path)/$(cfenginedefaultfile)","$(serverhost)");
+
 reports:
-    dns_server::  "I am a DNS";
-    !dns_server:: "I am NOT a DNS";
+    dns::  "I am a DNS";
+    !dns:: "I am NOT a DNS";
+    cfmaster:: "I am cfengine master";
+    !cfmaster:: "I am cfengine slave";
+    mysql:: "I am mysql";
 
 }
 
