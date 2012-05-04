@@ -1,44 +1,41 @@
 bundle agent default
 {
 classes:
-  "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
-  "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
-  "cfmaster" or => { "cf01_acgform_local" };
+    "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
+    "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
+    "backupmaster" or => { "backup01_acgform_local" };
+
+    "cfmaster" or => { "cf01_acgform_local" };
 
 
 vars:
-  dns::
-    "resolvconf"          string => "dns/etc/resolv.conf" ;
-  !dns::
-    "resolvconf"          string => "default/etc/resolv.conf" ;
+    dns::
+        "resolvconf"          string => "dns/etc/resolv.conf" ;
+    !dns::
+        "resolvconf"          string => "default/etc/resolv.conf" ;
 
-  cfmaster:: 
-    "cfenginedefaultfile" string => "cfengine/etc/default/cfengine3";
-  !cfmaster::
-    "cfenginedefaultfile" string => "default/etc/default/cfengine3";
+    any::
+        "serverhost" 	string => "cf01.acgform.local";
+        "group_path"    string => "/data/cf-repos";
+        "etc_src" 		string => "$(group_path)/default/etc";
 
-  any::
-    "serverhost" 	string => "cf01.acgform.local";
-    "group_path"    string => "/data/cf-repos";
-    "etc_src" 		string => "$(group_path)/default/etc";
+methods:
+    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
 
 files:
     any::
         "/etc/resolv.conf"
-            comment   => "copy $(etc_src) to /etc",
-            perms     => promisemode("644"),
-            copy_from => secure_cp("$(group_path)/$(resolvconf)","$(serverhost)");
-        "/etc/default/cfengine3"
-            comment   => "copy $(etc_src) to /etc",
-            perms     => promisemode("644"),
-            copy_from => secure_cp("$(group_path)/$(cfenginedefaultfile)","$(serverhost)");
+        comment   => "copy $(etc_src) to /etc",
+                  perms     => promisemode("644"),
+                  copy_from => secure_cp("$(group_path)/$(resolvconf)","$(serverhost)");
 
 reports:
-    dns::  "I am a DNS";
-    !dns:: "I am NOT a DNS";
-    cfmaster:: "I am cfengine master";
+    dns::       "I am a DNS";
+    cfmaster::  "I am cfengine master";
     !cfmaster:: "I am cfengine slave";
-    mysql:: "I am mysql";
+    mysql::     "I am mysql";
+    backupmaster::    "I am backup master";
+    !backupmaster::    "I am backup client";
 
 }
 
@@ -47,3 +44,16 @@ body perms promisemode(p)
     mode  => "$(p)";
 }
 
+
+bundle agent makebackupmaster {
+vars:
+    any::
+        "bacula" slist => { "bacula-server" };
+
+packages:
+    any::
+        "$(bacula)"
+        comment => "install $(bacula)",
+                package_policy   => "add",
+                package_method   => generic;
+}
