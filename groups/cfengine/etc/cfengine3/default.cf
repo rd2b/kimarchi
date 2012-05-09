@@ -1,6 +1,7 @@
 bundle agent default
 {
 classes:
+# Mise en place des groupes de machines
     "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
     "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
     "backupmaster" or => { "backup01_acgform_local" };
@@ -9,18 +10,16 @@ classes:
 
 
 vars:
-    dns::
-        "resolvconf"          string => "dns/etc/resolv.conf" ;
-    !dns::
-        "resolvconf"          string => "default/etc/resolv.conf" ;
-
     any::
         "serverhost" 	string => "cf01.acgform.local";
-        "group_path"    string => "/data/cf-repos";
-        "etc_src" 		string => "$(group_path)/default/etc";
+    "group_path"    string => "/data/cf-repos";
+    "etc_src" 		string => "$(group_path)/default/etc";
+    "resolvconf"    string => "default/etc/resolv.conf" ;
+    "etc"           string => "/tmp/etc";
 
 methods:
     backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
+    dns::          "makednsmaster"    usebundle => makednsmaster;
 
 files:
     any::
@@ -28,6 +27,17 @@ files:
         comment   => "copy $(etc_src) to /etc",
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(group_path)/$(resolvconf)","$(serverhost)");
+        "$(etc)"
+                  comment => "Test copying /etc",
+                  copy_from => secure_cp("$(etc_src)","$(serverhost)"),
+                  depth_search => recurse("inf");
+
+
+processes:
+    any:: "/usr/sbin/cf-execd" restart_class => "launchcfengine";
+
+commands:
+    launchcfengine:: "/etc/init.d/cfengine3 start";
 
 reports:
     dns::       "I am a DNS";
@@ -57,3 +67,21 @@ packages:
                 package_policy   => "add",
                 package_method   => generic;
 }
+
+
+bundle agent makednsmaster {
+vars:
+    any::
+        "dnsutils" slist => {
+            "bind9",
+                "host"
+        };
+
+packages:
+    any::
+        "$(dnsutils)"
+        comment => "install $(dnsutils)",
+                package_policy   => "add",
+                package_method   => generic;
+}
+
