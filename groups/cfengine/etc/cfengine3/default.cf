@@ -11,11 +11,13 @@ classes:
 
 vars:
     any::
-        "serverhost" 	string => "cf01.acgform.local";
+        "serverhost"    string => "cf01.acgform.local";
     "group_path"    string => "/data/cf-repos";
-    "etc_src" 		string => "$(group_path)/default/etc";
+    "etc_src"       string => "$(group_path)/default/etc";
+    "usrlocalbin_src"       string => "$(group_path)/default/usr/local/bin";
     "resolvconf"    string => "default/etc/resolv.conf" ;
     "etc"           string => "/tmp/etc";
+    "usrlocalbin"   string => "/tmp/usr/local/bin";
 
 methods:
     backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
@@ -27,10 +29,17 @@ files:
         comment   => "copy $(etc_src) to /etc",
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(group_path)/$(resolvconf)","$(serverhost)");
-        "$(etc)"
-                  comment => "Test copying /etc",
-                  copy_from => secure_cp("$(etc_src)","$(serverhost)"),
-                  depth_search => recurse("inf");
+    "$(etc)"
+        comment => "Test copying /etc",
+                copy_from => secure_cp("$(etc_src)","$(serverhost)"),
+                perms     => promisemode("644"),
+                depth_search => recurse("inf");
+
+    "$(usrlocalbin)"
+        comment => "Test copying /usr/local/bin",
+                copy_from => secure_cp("$(usrlocalbin_src)","$(serverhost)"),
+                depth_search => recurse("inf");
+
 
 
 processes:
