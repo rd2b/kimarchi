@@ -10,11 +10,16 @@ $TTL    604800
                          604800 )       ; Negative Cache TTL
 ;
 @       IN      NS      dns01.acgform.local.
+@       IN      NS      dns02.acgform.local.
 @       IN      A       192.168.122.10
+@       IN      A       192.168.122.20
 ns      IN      A       192.168.122.10
 dns01   IN      A       192.168.122.10
+dns02   IN      A       192.168.122.20
+
 bast01	IN      A       192.168.122.11
 cf01	IN      A       192.168.122.12
+backup01	IN      A       192.168.122.30
 
 
 dep01	IN	A	192.168.122.60
@@ -27,6 +32,7 @@ vm02	IN	A	192.168.122.102
 
 db01    IN      A       192.168.122.111
 db02    IN      A       192.168.122.112
+db03    IN      A       192.168.122.113
 
 front01	IN	A	192.168.122.121
 front02	IN	A	192.168.122.122
