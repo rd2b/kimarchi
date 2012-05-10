@@ -16,8 +16,8 @@ vars:
     "etc_src"       string => "$(group_path)/default/etc";
     "usrlocalbin_src"       string => "$(group_path)/default/usr/local/bin";
     "resolvconf"    string => "default/etc/resolv.conf" ;
-    "etc"           string => "/tmp/etc";
-    "usrlocalbin"   string => "/tmp/usr/local/bin";
+    "etc"           string => "/etc";
+    "usrlocalbin"   string => "/usr/local/bin";
 
 methods:
     backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
