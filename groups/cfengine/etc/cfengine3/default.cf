@@ -1,36 +1,96 @@
 bundle agent default
 {
+classes:
+# Mise en place des groupes de machines
+    "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
+    "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
+    "backupmaster" or => { "backup01_acgform_local" };
+
+    "cfmaster" or => { "cf01_acgform_local" };
+
+
 vars:
-  dns01_acgform_local::
-    "resolvconf"          string => "dns/etc/resolv.conf" ;
-  !dns01_acgform_local::
-    "resolvconf"          string => "default/etc/resolv.conf" ;
+    any::
+        "serverhost"    string => "cf01.acgform.local";
+    "group_path"    string => "/data/cf-repos";
+    "etc_src"       string => "$(group_path)/default/etc";
+    "usrlocalbin_src"       string => "$(group_path)/default/usr/local/bin";
+    "resolvconf"    string => "default/etc/resolv.conf" ;
+    "etc"           string => "/tmp/etc";
+    "usrlocalbin"   string => "/tmp/usr/local/bin";
 
-  cf01_acgform_local:: 
-    "cfenginedefaultfile" string => "cfengine/etc/default/cfengine3";
-  !cf01_acgform_local::
-    "cfenginedefaultfile" string => "default/etc/default/cfengine3";
-
-  any::
-    "serverhost" 	string => "cf01.acgform.local";
-    "group_path"        string => "/data/cf-repos";
-    "etc_src" 		string => "$(group_path)/default/etc";
+methods:
+    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
+    dns::          "makednsmaster"    usebundle => makednsmaster;
 
 files:
     any::
         "/etc/resolv.conf"
-            comment   => "copy $(etc_src) to /etc",
-            perms     => promisemode("644"),
-            copy_from => secure_cp("$(group_path)/$(resolvconf)","$(serverhost)");
-        "/etc/default/cfengine3"
-            comment   => "copy $(etc_src) to /etc",
-            perms     => promisemode("644"),
-            copy_from => secure_cp("$(group_path)/$(cfenginedefaultfile)","$(serverhost)");
+        comment   => "copy $(etc_src) to /etc",
+                  perms     => promisemode("644"),
+                  copy_from => secure_cp("$(group_path)/$(resolvconf)","$(serverhost)");
+    "$(etc)"
+        comment => "Test copying /etc",
+                copy_from => secure_cp("$(etc_src)","$(serverhost)"),
+                perms     => promisemode("644"),
+                depth_search => recurse("inf");
+
+    "$(usrlocalbin)"
+        comment => "Test copying /usr/local/bin",
+                copy_from => secure_cp("$(usrlocalbin_src)","$(serverhost)"),
+                depth_search => recurse("inf");
+
+
+
+processes:
+    any:: "/usr/sbin/cf-execd" restart_class => "launchcfengine";
+
+commands:
+    launchcfengine:: "/etc/init.d/cfengine3 start";
+
+reports:
+    dns::       "I am a DNS";
+    cfmaster::  "I am cfengine master";
+    !cfmaster:: "I am cfengine slave";
+    mysql::     "I am mysql";
+    backupmaster::    "I am backup master";
+    !backupmaster::    "I am backup client";
 
 }
 
 body perms promisemode(p)
 {
     mode  => "$(p)";
+}
+
+
+bundle agent makebackupmaster {
+vars:
+    any::
+        "bacula" slist => { "bacula-server" };
+
+packages:
+    any::
+        "$(bacula)"
+        comment => "install $(bacula)",
+                package_policy   => "add",
+                package_method   => generic;
+}
+
+
+bundle agent makednsmaster {
+vars:
+    any::
+        "dnsutils" slist => {
+            "bind9",
+                "host"
+        };
+
+packages:
+    any::
+        "$(dnsutils)"
+        comment => "install $(dnsutils)",
+                package_policy   => "add",
+                package_method   => generic;
 }
 

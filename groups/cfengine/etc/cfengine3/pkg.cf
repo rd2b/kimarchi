@@ -1,20 +1,20 @@
 bundle agent pkg
 {
 vars:
-
-  any::
-  "packages"  slist  => { "screen",
-                          "vim",
-                          "rsync",
-                          "man",
-                          "manpages",
-                          "tree" };
+    any::
+        "packages"  slist  => { "screen",
+            "vim",
+            "rsync",
+            "man",
+            "manpages",
+            "tree",
+            "update-manager-core"
+        };
 
 packages:
-
-  any::
-  "$(packages)"
-    comment => "install $(packages)",
-    package_policy   => "add",
-    package_method   => generic;
+    any::
+        "$(packages)"
+        comment => "install $(packages)",
+                package_policy   => "add",
+                package_method   => generic;
 }
