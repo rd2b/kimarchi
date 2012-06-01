@@ -32,13 +32,12 @@ files:
     "$(etc)"
         comment => "Test copying /etc",
                 copy_from => secure_cp("$(etc_src)","$(serverhost)"),
-                perms     => promisemode("644"),
                 depth_search => recurse("inf");
 
-     "/etc/ssh/ssh_host_dsa_key" perms     => promisemode("600");
-     "/etc/ssh/ssh_host_rsa_key" perms     => promisemode("600");
-     "/etc/sudoers"              perms     => promisemode("440");
-     "/etc/init.d" perms     => promisemode("777"), depth_search => recurse("inf");
+     "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
+     "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
+     "/etc/sudoers"              perms => promisemode("440");
+     "/etc/init.d"               perms => promisemode("777"), depth_search => recurse("inf");
 
     "$(usrlocalbin)"
         comment => "Test copying /usr/local/bin",
