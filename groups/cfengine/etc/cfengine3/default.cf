@@ -37,7 +37,7 @@ files:
      "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
      "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
      "/etc/sudoers"              perms => promisemode("440");
-     "/etc/init.d"               perms => promisemode("777"), depth_search => recurse("inf");
+     "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
 
     "$(usrlocalbin)"
         comment => "Test copying /usr/local/bin",
