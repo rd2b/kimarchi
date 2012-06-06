@@ -90,6 +90,17 @@ vars:
                 "host"
         };
 
+files:
+    "/etc/bind/acgform.local"
+          comment   => "copy $(etc_src) to /etc",
+          perms     => promisemode("644"),
+          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/acgform.local","$(serverhost)");
+
+    "/etc/bind/named.conf.local"
+          comment   => "copy $(etc_src) to /etc",
+          perms     => promisemode("644"),
+          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/named.conf.local","$(serverhost)");
+
 packages:
     any::
         "$(dnsutils)"
