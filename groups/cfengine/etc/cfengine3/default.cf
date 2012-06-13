@@ -44,7 +44,11 @@ files:
                 copy_from => secure_cp("$(usrlocalbin_src)","$(serverhost)"),
                 depth_search => recurse("inf");
 
-
+    cfmaster::
+        "/etc/default/cfengine3"
+                  comment   => "copy default/cfengine3 to /etc",
+                  perms     => promisemode("644"),
+                  copy_from => secure_cp("$(group_path)/groups/cfengine/etc/default/cfengine3","$(serverhost)");
 
 processes:
     any:: "/usr/sbin/cf-execd" restart_class => "launchcfengine";
