@@ -89,6 +89,10 @@ packages:
 bundle agent makednsmaster {
 vars:
     any::
+        "serverhost"    string => "cf01.acgform.local";
+        "group_path"    string => "/data/cf-repos";
+        "etc_src"       string => "$(group_path)/default/etc";
+
         "dnsutils" slist => {
             "bind9",
                 "host"
