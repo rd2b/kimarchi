@@ -97,6 +97,9 @@ packages:
 bundle agent makednsmaster {
 vars:
     any::
+        "dnsfilestocopy"
+        slist => { "/etc/bind/acgform.local", "/etc/bind/named.conf.local" };
+
 
         "dnsutils" slist => {
             "bind9",
@@ -104,15 +107,15 @@ vars:
         };
 
 files:
-    "/etc/bind/acgform.local"
+    "${dnsfilestocopy}"
           comment   => "copy $(globals.etc_src) to /etc",
           perms     => promisemode("644"),
-          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/acgform.local","$(globals.serverhost)");
+          copy_from => secure_cp("/data/cf-repos/groups/dns/${dnsfilestocopy}","$(globals.serverhost)");
 
-    "/etc/bind/named.conf.local"
-          comment   => "copy $(globals.etc_src) to /etc",
-          perms     => promisemode("644"),
-          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/named.conf.local","$(globals.serverhost)");
+#    "/etc/bind/named.conf.local"
+#          comment   => "copy $(globals.etc_src) to /etc",
+#          perms     => promisemode("644"),
+#          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/named.conf.local","$(globals.serverhost)");
 
 packages:
     any::
