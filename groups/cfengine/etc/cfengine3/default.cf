@@ -51,7 +51,7 @@ files:
         "/etc/mysql"
             comment => "Copying files in /etc/mysql",
             perms     => promisemode("644"),
-            copy_from => secure_cp("$(globals.group_path)/groups/mysql/etc/mysql","$(globals.serverhost)");
+            copy_from => secure_cp("$(globals.group_path)/groups/mysql/etc/mysql","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
 
