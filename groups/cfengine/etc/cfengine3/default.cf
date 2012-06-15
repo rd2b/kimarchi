@@ -11,10 +11,6 @@ classes:
 
 vars:
     any::
-        "serverhost"    string => "cf01.acgform.local";
-    "group_path"    string => "/data/cf-repos";
-    "etc_src"       string => "$(group_path)/default/etc";
-    "usrlocalbin_src"       string => "$(group_path)/default/usr/local/bin";
     "resolvconf"    string => "default/etc/resolv.conf" ;
     "etc"           string => "/etc";
     "usrlocalbin"   string => "/usr/local/bin";
@@ -26,12 +22,12 @@ methods:
 files:
     any::
         "/etc/resolv.conf"
-        comment   => "copy $(etc_src) to /etc",
+        comment   => "copy $(globals.etc_src) to /etc",
                   perms     => promisemode("644"),
-                  copy_from => secure_cp("$(group_path)/$(resolvconf)","$(serverhost)");
+                  copy_from => secure_cp("$(globals.group_path)/$(resolvconf)","$(globals.serverhost)");
     "$(etc)"
         comment => "Test copying /etc",
-                copy_from => secure_cp("$(etc_src)","$(serverhost)"),
+                copy_from => secure_cp("$(globals.etc_src)","$(globals.serverhost)"),
                 depth_search => recurse("inf");
 
      "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
@@ -41,14 +37,14 @@ files:
 
     "$(usrlocalbin)"
         comment => "Test copying /usr/local/bin",
-                copy_from => secure_cp("$(usrlocalbin_src)","$(serverhost)"),
+                copy_from => secure_cp("$(globals.usrlocalbin_src)","$(serverhost)"),
                 depth_search => recurse("inf");
 
     cfmaster::
         "/etc/default/cfengine3"
                   comment   => "copy default/cfengine3 to /etc",
                   perms     => promisemode("644"),
-                  copy_from => secure_cp("$(group_path)/groups/cfengine/etc/default/cfengine3","$(serverhost)");
+                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3","$(globals.serverhost)");
 
 processes:
     any:: 
@@ -95,9 +91,6 @@ packages:
 bundle agent makednsmaster {
 vars:
     any::
-        "serverhost"    string => "cf01.acgform.local";
-        "group_path"    string => "/data/cf-repos";
-        "etc_src"       string => "$(group_path)/default/etc";
 
         "dnsutils" slist => {
             "bind9",
@@ -106,14 +99,14 @@ vars:
 
 files:
     "/etc/bind/acgform.local"
-          comment   => "copy $(etc_src) to /etc",
+          comment   => "copy $(globals.etc_src) to /etc",
           perms     => promisemode("644"),
-          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/acgform.local","$(serverhost)");
+          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/acgform.local","$(globals.serverhost)");
 
     "/etc/bind/named.conf.local"
-          comment   => "copy $(etc_src) to /etc",
+          comment   => "copy $(globals.etc_src) to /etc",
           perms     => promisemode("644"),
-          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/named.conf.local","$(serverhost)");
+          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/named.conf.local","$(globals.serverhost)");
 
 packages:
     any::
