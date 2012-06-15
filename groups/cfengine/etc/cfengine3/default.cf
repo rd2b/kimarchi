@@ -60,7 +60,7 @@ commands:
     launchcfengine::
         "/etc/init.d/cfengine3 start";
     launchdropbox::
-        "su - remi -c \"dropbox start\"";
+        "/bin/su - remi -c \"/usr/bin/dropbox start\"";
 
 reports:
     dns::       "I am a DNS";
