@@ -13,8 +13,7 @@ classes:
 vars:
     any::
         "filestocopy" slist => { "/etc/resolv.conf" };
-    "etc"           string => "/etc";
-    "usrlocalbin"   string => "/usr/local/bin";
+        "dirstocopy"  slist => { "/etc", "/usr/local/bin" };
 
 methods:
 #    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
@@ -22,25 +21,20 @@ methods:
 
 files:
     any::
-    "$(filestocopy)"
-        comment   => "copy $(filestocopy) to /etc",
-        perms     => promisemode("644"),
-        copy_from => secure_cp("$(globals.group_path)/default/$(filestocopy)","$(globals.serverhost)");
+        "$(filestocopy)"
+            comment   => "Copying $(filestocopy)",
+            perms     => promisemode("644"),
+            copy_from => secure_cp("$(globals.group_path)/default/$(filestocopy)","$(globals.serverhost)");
 
-    "$(etc)"
-        comment => "Test copying /etc",
-                copy_from => secure_cp("$(globals.etc_src)","$(globals.serverhost)"),
-                depth_search => recurse("inf");
+        "$(dirstocopy)"
+            comment => "Copying $(dirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/default/$(dirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
 
-     "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
-     "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
-     "/etc/sudoers"              perms => promisemode("440");
-     "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
-
-    "$(usrlocalbin)"
-        comment => "Test copying /usr/local/bin",
-                copy_from => secure_cp("$(globals.usrlocalbin_src)","$(globals.serverhost)"),
-                depth_search => recurse("inf");
+         "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
+         "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
+         "/etc/sudoers"              perms => promisemode("440");
+         "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
 
     cfmaster::
         "/etc/default/cfengine3"
