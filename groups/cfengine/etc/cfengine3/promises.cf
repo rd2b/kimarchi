@@ -14,7 +14,7 @@ body common control
 
 bundle common globals{
     vars:
-        "serverhost"    string => "cf01.acgform.local";
+        "serverhost"    string => "192.168.122.12";
         "group_path"    string => "/data/cf-repos";
         "etc_src"       string => "$(group_path)/default/etc";
         "usrlocalbin_src"       string => "$(group_path)/default/usr/local/bin";
