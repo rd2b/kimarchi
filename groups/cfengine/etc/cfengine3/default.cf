@@ -5,6 +5,7 @@ classes:
     "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
     "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
     "backupmaster" or => { "backup01_acgform_local" };
+    "loghost" or => { "log01_acgform_local" };
 
     "cfmaster" or => { "cf01_acgform_local" };
 
@@ -45,6 +46,11 @@ files:
                   comment   => "copy default/cfengine3 to /etc",
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3","$(globals.serverhost)");
+    loghost::
+        "/etc/rsyslog.conf"
+            comment   => "copy loghost/etc/rsyslog.conf to /etc",
+            perms     => promisemode("644"),
+            copy_from => secure_cp("$(globals.group_path)/groups/loghost/etc/rsyslog.conf","$(globals.serverhost)");
 
 processes:
     any:: 
