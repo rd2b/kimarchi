@@ -20,7 +20,7 @@ vars:
     "usrlocalbin"   string => "/usr/local/bin";
 
 methods:
-    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
+#    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
     dns::          "makednsmaster"    usebundle => makednsmaster;
 
 files:
