@@ -22,11 +22,6 @@ methods:
 
 files:
     any::
-        "/etc/resolv.conf"
-        comment   => "copy $(globals.etc_src) to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/$(resolvconf)","$(globals.serverhost)");
-
     "$(filestocopy)"
         comment   => "copy $(filestocopy) to /etc",
         perms     => promisemode("644"),
