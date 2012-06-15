@@ -12,7 +12,7 @@ classes:
 
 vars:
     any::
-    "resolvconf"    string => "default/etc/resolv.conf" ;
+        "filestocopy" slist => { "/etc/resolv.conf" };
     "etc"           string => "/etc";
     "usrlocalbin"   string => "/usr/local/bin";
 
@@ -26,6 +26,12 @@ files:
         comment   => "copy $(globals.etc_src) to /etc",
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(globals.group_path)/$(resolvconf)","$(globals.serverhost)");
+
+    "$(filestocopy)"
+        comment   => "copy $(filestocopy) to /etc",
+        perms     => promisemode("644"),
+        copy_from => secure_cp("$(globals.group_path)/default/$(filestocopy)","$(globals.serverhost)");
+
     "$(etc)"
         comment => "Test copying /etc",
                 copy_from => secure_cp("$(globals.etc_src)","$(globals.serverhost)"),
@@ -98,24 +104,15 @@ bundle agent makednsmaster {
 vars:
     any::
         "dnsfilestocopy"
-        slist => { "/etc/bind/acgform.local", "/etc/bind/named.conf.local" };
+            slist => { "/etc/bind/acgform.local", "/etc/bind/named.conf.local" };
 
-
-        "dnsutils" slist => {
-            "bind9",
-                "host"
-        };
+        "dnsutils" slist => { "bind9", "host" };
 
 files:
-    "${dnsfilestocopy}"
-          comment   => "copy $(globals.etc_src) to /etc",
+    "$(dnsfilestocopy)"
+          comment   => "copy $(dnsfilestocopy) to /etc",
           perms     => promisemode("644"),
-          copy_from => secure_cp("/data/cf-repos/groups/dns/${dnsfilestocopy}","$(globals.serverhost)");
-
-#    "/etc/bind/named.conf.local"
-#          comment   => "copy $(globals.etc_src) to /etc",
-#          perms     => promisemode("644"),
-#          copy_from => secure_cp("/data/cf-repos/groups/dns/etc/bind/named.conf.local","$(globals.serverhost)");
+          copy_from => secure_cp("/data/cf-repos/groups/dns/$(dnsfilestocopy)","$(globals.serverhost)");
 
 packages:
     any::
