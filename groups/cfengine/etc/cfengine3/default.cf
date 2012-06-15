@@ -51,10 +51,16 @@ files:
                   copy_from => secure_cp("$(group_path)/groups/cfengine/etc/default/cfengine3","$(serverhost)");
 
 processes:
-    any:: "/usr/sbin/cf-execd" restart_class => "launchcfengine";
+    any:: 
+        "/usr/sbin/cf-execd" restart_class => "launchcfengine";
+    drop01_acgform_local:: 
+        "/home/remi/.dropbox-dist/dropbox" restart_class => "launchdropbox";
 
 commands:
-    launchcfengine:: "/etc/init.d/cfengine3 start";
+    launchcfengine::
+        "/etc/init.d/cfengine3 start";
+    launchdropbox::
+        "su - remi -c \"dropbox start\"";
 
 reports:
     dns::       "I am a DNS";
