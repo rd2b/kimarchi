@@ -13,6 +13,14 @@ body common control
 }
 
 bundle common globals{
+    classes:
+# Mise en place des groupes de machines
+        "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
+        "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
+        "backupmaster" or => { "backup01_acgform_local" };
+        "loghost" or => { "log01_acgform_local" };
+        "cfmaster" or => { "cf01_acgform_local" };
+
     vars:
         "serverhost"    string => "192.168.122.12";
         "group_path"    string => "/data/cf-repos";
