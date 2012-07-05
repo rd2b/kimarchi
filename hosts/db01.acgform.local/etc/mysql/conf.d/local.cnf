@@ -4,8 +4,3 @@ server-id              = 1
 auto_increment_offset 	= 1
 auto_increment_increment = 2
 
-master-host = db02.acgform.local
-master-user = rep
-master-password = ooh8Chei
-master-port = 3306
-
