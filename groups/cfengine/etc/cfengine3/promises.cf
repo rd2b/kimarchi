@@ -21,7 +21,7 @@ bundle common globals{
         "loghost" or => { "log01_acgform_local" };
         "cfmaster" or => { "cf01_acgform_local" };
 
-        "standalone" or => { "raspberrypi" }
+        "standalone" or => { "raspberrypi" };
 
     vars:
       standalone::
