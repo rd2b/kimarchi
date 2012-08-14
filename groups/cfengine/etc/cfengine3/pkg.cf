@@ -12,7 +12,7 @@ vars:
         };
 
 packages:
-    any::
+    CFpackages::
         "$(packages)"
         comment => "install $(packages)",
                 package_policy   => "add",
