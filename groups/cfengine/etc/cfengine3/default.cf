@@ -1,14 +1,7 @@
 bundle agent default
 {
 classes:
-# Mise en place des groupes de machines
-    "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
-    "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
-    "backupmaster" or => { "backup01_acgform_local" };
-    "loghost" or => { "log01_acgform_local" };
-
-    "cfmaster" or => { "cf01_acgform_local" };
-
+# Classes locales au bundle:
 
 vars:
     any::
@@ -18,7 +11,7 @@ vars:
 
 methods:
 #    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
-    globals.dns::          "makednsmaster"    usebundle => makednsmaster;
+    dns::          "makednsmaster"    usebundle => makednsmaster;
 
 files:
     any::
@@ -38,18 +31,18 @@ files:
          "/etc/sudoers"              perms => promisemode("440");
          "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
 
-    globals.cfmaster::
+    cfmaster::
         "/etc/default/cfengine3"
                   comment   => "copy default/cfengine3 to /etc",
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3","$(globals.serverhost)");
-    globals.loghost::
+    loghost::
         "/etc/rsyslog.conf"
             comment   => "copy loghost/etc/rsyslog.conf to /etc",
             perms     => promisemode("644"),
             copy_from => secure_cp("$(globals.group_path)/groups/loghost/etc/rsyslog.conf","$(globals.serverhost)");
 
-    globals.mysql::
+    mysql::
         "/etc/mysql"
             comment => "Copying files in /etc/mysql",
             perms     => promisemode("600"),
@@ -71,11 +64,11 @@ commands:
 
 reports:
     dns::       "I am a DNS";
-    globals.cfmaster::  "I am cfengine master";
-    !globals.cfmaster:: "I am cfengine slave";
-    globals.mysql::     "I am mysql";
-    globals.backupmaster::    "I am backup master";
-    !globals.backupmaster::    "I am backup client";
+    cfmaster::  "I am cfengine master";
+    !cfmaster:: "I am cfengine slave";
+    mysql::     "I am mysql";
+    backupmaster::    "I am backup master";
+    !backupmaster::    "I am backup client";
 
 }
 
