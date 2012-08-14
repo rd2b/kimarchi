@@ -28,6 +28,7 @@ bundle common globals{
             "serverhost"    string => "127.0.0.1";
       acgform_local::
             "serverhost"    string => "192.168.122.12";
+      any::
             "group_path"    string => "/data/cf-repos";
             "etc_src"       string => "$(group_path)/default/etc";
             "usrlocalbin_src"       string => "$(group_path)/default/usr/local/bin";
