@@ -27,7 +27,11 @@ bundle agent update
 vars:
 
  "master_location" string => "/var/lib/cfengine3/masterfiles";
- "master_server" string => "192.168.122.12";
+
+  acgform_local::
+     "master_server"    string => "192.168.122.12";
+  !any::
+     "master_server" string => "192.168.122.12";
 
 files:
 
