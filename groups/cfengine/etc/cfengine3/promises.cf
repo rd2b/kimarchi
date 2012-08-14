@@ -15,13 +15,14 @@ body common control
 bundle common globals{
     classes:
 # Mise en place des groupes de machines
+        "standalone" or => { "raspberrypi" };
+
         "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
         "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
         "backupmaster" or => { "backup01_acgform_local" };
         "loghost" or => { "log01_acgform_local" };
-        "cfmaster" or => { "cf01_acgform_local" };
+        "cfmaster" or => { "cf01_acgform_local", "standalone" };
 
-        "standalone" or => { "raspberrypi" };
 
     vars:
       standalone::
