@@ -35,6 +35,7 @@ bundle server access_rules() {
 
 body runagent control {
     hosts => {
-        "192.168.122.*"
+        "192.168.122.*",
+        "127.0.0.1"
     };
 }
