@@ -21,7 +21,8 @@ bundle common globals{
         "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
         "backupmaster" or => { "backup01_acgform_local" };
         "loghost" or => { "log01_acgform_local" };
-        "cfmaster" or => { "cf01_acgform_local", "standalone" };
+        "cfmaster" or => { "cf01_acgform_local"};
+        "cfmanual" or => { "raspberrypi" };
 
 
     vars:

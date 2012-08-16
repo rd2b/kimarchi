@@ -42,6 +42,12 @@ files:
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-client","$(globals.serverhost)");
 
+    cfmanual::
+        "/etc/default/cfengine3"
+                  comment   => "copy default/cfengine3 to /etc",
+                  perms     => promisemode("644"),
+                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-manual","$(globals.serverhost)");
+
     loghost::
         "/etc/rsyslog.conf"
             comment   => "copy loghost/etc/rsyslog.conf to /etc",
