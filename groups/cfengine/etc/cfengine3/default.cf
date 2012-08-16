@@ -31,6 +31,12 @@ files:
          "/etc/sudoers"              perms => promisemode("440");
          "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
 
+    acgform_local::
+        "/etc/resolv.conf"
+                  comment   => "copying /etc/resolv.conf for acgform",
+                  perms     => promisemode("644"),
+                  copy_from => secure_cp("$(globals.group_path)/groups/acgform/etc/resolv.conf","$(globals.serverhost)");
+
     cfmaster::
         "/etc/default/cfengine3"
                   comment   => "copy default/cfengine3 to /etc",
