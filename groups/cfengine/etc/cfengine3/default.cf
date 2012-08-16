@@ -5,7 +5,7 @@ classes:
 
 vars:
     any::
-        "filestocopy" slist => { "/etc/resolv.conf" };
+        "filestocopy" slist => {  };
         "dirstocopy"  slist => { "/etc", "/usr/local/bin" };
         "mysqlsrcdirs"  slist => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
 
