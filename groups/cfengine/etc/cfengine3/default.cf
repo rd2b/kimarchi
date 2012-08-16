@@ -31,6 +31,12 @@ files:
          "/etc/sudoers"              perms => promisemode("440");
          "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
 
+   any::
+       "$(dirstocopy)"
+        comment => "Copying $(dirstocopy)",
+        copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
+        depth_search => recurse("inf");
+
     acgform_local::
         "/etc/resolv.conf"
                   comment   => "copying /etc/resolv.conf for acgform",
