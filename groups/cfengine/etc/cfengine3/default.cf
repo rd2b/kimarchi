@@ -76,7 +76,7 @@ files:
 
 
 processes:
-    any:: 
+    !cfmanual:: 
         "/usr/sbin/cf-execd" restart_class => "launchcfengine";
     drop01_acgform_local:: 
         "/home/remi/.dropbox-dist/dropbox" restart_class => "launchdropbox";
