@@ -7,7 +7,7 @@ body common control
 
   inputs          => { "update.cf", 
                        "pkg.cf",
-                       "crontabs.cf",
+                       "crontab.cf",
                        "cfengine_stdlib.cf",
                        "default.cf",
                        "cf-serverd.cf" };
