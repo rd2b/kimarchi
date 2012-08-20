@@ -1,0 +1,12 @@
+bundle agent crontabs
+{
+vars:
+    cfmaster::
+        "cfrepos" => "/data/cf-repos/.git";
+
+commands:
+    cfmaster.Q1::
+        "/usr/bin/git"
+            args => " --git-dir=$(cfrepos) pull";
+
+}
