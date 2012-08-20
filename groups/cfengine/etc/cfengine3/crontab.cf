@@ -2,7 +2,7 @@ bundle agent crontabs
 {
 vars:
     cfmaster::
-        "cfrepos" => "/data/cf-repos/.git";
+        "cfrepos" string => "/data/cf-repos/.git";
 
 commands:
     cfmaster.Q1::
