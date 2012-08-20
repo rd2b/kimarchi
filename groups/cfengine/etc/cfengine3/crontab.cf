@@ -5,7 +5,7 @@ vars:
         "cfrepos" string => "/data/cf-repos/.git";
 
 commands:
-    cfmaster.Q1::
+    cfmaster.(Q1|Q2|Q3|Q4)::
         "/usr/bin/git"
             args => "pull",
             chdir => "$(cfrepos)";
