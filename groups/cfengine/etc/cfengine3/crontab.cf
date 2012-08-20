@@ -8,7 +8,7 @@ commands:
     cfmaster.(Q1|Q2|Q3|Q4)::
         "/usr/bin/git"
             args => "pull",
-            contain => ; go_to_dir("$(cfrepos)");
+            contain => go_to_dir("$(cfrepos)");
 
 }
 
