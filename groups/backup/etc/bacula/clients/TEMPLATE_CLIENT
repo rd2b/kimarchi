@@ -1,12 +1,3 @@
-#
-# back01.acgform.local configuration file
-#
-
-Job {
-  Name = "Job-zzzHOSTNAMEzzz-1"
-  JobDefs = "DefaultJob"
-  Client = zzzHOSTNAMEzzz-fd
-}
 
 # Client (File Services) to backup
 Client {
