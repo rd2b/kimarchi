@@ -1,0 +1,3 @@
+back.acgform.local  /etc    standard
+back.acgform.local  /boot    standard
+back.acgform.local  /var/spool/cron   standard
