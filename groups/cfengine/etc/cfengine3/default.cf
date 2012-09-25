@@ -120,7 +120,7 @@ vars:
         };
 
     backupclient::
-        "baculaserverpackages" slist => { "bacula-client" };
+        "baculaclientpackages" slist => { "bacula-client" };
         "clientfilestocopy" slist => { 
             "/etc/bacula/bacula-fd.conf"
         };
@@ -130,6 +130,12 @@ packages:
     backupmaster::
         "$(baculaserverpackages)"
         comment => "install $(baculaserverpackages)",
+                package_policy   => "add",
+                package_method   => generic;
+
+    backupclient::
+        "$(baculaclientpackages)"
+        comment => "install $(baculaclientpackages)",
                 package_policy   => "add",
                 package_method   => generic;
 
