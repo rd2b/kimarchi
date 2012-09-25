@@ -10,8 +10,10 @@ vars:
         "mysqlsrcdirs"  slist => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
 
 methods:
-    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
-    dns::          "makednsmaster"    usebundle => makednsmaster;
+    backupmaster|backupclient:: 
+        "makebackup"       usebundle => makebackup;
+    dns::
+        "makednsmaster"    usebundle => makednsmaster;
 
 files:
     any::
@@ -93,7 +95,7 @@ reports:
     !cfmaster:: "I am cfengine slave";
     mysql::     "I am mysql";
     backupmaster::    "I am backup master";
-    !backupmaster::    "I am backup client";
+    backupclient::    "I am backup client";
 
 }
 
@@ -103,28 +105,36 @@ body perms promisemode(p)
 }
 
 
-bundle agent makebackupmaster {
+bundle agent makebackup {
 vars:
     backupmaster::
-        "baculapackages" slist => { "bacula-server" };
+        "baculaserverpackages" slist => { "bacula-server" };
         "serverfilestocopy" slist => { 
             "/etc/bacula/bacula-dir.conf",
             "/etc/bacula/bacula-sd.conf"
         };
+
         "serverdirstocopy" slist => { 
             "/etc/bacula/clients",
             "/etc/bacula/filesets"
         };
 
+    backupclient::
+        "baculaserverpackages" slist => { "bacula-client" };
+        "clientfilestocopy" slist => { 
+            "/etc/bacula/bacula-fd.conf"
+        }
+
 
 packages:
-    any::
-        "$(baculapackages)"
-        comment => "install $(baculapackages)",
+    backupmaster::
+        "$(baculaserverpackages)"
+        comment => "install $(baculaserverpackages)",
                 package_policy   => "add",
                 package_method   => generic;
 
 files:
+    backupmaster::
         "$(serverfilestocopy)"
            comment   => "Copying $(serverfilestocopy)",
            perms     => promisemode("644"),
@@ -134,6 +144,13 @@ files:
             comment => "Copying $(serverdirstocopy)",
             copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
+
+    backupclient::
+        "$(clientfilestocopy)"
+           comment   => "Copying $(clientfilestocopy)",
+           perms     => promisemode("644"),
+           copy_from => secure_cp("$(globals.group_path)/groups/backup/$(clientfilestocopy)","$(globals.serverhost)");
+
 }
 
 
