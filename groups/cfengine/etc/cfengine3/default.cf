@@ -128,11 +128,11 @@ files:
         "$(serverfilestocopy)"
            comment   => "Copying $(serverfilestocopy)",
            perms     => promisemode("644"),
-           copy_from => secure_cp("$(globals.group_path)/groups/bacula/$(serverfilestocopy)","$(globals.serverhost)");
+           copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverfilestocopy)","$(globals.serverhost)");
 
         "$(serverdirstocopy)"
             comment => "Copying $(serverdirstocopy)",
-            copy_from => secure_cp("$(globals.group_path)/groups/bacula/$(serverdirstocopy)","$(globals.serverhost)"),
+            copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 }
 
