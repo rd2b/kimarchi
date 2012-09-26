@@ -120,6 +120,8 @@ bundle agent makebackup {
 vars:
     backupmaster::
         "baculaserverpackages" slist => { "bacula-server" };
+        "serverClientTemplate" string => "/etc/bacula/templates/TEMPLATE_CLIENT";
+
         "serverfilestocopy" slist => { 
             "/etc/bacula/bacula-dir.conf",
             "/etc/bacula/bacula-sd.conf"
@@ -127,10 +129,11 @@ vars:
 
         "serverdirstocopy" slist => { 
             "/etc/bacula/clients",
-            "/etc/bacula/filesets"
+            "/etc/bacula/filesets",
+            "$(serverClientTemplate)"
+
         };
 
-        "serverClientTemplate" string => "/etc/bacula/templates/TEMPLATE_CLIENT";
 
         "serverclientlist" slist => { "host.domain" };
 
@@ -165,6 +168,8 @@ files:
             comment => "Copying $(serverdirstocopy)",
             copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
+
+        ""
 
         "/etc/bacula/clients/$(serverclientlist).conf"
             create => "true",
