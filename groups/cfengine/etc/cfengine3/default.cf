@@ -5,28 +5,27 @@ classes:
 
 vars:
     any::
-#        "filestocopy" slist => {  };
-        "dirstocopy"  slist => { "/etc", "/usr/local/bin" };
-        "mysqlsrcdirs"  slist => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
+#       "filestocopy" slist => {  };
+        "dirstocopy"   slist => { "/etc", "/usr/local/bin" };
+        "mysqlsrcdirs" slist => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
+        "rsyslogdir"   slist =>  { "$(globals.group_path)/groups/loghost/etc" };
+
+    loghost::
+        "rsyslogfile"  slist =>  { "$(rsyslogdir)/server-rsyslog.conf" };
+
+    !loghost.!standalone.acgform_local::
+        "rsyslogfile"  slist =>  { "$(rsyslogdir)/client-rsyslog.conf" };
+
+    standalone::
+        "rsyslogfile"  slist =>  { "$(rsyslogdir)/standalone-rsyslog.conf" };
+
+
 
 methods:
     backupmaster|backupclient:: 
         "makebackup"       usebundle => makebackup;
     dns::
         "makednsmaster"    usebundle => makednsmaster;
-
-    any::
-        "rsyslogdir"      slist =>  { "$(globals.group_path)/groups/loghost/etc" };
-
-    loghost::
-        "rsyslogfile"     slist =>  { "$(rsyslogdir)/server-rsyslog.conf" };
-
-    !loghost.!standalone.acgform_local::
-        "rsyslogfile"     slist =>  { "$(rsyslogdir)/client-rsyslog.conf" };
-
-    standalone::
-        "rsyslogfile"     slist =>  { "$(rsyslogdir)/standalone-rsyslog.conf" };
-
 
 files:
     any::
