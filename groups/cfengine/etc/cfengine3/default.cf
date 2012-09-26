@@ -173,7 +173,7 @@ files:
 
 bundle agent makednsmaster {
 vars:
-    any::
+    dns::
         "dnsfilestocopy"
             slist => { "/etc/bind/acgform.local", "/etc/bind/named.conf.local" };
 
@@ -186,7 +186,7 @@ files:
           copy_from => secure_cp("/data/cf-repos/groups/dns/$(dnsfilestocopy)","$(globals.serverhost)");
 
 packages:
-    any::
+    dns::
         "$(dnsutils)"
         comment => "install $(dnsutils)",
                 package_policy   => "add",
