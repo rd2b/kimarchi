@@ -6,9 +6,9 @@ classes:
 vars:
     any::
 #       "filestocopy" slist => {  };
-        "dirstocopy"   slist => { "/etc", "/usr/local/bin" };
-        "mysqlsrcdirs" slist => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
-        "rsyslogdir"   slist =>  { "$(globals.group_path)/groups/loghost/etc" };
+        "dirstocopy"   slist  => { "/etc", "/usr/local/bin" };
+        "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
+        "rsyslogdir"   string => "$(globals.group_path)/groups/loghost/etc";
 
     loghost::
         "rsyslogfile"  slist =>  { "$(rsyslogdir)/server-rsyslog.conf" };
