@@ -169,12 +169,10 @@ files:
             copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
-        ""
-
         "/etc/bacula/clients/$(serverclientlist).conf"
             create => "true",
             edit_defaults => empty,
-            edit_line => expand_template("$(globals.group_path)/groups/backup/$(serverClientTemplate)"),
+            edit_line => expand_template("$(serverClientTemplate)"),
             comment => "Configuring the resolv.conf file";
 
 
