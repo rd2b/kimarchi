@@ -11,13 +11,13 @@ vars:
         "rsyslogdir"   string => "$(globals.group_path)/groups/loghost/etc";
 
     loghost::
-        "rsyslogfile"  slist =>  { "$(rsyslogdir)/server-rsyslog.conf" };
+        "rsyslogfile"  string => "$(rsyslogdir)/server-rsyslog.conf";
 
     !loghost.!standalone.acgform_local::
-        "rsyslogfile"  slist =>  { "$(rsyslogdir)/client-rsyslog.conf" };
+        "rsyslogfile"  string =>  "$(rsyslogdir)/client-rsyslog.conf";
 
     standalone::
-        "rsyslogfile"  slist =>  { "$(rsyslogdir)/standalone-rsyslog.conf" };
+        "rsyslogfile"  string => "$(rsyslogdir)/standalone-rsyslog.conf";
 
 
 
