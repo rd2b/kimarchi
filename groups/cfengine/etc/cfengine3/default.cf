@@ -135,7 +135,7 @@ vars:
         };
 
 
-        "serverclientlist" slist => { "host.domain" };
+        "serverclientlist" slist => { "host.domain", "host2.domain2" };
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
@@ -173,7 +173,7 @@ files:
             create => "true",
             edit_defaults => empty,
             edit_line => expand_template("$(serverClientTemplate)"),
-            comment => "Configuring the resolv.conf file";
+            comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
 
 
     backupclient::
