@@ -15,6 +15,19 @@ methods:
     dns::
         "makednsmaster"    usebundle => makednsmaster;
 
+    any::
+        "rsyslogdir"      slist =>  "$(globals.group_path)/groups/loghost/etc";
+
+    loghost::
+        "rsyslogfile"     slist =>  "$(rsyslogdir)/server-rsyslog.conf";
+
+    !loghost.!standalone.acgform_local::
+        "rsyslogfile"     slist =>  "$(rsyslogdir)/client-rsyslog.conf";
+
+    standalone::
+        "rsyslogfile"     slist =>  "$(rsyslogdir)/standalone-rsyslog.conf";
+
+
 files:
     any::
 #       "$(filestocopy)"
@@ -38,6 +51,12 @@ files:
         comment => "Copying $(dirstocopy)",
         copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
         depth_search => recurse("inf");
+
+    loghost|standalone|acgform_local::
+        "/etc/rsyslog.conf"
+            comment   => "copy loghost/etc/???-rsyslog.conf to /etc",
+            perms     => promisemode("644"),
+            copy_from => secure_cp("$(rsyslogfile)","$(globals.serverhost)");
 
     acgform_local::
         "/etc/resolv.conf"
@@ -63,19 +82,12 @@ files:
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-manual","$(globals.serverhost)");
 
-    loghost::
-        "/etc/rsyslog.conf"
-            comment   => "copy loghost/etc/rsyslog.conf to /etc",
-            perms     => promisemode("644"),
-            copy_from => secure_cp("$(globals.group_path)/groups/loghost/etc/rsyslog.conf","$(globals.serverhost)");
-
     mysql::
         "/etc/mysql"
             comment => "Copying files in /etc/mysql",
             perms     => promisemode("600"),
             copy_from => secure_cp("$(globals.group_path)/$(mysqlsrcdirs)","$(globals.serverhost)"),
             depth_search => recurse("inf");
-
 
 processes:
     !cfmanual:: 
