@@ -204,9 +204,3 @@ packages:
                 package_method   => generic;
 }
 
-bundle edit_line expand_template(templatefile) {
-insert_lines:
-    "$(templatefile)"
-        insert_type => "file",
-        expand_scalars => "true";
-}
