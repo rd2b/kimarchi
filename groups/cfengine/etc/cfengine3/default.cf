@@ -11,13 +11,13 @@ vars:
         "rsyslogdir"   string => "$(globals.group_path)/groups/loghost/etc";
 
     loghost::
-        "rsyslogfile"  string => "$(rsyslogdir)/server-rsyslog.conf";
+        "rsyslogfile"  string => "server-rsyslog.conf";
 
     !loghost.!standalone.acgform_local::
-        "rsyslogfile"  string =>  "$(rsyslogdir)/client-rsyslog.conf";
+        "rsyslogfile"  string =>  "client-rsyslog.conf";
 
     standalone::
-        "rsyslogfile"  string => "$(rsyslogdir)/standalone-rsyslog.conf";
+        "rsyslogfile"  string => "standalone-rsyslog.conf";
 
 
 
@@ -55,7 +55,7 @@ files:
         "/etc/rsyslog.conf"
             comment   => "copy loghost/etc/???-rsyslog.conf to /etc",
             perms     => promisemode("644"),
-            copy_from => secure_cp("$(rsyslogfile)","$(globals.serverhost)");
+            copy_from => secure_cp("$(globals.group_path)/groups/loghost/etc/$(rsyslogfile)","$(globals.serverhost)");
 
     acgform_local::
         "/etc/resolv.conf"
