@@ -125,13 +125,12 @@ vars:
         "serverfilestocopy" slist => { 
             "/etc/bacula/bacula-dir.conf",
             "/etc/bacula/bacula-sd.conf"
+            "$(serverClientTemplate)"
         };
 
         "serverdirstocopy" slist => { 
             "/etc/bacula/clients",
-            "/etc/bacula/filesets",
-            "$(serverClientTemplate)"
-
+            "/etc/bacula/filesets"
         };
 
 
