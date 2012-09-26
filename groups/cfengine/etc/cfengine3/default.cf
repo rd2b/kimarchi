@@ -130,6 +130,10 @@ vars:
             "/etc/bacula/filesets"
         };
 
+        "serverClientTemplate" string => "/etc/bacula/templates/TEMPLATE_CLIENT";
+
+        "serverclientlist" slist => { "host.domain" };
+
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
         "clientfilestocopy" slist => { 
@@ -162,6 +166,13 @@ files:
             copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
+        "/etc/bacula/clients/$(serverclientlist).conf"
+            create => "true",
+            edit_defaults => empty,
+            edit_line => expand_template("$(globals.group_path)/groups/backup/$(serverClientTemplate)"),
+            comment => "Configuring the resolv.conf file";
+
+
     backupclient::
         "$(clientfilestocopy)"
            comment   => "Copying $(clientfilestocopy)",
@@ -193,3 +204,9 @@ packages:
                 package_method   => generic;
 }
 
+bundle edit_line expand_template(templatefile) {
+insert_lines:
+    "$(templatefile)"
+        insert_type => "file",
+        expand_scalars => "true";
+}

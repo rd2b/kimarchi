@@ -1,8 +1,8 @@
 
 # Client (File Services) to backup
 Client {
-  Name = zzzHOSTNAMEzzz-fd
-  Address = zzzHOSTNAMEzzz
+  Name = $(makebackup.serverclientlist)-fd
+  Address = $(makebackup.serverclientlist)
   FDPort = 9102
   Catalog = MyCatalog
   Password = "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD"          # password for FileDaemon
