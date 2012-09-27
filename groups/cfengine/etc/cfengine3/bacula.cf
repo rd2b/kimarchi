@@ -1,0 +1,98 @@
+bundle agent makebackup {
+vars:
+    backupmaster::
+        "baculaserverpackages" slist => { "bacula-server" };
+        "serverClientTemplate" string => "/etc/bacula/templates/TEMPLATE_CLIENT";
+
+        "serverfilestocopy" slist => { 
+            "/etc/bacula/bacula-dir.conf",
+            "/etc/bacula/bacula-sd.conf",
+            "$(serverClientTemplate)"
+        };
+
+        "serverdirstocopy" slist => { 
+            "/etc/bacula/clients",
+            "/etc/bacula/filesets"
+        };
+
+
+        "serverclientlist" slist => { "host.domain", "host2.domain2" };
+
+    backupclient::
+        "baculaclientpackages" slist => { "bacula-fd" };
+        "clientfilestocopy" slist => { 
+            "/etc/bacula/bacula-fd.conf"
+        };
+
+
+packages:
+    backupmaster::
+        "$(baculaserverpackages)"
+        comment => "install $(baculaserverpackages)",
+                package_policy   => "add",
+                package_method   => generic;
+
+    backupclient::
+        "$(baculaclientpackages)"
+        comment => "install $(baculaclientpackages)",
+                package_policy   => "add",
+                package_method   => generic;
+
+files:
+    backupmaster::
+        "$(serverfilestocopy)"
+           comment   => "Copying $(serverfilestocopy)",
+           perms     => promisemode("644"),
+           copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverfilestocopy)","$(globals.serverhost)");
+
+        "$(serverdirstocopy)"
+            comment => "Copying $(serverdirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
+
+        "/etc/bacula/clients/$(serverclientlist).conf"
+            create => "true",
+           perms     => promisemode("644"),
+            edit_defaults => empty,
+            edit_line => dobaculafd("$(serverclientlist)"),
+            comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
+
+
+    backupclient::
+        "$(clientfilestocopy)"
+           comment   => "Copying $(clientfilestocopy)",
+           perms     => promisemode("644"),
+           copy_from => secure_cp("$(globals.group_path)/groups/backup/$(clientfilestocopy)","$(globals.serverhost)");
+
+}
+
+#######################################################
+# Configure the Client file
+# Setting the client name value
+# Adding a header to tell the file is configured by Cfengine
+#######################################################
+bundle edit_line dobaculafd(clientname) {
+insert_lines:
+    "#############################################################
+     ### This file is configured by Cfengine.
+     ### Manually editing the file might lead Cfengine
+     ### to change back its content
+     #############################################################
+# Client (File Services) to backup
+        Client {"
+        location => start,
+        insert_type => "preserve_block";
+    "Name = $(clientname)-fd";
+    "Address = $(clientname)";
+    "FDPort = 9102
+     Catalog = MyCatalog
+     Password = \"HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
+     File Retention = 30 days            # 30 days
+     Job Retention = 6 months            # six months
+     AutoPrune = yes                     # Prune expired Jobs/Files
+     }";
+
+
+
+}
+

@@ -10,6 +10,7 @@ body common control
                        "crontab.cf",
                        "cfengine_stdlib.cf",
                        "default.cf",
+                       "bacula.cf",
                        "cf-serverd.cf" };
 
 }
