@@ -15,8 +15,10 @@ vars:
             "/etc/bacula/filesets"
         };
 
+        "clients[host.domain]"   string => "standard";
+        "clients[host2.domain2]" string => "standard";
 
-        "serverclientlist" slist => { "host.domain", "host2.domain2" };
+        "serverclientlist" slist => { getindices["clients"] };
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
@@ -54,7 +56,7 @@ files:
             create => "true",
            perms     => promisemode("644"),
             edit_defaults => empty,
-            edit_line => dobaculafd("$(serverclientlist)"),
+            edit_line => do_baculafd("$(serverclientlist)"),
             comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
 
 
@@ -71,26 +73,32 @@ files:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line dobaculafd(clientname) {
+bundle edit_line do_baculafd(clientname) {
 insert_lines:
     "#############################################################
      ### This file is configured by Cfengine.
      ### Manually editing the file might lead Cfengine
      ### to change back its content
      #############################################################
-# Client (File Services) to backup
-        Client {"
-        location => start,
-        insert_type => "preserve_block";
-    "Name = $(clientname)-fd";
-    "Address = $(clientname)";
-    "FDPort = 9102
-     Catalog = MyCatalog
-     Password = \"HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
-     File Retention = 30 days            # 30 days
-     Job Retention = 6 months            # six months
-     AutoPrune = yes                     # Prune expired Jobs/Files
+     Job {
+         Name = \"Job-$(clientname)\"
+         JobDefs = \"DefaultJob\"
+         Client = $(clientname)-fd
+     }
+     
+     # Client (File Services) to backup
+     Client {
+         Name = $(clientname)-fd
+         Address = $(clientname)
+         FDPort = 9102
+         Catalog = MyCatalog
+         Password = \"HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
+         File Retention = 30 days            # 30 days
+         Job Retention = 6 months            # six months
+         AutoPrune = yes                     # Prune expired Jobs/Files
      }";
+    location => start,
+    insert_type => "preserve_block";
 
 
 
