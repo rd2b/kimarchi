@@ -79,11 +79,8 @@ insert_lines:
      ### This file is configured by Cfengine.
      ### Manually editing the file might lead Cfengine
      ### to change back its content
-     #############################################################"
-     location => start,
-     insert_type => "preserve_block";
-        
-     "Job {
+     #############################################################
+     Job {
          Name = \"Job-$(clientname)\"
          JobDefs = \"DefaultJob\"
          Client = $(clientname)-fd
