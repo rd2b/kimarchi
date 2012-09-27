@@ -3,6 +3,7 @@ vars:
     backupmaster::
         "baculaserverpackages" slist => { "bacula-server" };
         "serverClientTemplate" string => "/etc/bacula/templates/TEMPLATE_CLIENT";
+        "clientpassword"       string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
 
         "serverfilestocopy" slist => { 
             "/etc/bacula/bacula-dir.conf",
@@ -54,9 +55,9 @@ files:
 
         "/etc/bacula/clients/$(serverclientlist).conf"
             create => "true",
-           perms     => promisemode("644"),
+            perms     => promisemode("644"),
             edit_defaults => empty,
-            edit_line => do_baculafd("$(serverclientlist)"),
+            edit_line => do_baculafd("$(serverclientlist)", "$(clientpassword)"),
             comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
 
 
@@ -73,7 +74,7 @@ files:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line do_baculafd(clientname) {
+bundle edit_line do_baculafd(clientname, password) {
 insert_lines:
 "#############################################################
 ### This file is configured by Cfengine.
@@ -92,7 +93,7 @@ Client {
     Address = $(clientname)
     FDPort = 9102
     Catalog = MyCatalog
-    Password = \"HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
+    Password = \"$(password)HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
     File Retention = 30 days            # 30 days
     Job Retention = 6 months            # six months
     AutoPrune = yes                     # Prune expired Jobs/Files
