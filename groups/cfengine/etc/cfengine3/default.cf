@@ -170,6 +170,7 @@ files:
 
         "/etc/bacula/clients/$(serverclientlist).conf"
             create => "true",
+           perms     => promisemode("644"),
             edit_defaults => empty,
             edit_line => dobaculafd("$(serverclientlist)"),
             comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
