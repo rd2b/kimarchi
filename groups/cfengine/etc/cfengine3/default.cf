@@ -237,7 +237,3 @@ insert_lines:
 
 }
 
-# This body comes from the cfengine_stdlib.cf
-body location start {
-        before_after => "before";
-}
