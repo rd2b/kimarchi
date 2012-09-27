@@ -83,7 +83,7 @@ insert_lines:
 #############################################################
 Job {
     Name = \"Job-$(clientname)\"
-    JobDefs = \"DefaultJob\"
+    JobDefs = \"standard\"
     Client = $(clientname)-fd
 }
      
