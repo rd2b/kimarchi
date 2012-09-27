@@ -75,30 +75,28 @@ files:
 #######################################################
 bundle edit_line do_baculafd(clientname) {
 insert_lines:
-    "#############################################################
-     ### This file is configured by Cfengine.
-     ### Manually editing the file might lead Cfengine
-     ### to change back its content
-     #############################################################
-     Job {
-         Name = \"Job-$(clientname)\"
-         JobDefs = \"DefaultJob\"
-         Client = $(clientname)-fd
-     }
+"#############################################################
+### This file is configured by Cfengine.
+### Manually editing the file might lead Cfengine
+### to change back its content
+#############################################################
+Job {
+    Name = \"Job-$(clientname)\"
+    JobDefs = \"DefaultJob\"
+    Client = $(clientname)-fd
+}
      
-     # Client (File Services) to backup
-     Client {
-         Name = $(clientname)-fd
-         Address = $(clientname)
-         FDPort = 9102
-         Catalog = MyCatalog
-         Password = \"HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
-         File Retention = 30 days            # 30 days
-         Job Retention = 6 months            # six months
-         AutoPrune = yes                     # Prune expired Jobs/Files
-     }";
-
-
-
+# Client (File Services) to backup
+Client {
+    Name = $(clientname)-fd
+    Address = $(clientname)
+    FDPort = 9102
+    Catalog = MyCatalog
+    Password = \"HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
+    File Retention = 30 days            # 30 days
+    Job Retention = 6 months            # six months
+    AutoPrune = yes                     # Prune expired Jobs/Files
+}
+";
 }
 
