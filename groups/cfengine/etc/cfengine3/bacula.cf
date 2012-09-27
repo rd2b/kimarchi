@@ -79,8 +79,11 @@ insert_lines:
      ### This file is configured by Cfengine.
      ### Manually editing the file might lead Cfengine
      ### to change back its content
-     #############################################################
-     Job {
+     #############################################################"
+     location => start,
+     insert_type => "preserve_block";
+        
+     "Job {
          Name = \"Job-$(clientname)\"
          JobDefs = \"DefaultJob\"
          Client = $(clientname)-fd
@@ -96,9 +99,7 @@ insert_lines:
          File Retention = 30 days            # 30 days
          Job Retention = 6 months            # six months
          AutoPrune = yes                     # Prune expired Jobs/Files
-     }"
-    location => start,
-    insert_type => "preserve_block";
+     }";
 
 
 
