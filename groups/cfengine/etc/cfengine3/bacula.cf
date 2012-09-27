@@ -93,7 +93,7 @@ Client {
     Address = $(clientname)
     FDPort = 9102
     Catalog = MyCatalog
-    Password = \"$(password)HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD\"          # password for FileDaemon
+    Password = \"$(password)\"          # password for FileDaemon
     File Retention = 30 days            # 30 days
     Job Retention = 6 months            # six months
     AutoPrune = yes                     # Prune expired Jobs/Files
