@@ -60,10 +60,6 @@ files:
            perms     => promisemode("644"),
            copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverfilestocopy)","$(globals.serverhost)");
 
-        "$(serverdirstocopy)"
-            comment => "Copying $(serverdirstocopy)",
-            copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
-            depth_search => recurse("inf");
 
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
@@ -80,6 +76,11 @@ files:
                     "$(FDPASSWD)"),
             comment => "Configuring the client file $(baculafolder)/clients/$(serverclientlist).conf";
 
+        # Surcharge avec les fichiers de clients presents dans les depots
+        "$(serverdirstocopy)"
+            comment => "Copying $(serverdirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
 
     backupclient::
         "$(clientfilestocopy)"
