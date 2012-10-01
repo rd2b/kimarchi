@@ -5,6 +5,14 @@ vars:
         "serverClientTemplate" string => "/etc/bacula/templates/TEMPLATE_CLIENT";
         "clientpassword"       string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
 
+        "DIRPASSWD"  string => "p1BgtT9k4kmr7G8SS7SqXPlWkCFeNmSWu";
+        "DIRMPASSWD" string => "FTVFNk9NUEEFY7lNwKJKl4NESXBKPtQ2X";
+        "SDPASSWD"   string => "I7uYy8UJ5gacHa-x55QjPKyfPheSQWCUk";
+        "SDMPASSWD"  string => "CfnP_qNDd1QD2kaWHOMiXRD7RJk3dFE55";
+        "FDPASSWD"   string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
+        "FDMPASSWD"  string => "aSVRFQuJM6jci6fcfLtIfI1QtRKgSkedr";
+
+
         "serverfilestocopy" slist => { 
             "/etc/bacula/bacula-dir.conf",
             "/etc/bacula/bacula-sd.conf",
@@ -18,8 +26,12 @@ vars:
 
         "clients[host.domain]"   string => "standard";
         "clients[host2.domain2]" string => "standard";
+        "clients[back01.acgform.local]" string => "standard";
+
 
         "serverclientlist" slist => getindices("clients");
+
+        "serverclientinclude" string => "/etc/bacula/clients/client-list.cula"
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
@@ -53,6 +65,11 @@ files:
             copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
+        "$(serverclientinclude)"
+            comment   => "Adding new client file to $(serverclientinclude)",
+            perms     => promisemode("644"),
+            edit_line => append_if_no_lines("@/etc/bacula/clients/$(serverclientinclude)");
+
         "/etc/bacula/clients/$(serverclientlist).conf"
             create => "true",
             perms     => promisemode("644"),
@@ -60,7 +77,7 @@ files:
             edit_line => do_baculafd(
                     "$(serverclientlist)",
                     "$(clients[$(serverclientlist)])", 
-                    "$(clientpassword)"),
+                    "$(FDPASSWD)"),
             comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
 
 
@@ -77,7 +94,7 @@ files:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line do_baculafd(clientname, clientjob, password) {
+bundle edit_line do_baculafd(clientname, clientjob, fd-password) {
 insert_lines:
 "#############################################################
 ### This file is configured by Cfengine.
@@ -96,7 +113,7 @@ Client {
     Address = $(clientname)
     FDPort = 9102
     Catalog = MyCatalog
-    Password = \"$(password)\"          # password for FileDaemon
+    Password = \"$(fd-password)\"          # password for FileDaemon
     File Retention = 30 days            # 30 days
     Job Retention = 6 months            # six months
     AutoPrune = yes                     # Prune expired Jobs/Files
