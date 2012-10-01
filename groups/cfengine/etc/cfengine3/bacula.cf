@@ -68,7 +68,7 @@ files:
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
             perms     => promisemode("644"),
-            edit_line => append_if_no_lines("@/etc/bacula/clients/$(serverclientinclude)");
+            edit_line => append_if_no_lines("@/etc/bacula/clients/$(serverclientlist)");
 
         "/etc/bacula/clients/$(serverclientlist).conf"
             create => "true",
@@ -113,7 +113,7 @@ Client {
     Address = $(clientname)
     FDPort = 9102
     Catalog = MyCatalog
-    Password = \"$(fd-password)\"          # password for FileDaemon
+    Password = \"$(fd_password)\"          # password for FileDaemon
     File Retention = 30 days            # 30 days
     Job Retention = 6 months            # six months
     AutoPrune = yes                     # Prune expired Jobs/Files
