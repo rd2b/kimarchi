@@ -1,8 +1,9 @@
 bundle agent makebackup {
 vars:
     backupmaster::
+        "baculafolder" string => "/etc/bacula";
         "baculaserverpackages" slist => { "bacula-server" };
-        "serverClientTemplate" string => "/etc/bacula/templates/TEMPLATE_CLIENT";
+        "serverClientTemplate" string => "$(baculafolder)/templates/TEMPLATE_CLIENT";
         "clientpassword"       string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
 
         "DIRPASSWD"  string => "p1BgtT9k4kmr7G8SS7SqXPlWkCFeNmSWu";
@@ -14,8 +15,8 @@ vars:
 
 
         "serverfilestocopy" slist => { 
-            "/etc/bacula/bacula-dir.conf",
-            "/etc/bacula/bacula-sd.conf",
+            "$(baculafolder)/bacula-dir.conf",
+            "$(baculafolder)/bacula-sd.conf",
             "$(serverClientTemplate)"
         };
 
@@ -31,12 +32,12 @@ vars:
 
         "serverclientlist" slist => getindices("clients");
 
-        "serverclientinclude" string => "/etc/bacula/clients/client-list.cula";
+        "serverclientinclude" string => "$(baculafolder)/clients/client-list.cula";
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
         "clientfilestocopy" slist => { 
-            "/etc/bacula/bacula-fd.conf"
+            "$(baculafolder)/bacula-fd.conf"
         };
 
 
@@ -68,9 +69,9 @@ files:
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
             perms     => promisemode("644"),
-            edit_line => append_if_no_lines("@/etc/bacula/clients/$(serverclientlist)");
+            edit_line => append_if_no_lines("@$(baculafolder)/clients/$(serverclientlist).conf");
 
-        "/etc/bacula/clients/$(serverclientlist).conf"
+        "$(baculafolder)/clients/$(serverclientlist).conf"
             create => "true",
             perms     => promisemode("644"),
             edit_defaults => empty,
@@ -78,7 +79,7 @@ files:
                     "$(serverclientlist)",
                     "$(clients[$(serverclientlist)])", 
                     "$(FDPASSWD)"),
-            comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
+            comment => "Configuring the client file $(baculafolder)/clients/$(serverclientlist).conf";
 
 
     backupclient::
