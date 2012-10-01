@@ -19,7 +19,7 @@ vars:
         "clients[host.domain]"   string => "standard";
         "clients[host2.domain2]" string => "standard";
 
-        "serverclientlist" slist => { getindices("clients") };
+        "serverclientlist" slist => getindices("clients");
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
