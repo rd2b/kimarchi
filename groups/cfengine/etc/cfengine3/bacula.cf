@@ -94,7 +94,7 @@ files:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line do_baculafd(clientname, clientjob, fd-password) {
+bundle edit_line do_baculafd(clientname, clientjob, fd_password) {
 insert_lines:
 "#############################################################
 ### This file is configured by Cfengine.
