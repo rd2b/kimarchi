@@ -31,7 +31,7 @@ vars:
 
         "serverclientlist" slist => getindices("clients");
 
-        "serverclientinclude" string => "/etc/bacula/clients/client-list.cula"
+        "serverclientinclude" string => "/etc/bacula/clients/client-list.cula";
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
