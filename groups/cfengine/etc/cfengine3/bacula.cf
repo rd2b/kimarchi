@@ -20,7 +20,8 @@ vars:
 
         "serverdirstocopy" slist => { 
             "/etc/bacula/clients",
-            "/etc/bacula/filesets"
+            "/etc/bacula/filesets",
+            "/etc/bacula/schedules"
         };
 
         "clients[host.domain]"   string => "standard";
