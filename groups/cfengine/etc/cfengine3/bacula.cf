@@ -57,7 +57,10 @@ files:
             create => "true",
             perms     => promisemode("644"),
             edit_defaults => empty,
-            edit_line => do_baculafd("$(serverclientlist)", "$(clientpassword)"),
+            edit_line => do_baculafd(
+                    "$(serverclientlist)",
+                    "$(clients[$(serverclientlist)])", 
+                    "$(clientpassword)"),
             comment => "Configuring the client file /etc/bacula/clients/$(serverclientlist).conf";
 
 
@@ -74,7 +77,7 @@ files:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line do_baculafd(clientname, password) {
+bundle edit_line do_baculafd(clientname, clientjob, password) {
 insert_lines:
 "#############################################################
 ### This file is configured by Cfengine.
@@ -83,7 +86,7 @@ insert_lines:
 #############################################################
 Job {
     Name = \"Job-$(clientname)\"
-    JobDefs = \"standard\"
+    JobDefs = \"$(clientjob)\"
     Client = $(clientname)-fd
 }
      
