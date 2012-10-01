@@ -3,7 +3,6 @@ vars:
     backupmaster::
         "baculafolder" string => "/etc/bacula";
         "baculaserverpackages" slist => { "bacula-server" };
-        "serverClientTemplate" string => "$(baculafolder)/templates/TEMPLATE_CLIENT";
         "clientpassword"       string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
 
         "DIRPASSWD"  string => "p1BgtT9k4kmr7G8SS7SqXPlWkCFeNmSWu";
@@ -16,8 +15,7 @@ vars:
 
         "serverfilestocopy" slist => { 
             "$(baculafolder)/bacula-dir.conf",
-            "$(baculafolder)/bacula-sd.conf",
-            "$(serverClientTemplate)"
+            "$(baculafolder)/bacula-sd.conf"
         };
 
         "serverdirstocopy" slist => { 
