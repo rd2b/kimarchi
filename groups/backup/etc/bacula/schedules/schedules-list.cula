@@ -1,0 +1,2 @@
+@/etc/bacula/schedules/WeeklyCycle.conf
+@/etc/bacula/schedules/WeeklyCycleAfterBackup.conf
