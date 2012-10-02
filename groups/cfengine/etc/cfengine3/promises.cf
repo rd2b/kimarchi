@@ -24,11 +24,11 @@ bundle common globals{
         "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
         "backupmaster" or => { "back01_acgform_local" };
         "backupclient" or => {
-            "cf01.acgform.local",
-            "db01.acgform.local", "db02.acgform.local",
+            "cf01_acgform_local",
+            "db01_acgform_local", "db02_acgform_local",
             "dns01_acgform_local", "dns02_acgform_local",
-            "drop02.acgform.local",
-            "www01.acgform.local",
+            "drop02_acgform_local",
+            "www01_acgform_local",
             "back01_acgform_local",
             "log01_acgform_local"
         };
