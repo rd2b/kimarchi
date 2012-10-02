@@ -1,17 +1,15 @@
 bundle agent makebackup {
 vars:
-    backupmaster::
+    any::
         "baculafolder" string => "/etc/bacula";
-        "baculaserverpackages" slist => { "bacula-server" };
-        "clientpassword"       string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
-
         "DIRPASSWD"  string => "p1BgtT9k4kmr7G8SS7SqXPlWkCFeNmSWu";
         "DIRMPASSWD" string => "FTVFNk9NUEEFY7lNwKJKl4NESXBKPtQ2X";
         "SDPASSWD"   string => "I7uYy8UJ5gacHa-x55QjPKyfPheSQWCUk";
         "SDMPASSWD"  string => "CfnP_qNDd1QD2kaWHOMiXRD7RJk3dFE55";
         "FDPASSWD"   string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
         "FDMPASSWD"  string => "aSVRFQuJM6jci6fcfLtIfI1QtRKgSkedr";
-
+    backupmaster::
+        "baculaserverpackages" slist => { "bacula-server" };
 
         "serverfilestocopy" slist => { 
             "$(baculafolder)/bacula-dir.conf",
@@ -27,7 +25,7 @@ vars:
         "clients[host.domain]"   string => "standard";
         "clients[host2.domain2]" string => "standard";
         "clients[back01.acgform.local]" string => "standard";
-
+        "clients[log01.acgform.local]"  string => "standard";
 
         "serverclientlist" slist => getindices("clients");
 
