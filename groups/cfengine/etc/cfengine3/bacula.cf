@@ -79,7 +79,7 @@ files:
             depth_search => recurse("inf");
 
     backupclient::
-        "$(clientfiletocopy)"
+        "$(clientfiledaemon)"
            create => "true",
            perms     => promisemode("644"),
            edit_defaults => empty,
