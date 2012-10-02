@@ -33,10 +33,8 @@ vars:
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
-        "clientfilestocopy" slist => { 
-            "$(baculafolder)/bacula-fd.conf"
-        };
-
+        "baculadirector"   string => "back01.acgform.local";
+        "clientfiledaemon" string => "$(baculafolder)/bacula-fd.conf";
 
 packages:
     backupmaster::
@@ -68,7 +66,7 @@ files:
             create => "true",
             perms     => promisemode("644"),
             edit_defaults => empty,
-            edit_line => do_baculafd(
+            edit_line => do_baculaJob(
                     "$(serverclientlist)",
                     "$(clients[$(serverclientlist)])", 
                     "$(FDPASSWD)"),
@@ -81,10 +79,16 @@ files:
             depth_search => recurse("inf");
 
     backupclient::
-        "$(clientfilestocopy)"
-           comment   => "Copying $(clientfilestocopy)",
+        "$(clientfiletocopy)"
+           create => "true",
            perms     => promisemode("644"),
-           copy_from => secure_cp("$(globals.group_path)/groups/backup/$(clientfilestocopy)","$(globals.serverhost)");
+           edit_defaults => empty,
+           edit_line => do_baculaFileDaemon(
+                   "$(baculadirector)",
+                   "$(FDPASSWD)",
+                   "$(FDMPASSWD)"
+                   ),
+           comment => "Configuring the client file $(clientfiletocopy)";
 
 }
 
@@ -93,7 +97,7 @@ files:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line do_baculafd(clientname, clientjob, fd_password) {
+bundle edit_line do_baculaJob(clientname, clientjob, fd_password) {
 insert_lines:
 "#############################################################
 ### This file is configured by Cfengine.
@@ -116,6 +120,51 @@ Client {
     File Retention = 30 days            # 30 days
     Job Retention = 6 months            # six months
     AutoPrune = yes                     # Prune expired Jobs/Files
+}
+";
+}
+
+bundle edit_line do_baculaFileDaemon(directorname, directorpassword, directormonitoringpassword) {
+insert_lines:
+"#############################################################
+### This file is configured by Cfengine.
+### Manually editing the file might lead Cfengine
+### to change back its content
+#############################################################
+#
+# List Directors who are permitted to contact this File daemon
+#
+Director {
+    Name = $(directorname)-dir
+    Password = \"$(directorpassword)\"
+}
+
+#
+# Restricted Director, used by tray-monitor to get the
+#   status of the file daemon
+#
+Director {
+    Name = $(directorname)-mon
+    Password = \"$(directormonitoringpassword)\"
+    Monitor = yes
+}
+
+#
+# Global File daemon configuration specifications
+#
+FileDaemon {                          # this is me
+    Name = localhost-fd
+    FDport = 9102                  # where we listen for the director
+    WorkingDirectory = /var/lib/bacula
+    Pid Directory = /var/run/bacula
+    Maximum Concurrent Jobs = 20
+    FDAddress = 127.0.0.1
+}
+
+# Send all messages except skipped files back to Director
+Messages {
+    Name = Standard
+    director = $(directorname)-dir = all, !skipped, !restored
 }
 ";
 }
