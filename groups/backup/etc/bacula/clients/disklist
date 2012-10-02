@@ -1,6 +1,0 @@
-back01.acgform.local  /etc    standard
-back01.acgform.local  /boot    standard
-back01.acgform.local  /var/spool/cron   standard
-
-test02.acgform.local  /var/spool/cron   standard
-test02.acgform.local  /var/spool/cron   standard
