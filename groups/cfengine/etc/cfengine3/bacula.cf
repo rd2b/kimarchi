@@ -20,7 +20,8 @@ vars:
 
         "serverfilestocopy" slist => { 
             "$(baculafolder)/bacula-dir.conf",
-            "$(baculafolder)/bacula-sd.conf"
+            "$(baculafolder)/bacula-sd.conf",
+            "$(baculadisklist)"
         };
 
         "serverdirstocopy" slist => { 
