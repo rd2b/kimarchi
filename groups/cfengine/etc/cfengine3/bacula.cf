@@ -29,13 +29,6 @@ vars:
             "/etc/bacula/schedules"
         };
 
-        "clients[host.domain]"   string => "standard";
-        "clients[host2.domain2]" string => "standard";
-        "clients[back01.acgform.local]" string => "standard";
-        "clients[log01.acgform.local]"  string => "standard";
-
-        "serverclientlist" slist => getindices("clients");
-
         "serverclientinclude" string => "$(baculafolder)/clients/client-list.cula";
 
     backupclient::
@@ -46,7 +39,7 @@ vars:
 reports:
     backupmaster::
         "Got $(nbdisklist) on file $(baculadisklist)";
-        "New client for $(disklist[$(disklistindices)][1])";
+        "New client for $(disklist[$(disklistindices)][0]) $(disklist[$(disklistindices)][1]) $(disklist[$(disklistindices)][2])";
 packages:
     backupmaster::
         "$(baculaserverpackages)"
@@ -71,17 +64,17 @@ files:
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
             perms     => promisemode("644"),
-            edit_line => append_if_no_lines("@$(baculafolder)/clients/$(serverclientlist).conf");
+            edit_line => append_if_no_lines("@$(baculafolder)/clients/$(disklistindices[0]).conf");
 
-        "$(baculafolder)/clients/$(serverclientlist).conf"
+        "$(baculafolder)/clients/$(disklistindices[0]).conf"
             create => "true",
             perms     => promisemode("644"),
             edit_defaults => empty,
             edit_line => do_baculaJob(
-                    "$(serverclientlist)",
-                    "$(clients[$(serverclientlist)])", 
+                    "$(disklistindices[0])",
+                    "$(disklistindices[2])", 
                     "$(FDPASSWD)"),
-            comment => "Configuring the client file $(baculafolder)/clients/$(serverclientlist).conf";
+            comment => "Configuring the client file $(baculafolder)/clients/$(disklistindices[0]).conf";
 
         # Surcharge avec les fichiers de clients presents dans les depots
         "$(serverdirstocopy)"

@@ -1,0 +1,5 @@
+back01.acgform.local /boot standard
+back01.acgform.local /var/spool standard
+back01.acgform.local /etc standard
+log01.acgform.local /etc standard
+log01.acgform.local /var/spool standard
