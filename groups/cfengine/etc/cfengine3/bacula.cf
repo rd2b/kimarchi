@@ -25,6 +25,7 @@ vars:
 
         "serverdirstocopy" slist => { 
             "/etc/bacula/clients",
+            "/etc/bacula/disklists",
             "/etc/bacula/filesets",
             "/etc/bacula/schedules"
         };
@@ -64,17 +65,17 @@ files:
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
             perms     => promisemode("644"),
-            edit_line => append_if_no_lines("@$(baculafolder)/clients/$(disklistindices[0]).conf");
+            edit_line => append_if_no_lines("@$(baculafolder)/clients/$(disklistindices[$(disklistindices)][0]).conf");
 
-        "$(baculafolder)/clients/$(disklistindices[0]).conf"
+        "$(baculafolder)/clients/$(disklistindices[$(disklistindices)][0]).conf"
             create => "true",
             perms     => promisemode("644"),
             edit_defaults => empty,
             edit_line => do_baculaJob(
-                    "$(disklistindices[0])",
-                    "$(disklistindices[2])", 
+                    "$(disklistindices[$(disklistindices)][0])",
+                    "$(disklistindices[$(disklistindices)][2])", 
                     "$(FDPASSWD)"),
-            comment => "Configuring the client file $(baculafolder)/clients/$(disklistindices[0]).conf";
+            comment => "Configuring the client file $(baculafolder)/clients/$(disklistindices[$(disklistindices)][0]).conf";
 
         # Surcharge avec les fichiers de clients presents dans les depots
         "$(serverdirstocopy)"
