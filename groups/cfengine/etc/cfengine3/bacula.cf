@@ -8,8 +8,14 @@ vars:
         "SDMPASSWD"  string => "CfnP_qNDd1QD2kaWHOMiXRD7RJk3dFE55";
         "FDPASSWD"   string => "HyFo__BaxZGn0IH4uJdzIY_SHnpfqOEYD";
         "FDMPASSWD"  string => "aSVRFQuJM6jci6fcfLtIfI1QtRKgSkedr";
+
     backupmaster::
         "baculaserverpackages" slist => { "bacula-server" };
+
+        "baculadisklistdir" string => "/etc/bacula/disklists";
+        "baculadisklist"    string => "$(baculadisklistdir)/default"; 
+        "nbdisklist"      int => getfields(
+                ".*", "$(baculadisklist)", " ", "disklist");
 
         "serverfilestocopy" slist => { 
             "$(baculafolder)/bacula-dir.conf",
@@ -36,6 +42,10 @@ vars:
         "baculadirector"   string => "back01.acgform.local";
         "clientfiledaemon" string => "$(baculafolder)/bacula-fd.conf";
 
+reports:
+    backupmaster::
+        "Got $(nbdisklist) on file $(baculadisklist)";
+        "New client for $(disklist[1])";
 packages:
     backupmaster::
         "$(baculaserverpackages)"
