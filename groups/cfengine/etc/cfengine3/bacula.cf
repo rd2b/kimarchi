@@ -1,4 +1,4 @@
-bundle agent makebackup {
+bundle agent app_bacula {
 vars:
     any::
         "baculafolder" string => "/etc/bacula";
@@ -91,6 +91,12 @@ files:
                    "$(FDMPASSWD)"
                    ),
            comment => "Configuring the client file $(clientfiletocopy)";
+
+reports:
+    backupmaster::
+        "I am backup master";
+    backupclient::
+        "I am backup client";
 
 }
 

@@ -22,8 +22,6 @@ vars:
 
 
 methods:
-    backupmaster|backupclient:: 
-        "makebackup"       usebundle => makebackup;
     dns::
         "makednsmaster"    usebundle => makednsmaster;
 
@@ -105,9 +103,6 @@ reports:
     cfmaster::  "I am cfengine master";
     !cfmaster:: "I am cfengine slave";
     mysql::     "I am mysql";
-    backupmaster::    "I am backup master";
-    backupclient::    "I am backup client";
-
 }
 
 body perms promisemode(p)

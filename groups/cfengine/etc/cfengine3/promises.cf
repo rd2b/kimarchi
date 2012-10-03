@@ -47,7 +47,9 @@ bundle common globals{
             "etc_src"       string => "$(group_path)/default/etc";
             "usrlocalbin_src"       string => "$(group_path)/default/usr/local/bin";
 
-
+methods:
+    backupmaster|backupclient::
+        "makebackup" usebundle => app_bacula;
 }
 
 body agent control {
