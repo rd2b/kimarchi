@@ -14,7 +14,7 @@ vars:
 
         "baculadisklistdir" string => "/etc/bacula/disklists";
         "baculadisklist"    string => "$(baculadisklistdir)/default"; 
-        "nbdisklist"      int => readstringarray(
+        "nbdisklist"      int => readstringarrayidx(
                 "disklist", "$(baculadisklist)", "\s*#[^\n]*", "\s+", 3000, 10000);
         "disklistindices"  slist => getindices("disklist");
 
