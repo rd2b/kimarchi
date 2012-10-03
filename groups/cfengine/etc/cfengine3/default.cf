@@ -22,6 +22,9 @@ vars:
 
 
 methods:
+    backupmaster|backupclient::
+        "makebackup" usebundle => app_bacula;
+
     dns::
         "makednsmaster"    usebundle => makednsmaster;
 
