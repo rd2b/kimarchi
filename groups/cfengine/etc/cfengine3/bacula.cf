@@ -38,10 +38,6 @@ vars:
         "baculadirector"   string => "back01.acgform.local";
         "clientfiledaemon" string => "$(baculafolder)/bacula-fd.conf";
 
-reports:
-    backupmaster::
-        "Got $(nbdisklist) on file $(baculadisklist)";
-        "New client for $(disklist[$(disklistindices)][0]) $(disklist[$(disklistindices)][1]) $(disklist[$(disklistindices)][2])";
 packages:
     backupmaster::
         "$(baculaserverpackages)"
