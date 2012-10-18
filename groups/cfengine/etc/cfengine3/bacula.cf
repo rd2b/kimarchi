@@ -19,7 +19,7 @@ vars:
                 "disklist", "$(baculadisklist)", "\s*#[^\n]*", "\s+", 3000, 10000);
         "disklistindices"  slist => getindices("disklist");
 
-        "$(disklislist[$(disklistindices)][3])" string => ""
+        "$(disklislist[$(disklistindices)][3])" string => "";
 
         "serverfilestocopy" slist => { 
             "$(baculafolder)/bacula-dir.conf",
