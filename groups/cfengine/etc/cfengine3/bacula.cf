@@ -1,7 +1,7 @@
 bundle agent app_bacula {
 vars:
     any::
-        "local_cache"  string => "/var/cache/cfengine3/app_bacula"
+        "local_cache"  string => "/var/cache/cfengine3/app_bacula";
         "baculafolder" string => "/etc/bacula";
         "DIRPASSWD"  string => "p1BgtT9k4kmr7G8SS7SqXPlWkCFeNmSWu";
         "DIRMPASSWD" string => "FTVFNk9NUEEFY7lNwKJKl4NESXBKPtQ2X";
