@@ -19,7 +19,9 @@ vars:
                 "disklist", "$(baculadisklist)", "\s*#[^\n]*", "\s+", 3000, 10000);
         "disklistindices"  slist => getindices("disklist");
 
-        "$(disklist[$(disklistindices)][3])" string => "";
+        "$(disklist[$(disklistindices)][3])" slist  =>  splitstring("$(disklist[$(disklistindices)][1])", "/", 32);
+        "$(disklist[$(disklistindices)][4])" string =>  join("_", "$(disklist[$(disklistindices)][3])");
+
 
         "serverfilestocopy" slist => { 
             "$(baculafolder)/bacula-dir.conf",
@@ -74,7 +76,7 @@ files:
             edit_defaults => empty,
             edit_line => do_baculaJob(
                     "$(disklist[$(disklistindices)][0])",
-                    "$(disklist[$(disklistindices)][1])", 
+                    "$(disklist[$(disklistindices)][4])", 
                     "$(disklist[$(disklistindices)][2])", 
                     "$(FDPASSWD)"),
             comment => "Configuring the client file $(baculafolder)/clients/$(disklist[$(disklistindices)][0]).conf";
@@ -115,10 +117,7 @@ reports:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line do_baculaJob(clientname, folder, clientjob, fd_password) {
-classes:
-    "filesetname" slist => join("_", splitstring("$(folder)", "/", "32"));
-     
+bundle edit_line do_baculaJob(clientname, filesetname, clientjob, fd_password) {
 insert_lines:
 "#############################################################
 ### This file is configured by Cfengine.
