@@ -64,6 +64,7 @@ files:
 
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
+            create     => "true",
             perms     => promisemode("644"),
             edit_line => append_if_no_lines("@$(baculafolder)/clients/$(disklist[$(disklistindices)][0]).conf");
 
