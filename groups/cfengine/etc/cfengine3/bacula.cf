@@ -115,7 +115,10 @@ reports:
 # Setting the client name value
 # Adding a header to tell the file is configured by Cfengine
 #######################################################
-bundle edit_line do_baculaJob(clientname, fileset, clientjob, fd_password) {
+bundle edit_line do_baculaJob(clientname, folder, clientjob, fd_password) {
+classes:
+    "filesetname" slist => join("_", splitstring("$(folder)", "/", "32"));
+     
 insert_lines:
 "#############################################################
 ### This file is configured by Cfengine.
@@ -125,7 +128,7 @@ insert_lines:
 Job {
     Name = \"Job-$(clientname)\"
     JobDefs = \"$(clientjob)\"
-    FileSet = \"$(fileset)\"
+    FileSet = \"$(filesetname)\"
     Client = $(clientname)-fd
 }
      
