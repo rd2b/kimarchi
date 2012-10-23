@@ -19,7 +19,7 @@ vars:
                 "disklist", "$(baculadisklist)", "\s*#[^\n]*", "\s+", 3000, 10000);
         "disklistindices"  slist => getindices("disklist");
 
-        "$(disklist[$(disklistindices)][4])" string =>  canonify("$(disklist[$(disklistindices)][1])");
+        "$(disklist[$(disklistindices)][3])" string =>  canonify("$(disklist[$(disklistindices)][1])");
 
 
         "serverfilestocopy" slist => { 
