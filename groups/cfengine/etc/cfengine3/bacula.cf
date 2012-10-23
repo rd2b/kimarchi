@@ -124,9 +124,9 @@ insert_lines:
 ### to change back its content
 #############################################################
 Job {
-    Name = \"Job-$(clientname)\"
+    Name = \"Job-$(clientname)-$(filesetname)\"
     JobDefs = \"$(clientjob)\"
-    FileSet = \"$(filesetname)\"
+    FileSet = \"Fileset-$(filesetname)\"
     Client = $(clientname)-fd
 }
      
@@ -143,6 +143,8 @@ Client {
 }
 ";
 }
+
+
 
 bundle edit_line do_baculaFileDaemon(directorname, directorpassword, directormonitoringpassword) {
 insert_lines:
