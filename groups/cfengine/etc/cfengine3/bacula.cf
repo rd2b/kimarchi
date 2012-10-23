@@ -143,7 +143,29 @@ Client {
 }
 ";
 }
+bundle edit_line do_baculaFileSet(folder) {
+vars:
+    "filesetname"   string => canonify("$(folder)");
 
+insert_lines:
+"#############################################################
+### This file is configured by Cfengine.
+### Manually editing the file might lead Cfengine
+### to change back its content
+#############################################################
+FileSet {
+    Name = \"Fileset-$(filesetname)\"
+    Include {
+        Options {
+            signature = MD5
+            compression = GZIP
+        }
+        File = $(folder)
+    }
+    Exclude {
+    } 
+";
+}
 
 
 bundle edit_line do_baculaFileDaemon(directorname, directorpassword, directormonitoringpassword) {
