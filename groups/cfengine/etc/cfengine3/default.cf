@@ -104,7 +104,8 @@ commands:
 reports:
     dns::       "I am a DNS";
     cfmaster::  "I am cfengine master";
-    !cfmaster:: "I am cfengine slave";
+    cfmanual::  "I am standalone master";
+    !cfmaster.!cfmanual:: "I am cfengine slave";
     mysql::     "I am mysql";
 }
 
