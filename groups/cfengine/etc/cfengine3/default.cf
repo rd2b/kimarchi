@@ -102,11 +102,16 @@ commands:
         "/bin/su - remi -c \"/usr/bin/dropbox start\"";
 
 reports:
-    dns::       "I am a DNS";
-    cfmaster::  "I am cfengine master";
-    cfmanual::  "I am standalone master";
-    !cfmaster.!cfmanual:: "I am cfengine slave";
-    mysql::     "I am mysql";
+    cfmaster::
+        "I am cfengine master";
+    cfmanual::
+        "I am standalone master";
+    !cfmaster.!cfmanual::
+        "I am cfengine slave";
+    mysql::
+        "I am mysql";
+    !CFpackages::
+
 }
 
 body perms promisemode(p)
@@ -130,10 +135,13 @@ files:
           copy_from => secure_cp("/data/cf-repos/groups/dns/$(dnsfilestocopy)","$(globals.serverhost)");
 
 packages:
-    dns::
+    dns.CFpackages::
         "$(dnsutils)"
         comment => "install $(dnsutils)",
                 package_policy   => "add",
                 package_method   => generic;
+reports:
+    dns::
+        "I am a DNS";
 }
 

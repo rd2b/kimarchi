@@ -40,13 +40,13 @@ vars:
         "clientfiledaemon" string => "$(baculafolder)/bacula-fd.conf";
 
 packages:
-    backupmaster::
+    backupmaster.CFpackages::
         "$(baculaserverpackages)"
         comment => "install $(baculaserverpackages)",
                 package_policy   => "add",
                 package_method   => generic;
 
-    backupclient::
+    backupclient.CFpackages::
         "$(baculaclientpackages)"
         comment => "install $(baculaclientpackages)",
                 package_policy   => "add",
