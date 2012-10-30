@@ -154,7 +154,7 @@ insert_lines:
 Job {
     Name = \"Job-$(clientname)-$(filesetname)\"
     JobDefs = \"$(clientjob)\"
-    FileSet = \"Fileset-$(filesetname)\"
+    FileSet = \"Fileset$(filesetname)\"
     Client = $(clientname)-fd
 }
      
@@ -182,7 +182,7 @@ insert_lines:
 ### to change back its content
 #############################################################
 FileSet {
-    Name = \"Fileset-$(filesetname)\"
+    Name = \"Fileset$(filesetname)\"
     Include {
         Options {
             signature = MD5
