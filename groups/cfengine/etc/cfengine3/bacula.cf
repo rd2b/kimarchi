@@ -36,6 +36,7 @@ vars:
         };
 
         "serverclientinclude" string => "$(baculafolder)/clients/client-list.cula";
+        "serverfilesetinclude" string => "$(baculafolder)/filesets/filesets-list.cula";
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
@@ -62,13 +63,22 @@ files:
            perms     => promisemode("644"),
            copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverfilestocopy)","$(globals.serverhost)");
 
-
+#################################
+# Editing includes lists:
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
             create    => "true",
             perms     => promisemode("644"),
             edit_line => append_if_no_lines("@$(baculafolder)/clients/$(disklist[$(disklistindices)][0]).conf");
 
+       "$(serverfilesetinclude)"
+            comment   => "Adding new fileset file to $(serverclientinclude)",
+            create    => "true",
+            perms     => promisemode("644"),
+            edit_line => append_if_no_lines("@$(baculafolder)/filesets/Fileset-$(filesets[$(disklist[$(disklistindices)][1])]).conf");
+
+#################################
+# Clients files:
         "$(local_cache)/$(baculafolder)/clients/$(disklist[$(disklistindices)][0]).conf"
             create => "true",
             perms     => promisemode("644"),
@@ -81,11 +91,12 @@ files:
             comment => "Configuring the client file $(baculafolder)/clients/$(disklist[$(disklistindices)][0]).conf";
 
         # Surcharge avec les fichiers de clients presents dans les depots
-        "$(serverdirstocopy)"
+        "$(local_cache)/$(serverdirstocopy)"
             comment => "Copying $(serverdirstocopy)",
             copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
+#################################
         "$(baculafolder)"
             comment => "Copying $(baculafolder) with $(local_cache) files",
             copy_from => local_cp("$(local_cache)/$(baculafolder)"),
