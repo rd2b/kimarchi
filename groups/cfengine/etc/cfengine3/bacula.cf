@@ -19,6 +19,9 @@ vars:
                 "disklist", "$(baculadisklist)", "\s*#[^\n]*", "\s+", 3000, 10000);
         "disklistindices"  slist => getindices("disklist");
 
+        "filesets[$(disklist[$(disklistindices)][1])]" 
+            string => canonify("$(disklist[$(disklistindices)][1])");
+
         "serverfilestocopy" slist => { 
             "$(baculafolder)/bacula-dir.conf",
             "$(baculafolder)/bacula-sd.conf",
@@ -105,6 +108,10 @@ reports:
         "I am backup master";
         "This is my disklist:";
         "$(disklist[$(disklistindices)][0]) $(disklist[$(disklistindices)][1]) $(disklist[$(disklistindices)][2])";
+        "";
+        "Those are my filesets:";
+        "$(filesets[$(disklist[$(disklistindices)][1])]) -> $(disklist[$(disklistindices)][1])";
+
     backupclient::
         "I am backup client";
 
