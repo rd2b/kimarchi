@@ -75,7 +75,7 @@ files:
             comment   => "Adding new fileset file to $(serverclientinclude)",
             create    => "true",
             perms     => promisemode("644"),
-            edit_line => append_if_no_lines("@$(baculafolder)/filesets/Fileset-$(filesets[$(disklist[$(disklistindices)][1])]).conf");
+            edit_line => append_if_no_lines("@$(baculafolder)/filesets/Fileset$(filesets[$(disklist[$(disklistindices)][1])]).conf");
 
 #################################
 # Clients files:
