@@ -108,7 +108,8 @@ files:
         "$(baculafolder)"
             comment => "Copying $(baculafolder) with $(local_cache) files",
             copy_from => local_cp("$(local_cache)/$(baculafolder)"),
-            depth_search => recurse("inf");
+            depth_search => recurse("inf"),
+            restart_class => "restartDirector";
 
     backupclient::
         "$(clientfiledaemon)"
@@ -120,7 +121,15 @@ files:
                    "$(FDPASSWD)",
                    "$(FDMPASSWD)"
                    ),
-           comment => "Configuring the client file $(clientfiletocopy)";
+           comment => "Configuring the client file $(clientfiletocopy)",
+           restart_class => "restartFD";
+
+commands:
+    restartDirector::
+        "/etc/init.d//etc/init.d/bacula-director restart";
+
+    restartFD::
+        "/etc/init.d//etc/init.d/bacula-fd restart";
 
 reports:
     backupmaster::
