@@ -95,8 +95,8 @@ files:
             create => "true",
             perms     => promisemode("644"),
             edit_defaults => empty,
-            edit_line => do_baculaFileSet("$(disklist[$(disklistindices)][2])"),
-            comment => "Configuring the fileset file $(disklist[$(disklistindices)][2])";
+            edit_line => do_baculaFileSet("$(disklist[$(disklistindices)][1])"),
+            comment => "Configuring the fileset file $(disklist[$(disklistindices)][1])";
 
         # Surcharge avec les fichiers de clients presents dans les depots
         "$(local_cache)/$(serverdirstocopy)"
