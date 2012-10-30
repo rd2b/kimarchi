@@ -103,8 +103,8 @@ files:
 reports:
     backupmaster::
         "I am backup master";
-        "This is my disklist:"
-        "$(disklist[$(disklistindices)][0]) disklist[$(disklistindices)][1]) $(disklist[$(disklistindices)][2])"
+        "This is my disklist:";
+        "$(disklist[$(disklistindices)][0]) disklist[$(disklistindices)][1]) $(disklist[$(disklistindices)][2])";
     backupclient::
         "I am backup client";
 
