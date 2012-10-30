@@ -88,7 +88,15 @@ files:
                     "$(disklist[$(disklistindices)][1])", 
                     "$(disklist[$(disklistindices)][2])", 
                     "$(FDPASSWD)"),
-            comment => "Configuring the client file $(baculafolder)/clients/$(disklist[$(disklistindices)][0]).conf";
+            comment => "Configuring the client file $(disklist[$(disklistindices)][0]).conf";
+
+# Filesets files:
+        "$(local_cache)/$(baculafolder)/filesets/Fileset$(filesets[$(disklist[$(disklistindices)][1])]).conf"
+            create => "true",
+            perms     => promisemode("644"),
+            edit_defaults => empty,
+            edit_line => do_baculaFileSet("$(disklist[$(disklistindices)][2])"),
+            comment => "Configuring the fileset file $(disklist[$(disklistindices)][2])";
 
         # Surcharge avec les fichiers de clients presents dans les depots
         "$(local_cache)/$(serverdirstocopy)"
