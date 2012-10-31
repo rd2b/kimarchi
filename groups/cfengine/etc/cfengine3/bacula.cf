@@ -65,7 +65,8 @@ files:
         "$(serverfilestocopy)"
            comment   => "Copying $(serverfilestocopy)",
            perms     => promisemode("644"),
-           copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverfilestocopy)","$(globals.serverhost)");
+           copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverfilestocopy)","$(globals.serverhost)"),
+           classes => if_repaired("restartDirector");
 
 #################################
 # Editing includes lists:
@@ -136,7 +137,7 @@ files:
             comment => "Copying $(baculafolder) with $(local_bacula) files",
             copy_from => local_cp("$(local_bacula)"),
             depth_search => recurse("inf"),
-            restart_class => "restartDirector";
+            classes => if_repaired("restartDirector");
 
     backupclient::
         "$(clientfiledaemon)"
@@ -149,7 +150,7 @@ files:
                    "$(FDMPASSWD)"
                    ),
            comment => "Configuring the client file $(clientfiletocopy)",
-           restart_class => "restartFD";
+           classes => if_repaired("restartFD");
 
 commands:
     restartDirector::
