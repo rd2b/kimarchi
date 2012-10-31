@@ -172,7 +172,7 @@ insert_lines:
 #############################################################
 # Client (File Services) to backup
 Client {
-    Name = $(clientname)-fd
+    Name = $(clientname)
     Address = $(clientname)
     FDPort = 9102
     Catalog = MyCatalog
@@ -195,10 +195,10 @@ insert_lines:
 ### to change back its content
 #############################################################
 Job {
-    Name = \"Job-$(clientname)-$(filesetname)\"
+    Name = \"$(clientname)$(filesetname)\"
     JobDefs = \"$(clientjob)\"
     FileSet = \"Fileset$(filesetname)\"
-    Client = $(clientname)-fd
+    Client = $(clientname)
 }
      
 ";
