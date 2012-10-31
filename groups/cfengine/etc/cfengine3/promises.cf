@@ -27,10 +27,12 @@ bundle common globals{
             "cf01_acgform_local",
             "db01_acgform_local", "db02_acgform_local",
             "dns01_acgform_local", "dns02_acgform_local",
-            "drop02_acgform_local",
+            "drop01_acgform_local",
+            "sab02_acgform_local",
             "www01_acgform_local",
             "back01_acgform_local",
-            "log01_acgform_local"
+            "log01_acgform_local",
+            "perso01_acgform_local"
         };
         "loghost" or => { "log01_acgform_local" };
         "cfmaster" or => { "cf01_acgform_local"};
