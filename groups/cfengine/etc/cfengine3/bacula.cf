@@ -184,7 +184,7 @@ Client {
 ";
 }
 
-bundle edit_line do_baculaJob(clientname, folder, clientjob, fd_password) {
+bundle edit_line do_baculaJob(clientname, folder, clientjob) {
 vars:
     "filesetname"   string => canonify("$(folder)");
 
