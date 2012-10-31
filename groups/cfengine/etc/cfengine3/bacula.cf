@@ -118,7 +118,7 @@ files:
             comment => "Configuring the job file $(disklist[$(disklistindices)][0])$(filesets[$(disklist[$(disklistindices)][1])]).conf";
 
         # Surcharge avec les fichiers de clients presents dans les depots
-        "$(local_bacula)/$(serverdirstocopy)"
+        "$(local_cache)/$(serverdirstocopy)"
             comment => "Copying $(serverdirstocopy)",
             perms     => promisemode("644"),
             copy_from => secure_cp("$(globals.group_path)/groups/backup/$(serverdirstocopy)","$(globals.serverhost)"),
