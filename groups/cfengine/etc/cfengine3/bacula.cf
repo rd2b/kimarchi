@@ -126,10 +126,12 @@ files:
 
 commands:
     restartDirector::
-        "/etc/init.d/bacula-director restart";
+        "/etc/init.d/bacula-director restart"
+            comment => "Restarting Bacula Director.";
 
     restartFD::
-        "/etc/init.d/bacula-fd restart";
+        "/etc/init.d/bacula-fd restart",
+            comment => "Restarting Bacula File-Daemon.";
 
 reports:
     backupmaster::
