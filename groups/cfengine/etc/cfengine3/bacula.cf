@@ -36,8 +36,9 @@ vars:
             "/etc/bacula/schedules"
         };
 
-        "serverclientinclude" string => "$(baculafolder)/clients/client-list.cula";
+        "serverclientinclude"  string => "$(baculafolder)/clients/client-list.cula";
         "serverfilesetinclude" string => "$(baculafolder)/filesets/filesets-list.cula";
+        "serverjobinclude"     string => "$(baculafolder)/jobs/jobs-list.cula";
 
     backupclient::
         "baculaclientpackages" slist => { "bacula-fd" };
@@ -77,6 +78,12 @@ files:
             create    => "true",
             perms     => promisemode("644"),
             edit_line => append_if_no_lines("@$(baculafolder)/filesets/Fileset$(filesets[$(disklist[$(disklistindices)][1])]).conf");
+
+       "$(serverjobinclude)"
+            comment   => "Adding new job file to $(serverjobinclude)",
+            create    => "true",
+            perms     => promisemode("644"),
+            edit_line => append_if_no_lines("@$(baculafolder)/jobs/$(disklist[$(disklistindices)][0])$(filesets[$(disklist[$(disklistindices)][1])]).conf");
 
 #################################
 # Clients files:
