@@ -3,7 +3,9 @@ body common control
   bundlesequence  => { "update",
                        "pkg",
                        "crontabs",
-                       "default" };
+                       "default",
+                       "monitoring"
+  };
 
   inputs          => { "update.cf", 
                        "pkg.cf",
@@ -11,7 +13,9 @@ body common control
                        "cfengine_stdlib.cf",
                        "default.cf",
                        "bacula.cf",
-                       "cf-serverd.cf" };
+                       "monitoring.cf",
+                       "cf-serverd.cf"
+  };
 
 }
 

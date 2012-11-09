@@ -1,0 +1,10 @@
+bundle agent monitoring
+{
+classes:
+# Classes locales au bundle:
+
+storage:
+    "/" volume => min_free_space("1G");
+
+}
+
