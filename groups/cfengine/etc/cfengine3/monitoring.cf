@@ -4,7 +4,13 @@ classes:
 # Classes locales au bundle:
 
 storage:
-    "/" volume => min_free_space("1G");
+    "/boot"    volume => min_free_space("100M");
+    "/"        volume => min_free_space("500M");
+    "/usr"     volume => min_free_space("500M");
+    "/var"     volume => min_free_space("500M");
+    "/var/log" volume => min_free_space("500M");
+    "/home"    volume => min_free_space("500M");
+
 
 }
 
