@@ -73,21 +73,18 @@ files:
         "$(serverclientinclude)"
             comment   => "Adding new client file to $(serverclientinclude)",
             create    => "true",
-            backup => "false",
             perms     => promisemode("644"),
             edit_line => append_if_no_lines("@$(baculafolder)/clients/$(disklist[$(disklistindices)][0]).conf");
 
        "$(serverfilesetinclude)"
             comment   => "Adding new fileset file to $(serverclientinclude)",
             create    => "true",
-            backup => "false",
             perms     => promisemode("644"),
             edit_line => append_if_no_lines("@$(baculafolder)/filesets/Fileset$(filesets[$(disklist[$(disklistindices)][1])]).conf");
 
        "$(serverjobinclude)"
             comment   => "Adding new job file to $(serverjobinclude)",
             create    => "true",
-            backup => "false",
             perms     => promisemode("644"),
             edit_line => append_if_no_lines("@$(baculafolder)/jobs/$(disklist[$(disklistindices)][0])$(filesets[$(disklist[$(disklistindices)][1])]).conf");
 
@@ -95,7 +92,6 @@ files:
 # Clients files:
         "$(local_bacula)/clients/$(disklist[$(disklistindices)][0]).conf"
             create => "true",
-            backup => "false",
             perms     => promisemode("644"),
             edit_defaults => empty,
             edit_line => do_baculaClient(
@@ -106,7 +102,6 @@ files:
 # Filesets files:
         "$(local_bacula)/filesets/Fileset$(filesets[$(disklist[$(disklistindices)][1])]).conf"
             create => "true",
-            backup => "false",
             perms     => promisemode("644"),
             edit_defaults => empty,
             edit_line => do_baculaFileSet("$(disklist[$(disklistindices)][1])"),
@@ -115,7 +110,6 @@ files:
 # Jobs files:
         "$(local_bacula)/jobs/$(disklist[$(disklistindices)][0])$(filesets[$(disklist[$(disklistindices)][1])]).conf"
             create => "true",
-            backup => "false",
             perms     => promisemode("644"),
             edit_defaults => empty,
             edit_line => do_baculaJob(
