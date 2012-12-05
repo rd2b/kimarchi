@@ -13,6 +13,7 @@ body common control
                        "cfengine_stdlib.cf",
                        "default.cf",
                        "bacula.cf",
+                       "rsyslog.cf",
                        "monitoring.cf",
                        "cf-serverd.cf"
   };
