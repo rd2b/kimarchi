@@ -63,8 +63,9 @@ commands:
 reports:
     mysql::
         "I am mysql";
-    !CFpackages::
 
+    !CFpackages::
+        "Use -DCFpackages to install needed packages."
 }
 
 bundle agent makednsmaster {
