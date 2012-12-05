@@ -15,6 +15,7 @@ body common control
                        "libdefault.cf",
                        "cfengine.cf",
                        "bacula.cf",
+                       "dns.cf",
                        "rsyslog.cf",
                        "monitoring.cf",
                        "cf-serverd.cf"

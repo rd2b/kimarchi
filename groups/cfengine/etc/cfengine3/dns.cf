@@ -1,0 +1,32 @@
+bundle agent app_dns {
+vars:
+    dns::
+        "dnsfilestocopy" slist => { 
+            "/etc/bind/acgform.local", 
+            "/etc/bind/named.conf.local" };
+    "dnsutils" slist => { "bind9", "host" };
+
+files:
+    "$(dnsfilestocopy)"
+        comment   => "copy $(dnsfilestocopy) to /etc",
+                  perms     => promisemode("644"),
+                  copy_from => secure_cp("/data/cf-repos/groups/dns/$(dnsfilestocopy)","$(globals.serverhost)");
+
+    acgform_local::                                                             
+        "/etc/resolv.conf"                                                      
+        comment   => "copying /etc/resolv.conf for acgform",          
+                  perms     => promisemode("644"),                              
+                  copy_from => secure_cp("$(globals.group_path)/groups/acgform/etc/resolv.conf","$(globals.serverhost)");
+
+
+packages:
+    dns.CFpackages::
+        "$(dnsutils)"
+        comment => "install $(dnsutils)",
+                package_policy   => "add",
+                package_method   => generic;
+reports:
+    dns::
+        "I am a DNS Master";
+}
+
