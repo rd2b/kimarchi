@@ -36,8 +36,3 @@ reports:
 
 }
 
-body perms promisemode(p)
-{
-    mode  => "$(p)";
-}
-

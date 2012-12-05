@@ -12,6 +12,7 @@ body common control
                        "crontab.cf",
                        "cfengine_stdlib.cf",
                        "default.cf",
+                       "libdefault.cf",
                        "bacula.cf",
                        "rsyslog.cf",
                        "monitoring.cf",

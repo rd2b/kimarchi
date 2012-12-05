@@ -100,12 +100,6 @@ reports:
 
 }
 
-body perms promisemode(p)
-{
-    mode  => "$(p)";
-}
-
-
 bundle agent makednsmaster {
 vars:
     dns::
