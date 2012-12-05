@@ -65,7 +65,7 @@ reports:
         "I am mysql";
 
     !CFpackages::
-        "Use -DCFpackages to install needed packages."
+        "Use -DCFpackages to install needed packages.";
 }
 
 
