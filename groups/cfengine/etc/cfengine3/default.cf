@@ -12,6 +12,7 @@ vars:
 
 methods:
     any::
+        "makecfengine" usebundle => app_cfengine;
         "makersyslog" usebundle => app_rsyslog;
 
     backupmaster|backupclient::
@@ -44,31 +45,7 @@ files:
         copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
         depth_search => recurse("inf");
 
-    acgform_local::
-        "/etc/resolv.conf"
-                  comment   => "copying /etc/resolv.conf for acgform",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/acgform/etc/resolv.conf","$(globals.serverhost)");
-
-    cfmaster::
-        "/etc/default/cfengine3"
-                  comment   => "copy default/cfengine3 to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-master","$(globals.serverhost)");
-
-    !cfmaster.!cfmanual::
-        "/etc/default/cfengine3"
-                  comment   => "copy default/cfengine3 to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-client","$(globals.serverhost)");
-
-    cfmanual::
-        "/etc/default/cfengine3"
-                  comment   => "copy default/cfengine3 to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-manual","$(globals.serverhost)");
-
-    mysql::
+   mysql::
         "/etc/mysql"
             comment => "Copying files in /etc/mysql",
             perms     => promisemode("600"),
@@ -76,24 +53,14 @@ files:
             depth_search => recurse("inf");
 
 processes:
-    !cfmanual:: 
-        "/usr/sbin/cf-execd" restart_class => "launchcfengine";
     drop01_acgform_local:: 
         "/home/remi/.dropbox-dist/dropbox" restart_class => "launchdropbox";
 
 commands:
-    launchcfengine::
-        "/etc/init.d/cfengine3 start";
     launchdropbox::
         "/bin/su - remi -c \"/usr/bin/dropbox start\"";
 
 reports:
-    cfmaster::
-        "I am cfengine master";
-    cfmanual::
-        "I am standalone master";
-    !cfmaster.!cfmanual::
-        "I am cfengine slave";
     mysql::
         "I am mysql";
     !CFpackages::
