@@ -5,7 +5,8 @@ body common control
         "pkg",
         "crontabs",
         "default",
-        "monitoring"
+        "monitoring",
+        "cleanup"
     };
 
     inputs          => {
@@ -20,6 +21,7 @@ body common control
         "dns.cf",
         "rsyslog.cf",
         "monitoring.cf",
+        "cleanup.cf",
         "cf-serverd.cf"
     };
 }
