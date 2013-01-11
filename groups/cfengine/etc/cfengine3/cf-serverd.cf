@@ -1,12 +1,27 @@
 
 body server control
 {
-    skipverify => { ".*" };
-    allowconnects         => { "127.0.0.1" , "127.0.1.1", "192.168.122.0/24", "::1" };
-    allowallconnects      => { "127.0.0.1" , "127.0.1.1", "192.168.122.0/24", "::1" };
-    trustkeysfrom         => { "127.0.0.1" , "127.0.1.1", "192.168.122.0/24", "::1" };
-    skipverify            => { "192.168.122.0/24" };
-    allowusers        => { "root" };
+    skipverify          => { ".*" };
+    allowconnects       => { 
+        "127.0.0.1", 
+        "127.0.1.1", 
+        "192.168.122.0/24", 
+        "::1" 
+    };
+    allowallconnects    => { 
+        "127.0.0.1", 
+        "127.0.1.1", 
+        "192.168.122.0/24", 
+        "::1" 
+    };
+    trustkeysfrom       => { 
+        "127.0.0.1", 
+        "127.0.1.1", 
+        "192.168.122.0/24", 
+        "::1" 
+    };
+    skipverify          => { "192.168.122.0/24" };
+    allowusers          => { "root" };
 }
 
 # ensure server is running.
