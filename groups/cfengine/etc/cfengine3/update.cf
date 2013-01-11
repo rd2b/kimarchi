@@ -25,55 +25,54 @@
 bundle agent update
 {
 vars:
+    !redhat::
+        "master_location"   string => "/var/lib/cfengine3/masterfiles";
+        "etc_cfengine"      string => "/etc/cfengine3";
 
- "master_location" string => "/var/lib/cfengine3/masterfiles";
+    redhat::
+        "master_location"   string => "/var/cfengine/masterfiles";
+        "etc_cfengine"      string => "/etc/cfengine";
 
-  acgform_local::
-     "master_server"    string => "192.168.122.12";
-  !acgform_local::
-     "master_server" string => "127.0.0.1";
+    acgform_local::
+        "master_server"     string => "192.168.122.12";
+    !acgform_local::
+        "master_server"     string => "127.0.0.1";
 
 files:
-
-  "/etc/cfengine3"
-
-    perms => u_p("644"),
-    copy_from => secure_cp("$(master_location)","$(master_server)"),
-    depth_search => recurse("inf"),
-    action => uimmediate;
-
+    "$(etc_cfengine)"
+        perms => u_p("644"),
+        copy_from => secure_cp("$(master_location)","$(master_server)"),
+        depth_search => recurse("inf"),
+        action => uimmediate;
 }
 
 ############################################
 
 body perms u_p(p)
-
 {
-mode  => "$(p)";
+    mode  => "$(p)";
 }
 
 ############################################
 
 body file_select cf3_files
-
 {
-leaf_name => { "cf-.*" };
+    leaf_name => { "cf-.*" };
 
-file_result => "leaf_name";
+    file_result => "leaf_name";
 }
 
 #########################################################
 
 body copy_from mycopy(from,server)
-
 {
-source      => "$(from)";
-compare     => "digest";
+    source      => "$(from)";
+    compare     => "digest";
 }
 
 #########################################################
 
 body action uimmediate
 {
-ifelapsed => "60";
+    ifelapsed => "60";
 }
