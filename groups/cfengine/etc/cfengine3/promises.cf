@@ -29,7 +29,10 @@ body common control
 bundle common globals{
 classes:
 # Mise en place des groupes de machines
-    "standalone" or => { "raspberrypi" };
+    "standalone" or => {
+        "raspberrypi",
+        "net01"
+    };
 
     "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
     "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
@@ -47,7 +50,10 @@ classes:
     };
     "loghost" or => { "log01_acgform_local" };
     "cfmaster" or => { "cf01_acgform_local"};
-    "cfmanual" or => { "raspberrypi" };
+    "cfmanual" or => { 
+        "raspberrypi", 
+        "net01" 
+    };
 
 vars:
     standalone::
