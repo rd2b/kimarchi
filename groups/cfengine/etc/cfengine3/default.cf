@@ -5,67 +5,37 @@ classes:
 
 vars:
     any::
-#        "filestocopy" slist => {  };
-        "dirstocopy"  slist => { "/etc", "/usr/local/bin" };
-        "mysqlsrcdirs"  slist => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
+        "dirstocopy"   slist  => { "/etc", "/usr/local/bin" };
+        "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
 
 methods:
-#    backupmaster:: "makebackupmaster" usebundle => makebackupmaster;
-    dns::          "makednsmaster"    usebundle => makednsmaster;
+    any::
+        "makecfengine" usebundle => app_cfengine;
+        "makersyslog" usebundle => app_rsyslog;
+
+    backupmaster|backupclient::
+        "makebackup" usebundle => app_bacula;
+
+    dns::
+        "makednsmaster"    usebundle => app_dns;
 
 files:
     any::
-#       "$(filestocopy)"
-#           comment   => "Copying $(filestocopy)",
-#           perms     => promisemode("644"),
-#           copy_from => secure_cp("$(globals.group_path)/groups/default/$(filestocopy)","$(globals.serverhost)");
-
         "$(dirstocopy)"
             comment => "Copying $(dirstocopy)",
             copy_from => secure_cp("$(globals.group_path)/groups/default/$(dirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
-         "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
-         "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
-         "/etc/bash.bashrc"          perms => promisemode("644");
-         "/etc/sudoers"              perms => promisemode("440");
-         "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
+        "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
+        "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
+        "/etc/bash.bashrc"          perms => promisemode("644");
+        "/etc/sudoers"              perms => promisemode("440");
 
-   any::
-       "$(dirstocopy)"
-        comment => "Copying $(dirstocopy)",
-        copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
-        depth_search => recurse("inf");
-
-    acgform_local::
-        "/etc/resolv.conf"
-                  comment   => "copying /etc/resolv.conf for acgform",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/acgform/etc/resolv.conf","$(globals.serverhost)");
-
-    cfmaster::
-        "/etc/default/cfengine3"
-                  comment   => "copy default/cfengine3 to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-master","$(globals.serverhost)");
-
-    !cfmaster.!cfmanual::
-        "/etc/default/cfengine3"
-                  comment   => "copy default/cfengine3 to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-client","$(globals.serverhost)");
-
-    cfmanual::
-        "/etc/default/cfengine3"
-                  comment   => "copy default/cfengine3 to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-manual","$(globals.serverhost)");
-
-    loghost::
-        "/etc/rsyslog.conf"
-            comment   => "copy loghost/etc/rsyslog.conf to /etc",
-            perms     => promisemode("644"),
-            copy_from => secure_cp("$(globals.group_path)/groups/loghost/etc/rsyslog.conf","$(globals.serverhost)");
+    any::
+        "$(dirstocopy)"
+            comment => "Copying $(dirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
 
     mysql::
         "/etc/mysql"
@@ -74,68 +44,20 @@ files:
             copy_from => secure_cp("$(globals.group_path)/$(mysqlsrcdirs)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
-
 processes:
-    !cfmanual:: 
-        "/usr/sbin/cf-execd" restart_class => "launchcfengine";
     drop01_acgform_local:: 
         "/home/remi/.dropbox-dist/dropbox" restart_class => "launchdropbox";
 
 commands:
-    launchcfengine::
-        "/etc/init.d/cfengine3 start";
     launchdropbox::
         "/bin/su - remi -c \"/usr/bin/dropbox start\"";
 
 reports:
-    dns::       "I am a DNS";
-    cfmaster::  "I am cfengine master";
-    !cfmaster:: "I am cfengine slave";
-    mysql::     "I am mysql";
-    backupmaster::    "I am backup master";
-    !backupmaster::    "I am backup client";
+    mysql::
+        "I am mysql";
 
+    !CFpackages::
+        "Use -DCFpackages to install needed packages.";
 }
 
-body perms promisemode(p)
-{
-    mode  => "$(p)";
-}
-
-
-bundle agent makebackupmaster {
-vars:
-    any::
-        "bacula" slist => { "bacula-server" };
-
-packages:
-    any::
-        "$(bacula)"
-        comment => "install $(bacula)",
-                package_policy   => "add",
-                package_method   => generic;
-}
-
-
-bundle agent makednsmaster {
-vars:
-    any::
-        "dnsfilestocopy"
-            slist => { "/etc/bind/acgform.local", "/etc/bind/named.conf.local" };
-
-        "dnsutils" slist => { "bind9", "host" };
-
-files:
-    "$(dnsfilestocopy)"
-          comment   => "copy $(dnsfilestocopy) to /etc",
-          perms     => promisemode("644"),
-          copy_from => secure_cp("/data/cf-repos/groups/dns/$(dnsfilestocopy)","$(globals.serverhost)");
-
-packages:
-    any::
-        "$(dnsutils)"
-        comment => "install $(dnsutils)",
-                package_policy   => "add",
-                package_method   => generic;
-}
 

@@ -1,0 +1,19 @@
+
+back01.acgform.local  /etc    standard
+cf01.acgform.local    /etc    standard
+db01.acgform.local    /etc    standard
+db02.acgform.local    /etc    standard
+dev01.acgform.local   /etc    standard
+dns01.acgform.local   /etc    standard
+dns02.acgform.local   /etc    standard
+drop02.acgform.local  /etc    standard
+front01.acgform.local /etc    standard
+log01.acgform.local   /etc    standard
+perso01.acgform.local /etc    standard
+sab02.acgform.local   /etc    standard
+www01.acgform.local   /etc    standard
+
+back01.acgform.local /boot standard
+
+back01.acgform.local /var/spool standard
+log01.acgform.local /var/spool standard
