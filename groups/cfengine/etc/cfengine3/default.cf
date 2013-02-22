@@ -5,10 +5,8 @@ classes:
 
 vars:
     any::
-#       "filestocopy" slist => {  };
         "dirstocopy"   slist  => { "/etc", "/usr/local/bin" };
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
-
 
 methods:
     any::
@@ -26,34 +24,28 @@ methods:
 
 files:
     any::
-#       "$(filestocopy)"
-#           comment   => "Copying $(filestocopy)",
-#           perms     => promisemode("644"),
-#           copy_from => secure_cp("$(globals.group_path)/groups/default/$(filestocopy)","$(globals.serverhost)");
-
         "$(dirstocopy)"
-        comment => "Copying $(dirstocopy)",
-                copy_from => secure_cp("$(globals.group_path)/groups/default/$(dirstocopy)","$(globals.serverhost)"),
-                depth_search => recurse("inf");
+            comment => "Copying $(dirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/groups/default/$(dirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
 
-    "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
-    "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
-    "/etc/bash.bashrc"          perms => promisemode("644");
-    "/etc/sudoers"              perms => promisemode("440");
-    "/etc/init.d"               perms => promisemode("755"), depth_search => recurse("inf");
+        "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
+        "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
+        "/etc/bash.bashrc"          perms => promisemode("644");
+        "/etc/sudoers"              perms => promisemode("440");
 
     any::
         "$(dirstocopy)"
-        comment => "Copying $(dirstocopy)",
-                copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
-                depth_search => recurse("inf");
+            comment => "Copying $(dirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
 
     mysql::
         "/etc/mysql"
-        comment => "Copying files in /etc/mysql",
-                perms     => promisemode("600"),
-                copy_from => secure_cp("$(globals.group_path)/$(mysqlsrcdirs)","$(globals.serverhost)"),
-                depth_search => recurse("inf");
+            comment => "Copying files in /etc/mysql",
+            perms     => promisemode("600"),
+            copy_from => secure_cp("$(globals.group_path)/$(mysqlsrcdirs)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
 
 processes:
     drop01_acgform_local:: 
