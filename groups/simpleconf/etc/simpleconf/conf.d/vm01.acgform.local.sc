@@ -1,2 +1,0 @@
-default
-glusterfs-server

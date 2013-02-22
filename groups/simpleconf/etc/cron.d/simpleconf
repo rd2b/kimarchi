@@ -1,5 +1,0 @@
-
-
-MAILTO=""
-
-#*/2 * * * *    root    cd /var/cache/simpleconf/ && git pull -q origin master && simpleconf &> /dev/null 
