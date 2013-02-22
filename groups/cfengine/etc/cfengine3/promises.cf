@@ -30,7 +30,7 @@ body common control
 bundle common globals{
 classes:
 # Mise en place des groupes de machines
-    "standalone" not => { "acgform_local" };
+    "standalone" not =>  "acgform_local" ;
     "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
     "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
     "backupmaster" or => { "back01_acgform_local" };
