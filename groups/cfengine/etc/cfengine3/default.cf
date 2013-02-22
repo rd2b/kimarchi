@@ -12,14 +12,17 @@ vars:
 
 methods:
     any::
-        "makecfengine" usebundle => app_cfengine;
-    "makersyslog" usebundle => app_rsyslog;
+        "makecfengine"  usebundle => app_cfengine;
+        "makersyslog"   usebundle => app_rsyslog;
 
     backupmaster|backupclient::
-        "makebackup" usebundle => app_bacula;
+        "makebackup"    usebundle => app_bacula;
 
     dns::
-        "makednsmaster"    usebundle => app_dns;
+        "makednsmaster" usebundle => app_dns;
+
+    webserver:: 
+        "makewebserver" usebundle => app_apache;
 
 files:
     any::

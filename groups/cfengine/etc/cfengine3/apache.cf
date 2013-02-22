@@ -1,0 +1,19 @@
+bundle agent app_apache {
+vars:
+    webserver::
+        "webserverutils" slist => { 
+            "apache2",
+            "libapache2-mod-php5"
+        };
+
+packages:
+    webserver.CFpackages::
+        "$(webserverutils)"
+        comment => "install $(webserverutils)",
+                package_policy   => "add",
+                package_method   => generic;
+reports:
+    webserver::
+        "I am a WebServer";
+}
+
