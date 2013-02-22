@@ -51,6 +51,7 @@ classes:
     "webserver" or => {
         "front01_acgform_local",
         "front02_acgform_local"
+    };
 
 vars:
     standalone::
