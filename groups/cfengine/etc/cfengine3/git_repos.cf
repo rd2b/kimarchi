@@ -44,6 +44,6 @@ files:
 
 commands:
     "/usr/bin/git clone $($(repos)[$(repos_keys)])"
-        contain => in_dir("$(basepath)"),
+        contain => in_dir_and_setuid_sh("$(basepath)", "$(user)"),
                 ifvarclass => "!repo_dir_exists_$(repos_keys)";
 }
