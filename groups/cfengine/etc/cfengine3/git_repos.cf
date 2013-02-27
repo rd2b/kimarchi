@@ -1,21 +1,23 @@
 bundle agent clone_git_repos {
 vars:
-    gitrepos::
+    CFgit::
         "username" string => "remi";
-        "git_repos_base" string => "/home/${username}/repositories/";
+        "git_repos_base" string => "/home/$(username)/repositories/";
 
-        "git_repos[GitHub][0]" string => "git@github.com:rd2b/kimarchi.git";
-        "git_repos[GitHub][1]" string => "git@github.com:rd2b/config.git";
+        "git_repos[kimarchi][0]" string => "git@github.com:rd2b/kimarchi.git";
+        "git_repos[github][1]" string => "git@github.com:rd2b/config.git";
 
         "projects"  slist => getindices("git_repos");
 
 methods:
+    CFgit::
         "placeholder" usebundle => clone_git_repos_project(
                 "$(git_repos_base)/$(projects)", 
-                "clone_git_repos.git_repos[$(projects)]");
+                "clone_git_repos.git_repos[$(projects)]",
+                "$(username)");
 }
 
-bundle agent clone_git_repos_project(basepath, repos) {
+bundle agent clone_git_repos_project(basepath, repos, user) {
 vars:
 
     "repos_keys" slist => getindices("$(repos)");
@@ -30,14 +32,14 @@ classes:
 files:
     "$(basepath)/."
         create => "true",
-               perms => owner("$(config.username)");
+               perms => owner("$(user)");
 
     "$(basepath)/$(repo_data[$(repos_keys)][dirname])/."
-        perms => owner("$(config.username)");
+        perms => owner("$(user)");
 
     "$(basepath)/$(repo_data[$(repos_keys)][dirname])"
         depth_search => recurse("inf"),
-                     perms => owner("$(config.username)");
+                     perms => owner("$(user)");
 
 
 commands:
