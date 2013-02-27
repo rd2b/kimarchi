@@ -1,0 +1,47 @@
+bundle agent clone_git_repos {
+vars:
+    gitrepos::
+        "username" string => "remi";
+        "git_repos_base" string => "/home/${username}/repositories/";
+
+        "git_repos[GitHub][0]" string => "git@github.com:rd2b/kimarchi.git";
+        "git_repos[GitHub][1]" string => "git@github.com:rd2b/config.git";
+
+        "projects"  slist => getindices("git_repos");
+
+methods:
+        "placeholder" usebundle => clone_git_repos_project(
+                "$(git_repos_base)/$(projects)", 
+                "clone_git_repos.git_repos[$(projects)]");
+}
+
+bundle agent clone_git_repos_project(basepath, repos) {
+vars:
+
+    "repos_keys" slist => getindices("$(repos)");
+
+    "repo_data[$(repos_keys)][dirname]" string => execresult(
+            "/usr/bin/basename $($(repos)[$(repos_keys)]) .git", "noshell");
+
+classes:
+    "repo_dir_exists_$(repos_keys)" expression => isdir(
+            "$(basepath)/$(repo_data[$(repos_keys)][dirname])");
+
+files:
+    "$(basepath)/."
+        create => "true",
+               perms => owner("$(config.username)");
+
+    "$(basepath)/$(repo_data[$(repos_keys)][dirname])/."
+        perms => owner("$(config.username)");
+
+    "$(basepath)/$(repo_data[$(repos_keys)][dirname])"
+        depth_search => recurse("inf"),
+                     perms => owner("$(config.username)");
+
+
+commands:
+    "/usr/bin/git clone $($(repos)[$(repos_keys)])"
+        contain => in_dir("$(basepath)"),
+                ifvarclass => "!repo_dir_exists_$(repos_keys)";
+}

@@ -12,6 +12,8 @@ methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
         "makersyslog"   usebundle => app_rsyslog;
+    CFgit::
+        "makegit"   usebundle => git_repos;
 
     backupmaster|backupclient::
         "makebackup"    usebundle => app_bacula;

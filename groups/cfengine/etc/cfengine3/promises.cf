@@ -21,6 +21,7 @@ body common control
         "dns.cf",
         "apache.cf",
         "rsyslog.cf",
+        "git_repos.cf",
         "monitoring.cf",
         "cleanup.cf",
         "cf-serverd.cf"
