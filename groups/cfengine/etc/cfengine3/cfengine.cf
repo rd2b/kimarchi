@@ -1,20 +1,20 @@
 bundle agent app_cfengine
 {
 vars:
-    any::
+    ubuntu::
         "defaultdirfile" string => "$(globals.group_path)/groups/cfengine/etc/default/";
 
-    cfmaster::
+    ubuntu.cfmaster::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-master";
 
-    !cfmaster.!cfmanual::
+    ubuntu.!cfmaster.!cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-client";
 
-    cfmanual::
+    ubuntu.cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-manual";
 
 files:
-    any::
+    ubuntu::
         "/etc/default/cfengine3"
                   comment   => "copy default/cfengine3 to /etc",
                   perms     => promisemode("644"),
@@ -22,11 +22,20 @@ files:
 
 processes:
     !cfmanual:: 
-        "/usr/sbin/cf-execd" restart_class => "launchcfengine";
+        "/usr/sbin/cf-execd" restart_class => "startcfexecd";
+
+    cfmaster||cfmanual::
+        "/usr/sbin/cf-serverd" restart_class => "startcfserverd";
 
 commands:
-    launchcfengine::
+    startcfexecd.ubuntu::
         "/etc/init.d/cfengine3 start";
+
+    startcfexecd.fedora::
+        "/etc/init.d/cf-execd start";
+
+    startcfserverd.fedora::
+        "/etc/init.d/cf-serverd start";
 
 reports:
     cfmaster::
