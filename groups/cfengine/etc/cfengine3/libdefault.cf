@@ -4,3 +4,10 @@ body perms promisemode(p)
     mode  => "$(p)";
 }
 
+body contain in_dir_and_setuid_sh(dir,owner)
+{
+    chdir => "$(dir)";
+    exec_owner => "$(owner)";
+    useshell => "true";
+}
+
