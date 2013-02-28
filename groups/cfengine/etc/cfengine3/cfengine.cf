@@ -1,6 +1,8 @@
 bundle agent app_cfengine
 {
 vars:
+    "masterfilesrcdir" string => "$(globals.group_path)/groups/cfengine/etc/cfengine3/";
+
     ubuntu::
         "defaultdirfile" string => "$(globals.group_path)/groups/cfengine/etc/default/";
 
@@ -12,13 +14,24 @@ vars:
 
     ubuntu.cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-manual";
-
+    
+    ubuntut::
+        "master_location"   string => "/var/lib/cfengine3/masterfiles";
+    
+    redhat::
+        "master_location"   string => "/var/cfengine/masterfiles";              
 files:
     ubuntu::
         "/etc/default/cfengine3"
                   comment   => "copy default/cfengine3 to /etc",
                   perms     => promisemode("644"),
-                  copy_from => secure_cp("$(globals.group_path)/groups/cfengine/etc/default/cfengine3-master","$(globals.serverhost)");
+                  copy_from => secure_cp("$(defaultsrcfile)","$(globals.serverhost)");
+
+    ubuntu||redhat::
+        "$(master_location)"
+        comment => "Updating masterfiles",
+        copy_from => secure_cp("$(masterfilesrcdir)","$(globals.serverhost)"),
+        depth_search => recurse("inf");
 
 processes:
     !cfmanual:: 
@@ -31,10 +44,10 @@ commands:
     startcfexecd.ubuntu::
         "/etc/init.d/cfengine3 start";
 
-    startcfexecd.fedora::
+    startcfexecd.redhat::
         "/etc/init.d/cf-execd start";
 
-    startcfserverd.fedora::
+    startcfserverd.redhat::
         "/etc/init.d/cf-serverd start";
 
 reports:
