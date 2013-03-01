@@ -12,14 +12,13 @@ methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
         "makersyslog"   usebundle => app_rsyslog;
+        "makednsmaster" usebundle => app_dns;
+
     CFgit::
         "makegit"       usebundle => clone_git_repos;
 
     backupmaster|backupclient::
         "makebackup"    usebundle => app_bacula;
-
-    dns::
-        "makednsmaster" usebundle => app_dns;
 
     webserver:: 
         "makewebserver" usebundle => app_apache;
