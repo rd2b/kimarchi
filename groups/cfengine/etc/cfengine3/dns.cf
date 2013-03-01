@@ -1,22 +1,30 @@
 bundle agent app_dns {
 vars:
+    any::
+    "dnsdir" string => "$(globals.group_path)/groups/dns/";
+
     dns::
         "dnsfilestocopy" slist => { 
             "/etc/bind/acgform.local", 
             "/etc/bind/named.conf.local" };
     "dnsutils" slist => { "bind9", "host" };
 
-files:
-    "$(dnsfilestocopy)"
-        comment   => "copy $(dnsfilestocopy) to /etc",
-                  perms     => promisemode("644"),
-                  copy_from => secure_cp("/data/cf-repos/groups/dns/$(dnsfilestocopy)","$(globals.serverhost)");
+    acgform_local.!dns::
+        "resolvconf" string => "$(dnsdir)/etc/acgform-resolv.conf";
 
-    acgform_local::                                                             
-        "/etc/resolv.conf"                                                      
-        comment   => "copying /etc/resolv.conf for acgform",          
-                  perms     => promisemode("644"),                              
-                  copy_from => secure_cp("$(globals.group_path)/groups/acgform/etc/resolv.conf","$(globals.serverhost)");
+
+files:
+    dns::
+        "$(dnsfilestocopy)"
+        comment   => "copy $(dnsfilestocopy) to /etc",
+        perms     => promisemode("644"),
+        copy_from => secure_cp("$(dnsdir)/$(dnsfilestocopy)","$(globals.serverhost)");
+
+    acgform_local.!dns:: 
+        "/etc/resolv.conf"
+        comment   => "copying /etc/resolv.conf for acgform",
+        perms     => promisemode("644"),
+        copy_from => secure_cp("$(resolvconf)","$(globals.serverhost)");
 
 
 packages:
