@@ -74,5 +74,5 @@ body copy_from mycopy(from,server)
 
 body action uimmediate
 {
-    ifelapsed => "60";
+    ifelapsed => "240";
 }
