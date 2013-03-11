@@ -27,6 +27,12 @@ files:
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(defaultsrcfile)","$(globals.serverhost)");
 
+    (ubuntu|debian).!cfmanual::
+        "/etc/default/cfengine3"
+            comment  => "Adding start cf-execd",
+            edit_line => append_if_no_line("RUN_CFEXECD=1");
+
+
     ubuntu|debian|redhat::
         "$(master_location)"
         comment => "Updating masterfiles",
