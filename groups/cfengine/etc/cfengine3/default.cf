@@ -13,6 +13,7 @@ methods:
         "makecfengine"  usebundle => app_cfengine;
         "makersyslog"   usebundle => app_rsyslog;
         "makednsmaster" usebundle => app_dns;
+        "makemonitoring" usebundle => app_monitor;
 
     CFgit::
         "makegit"       usebundle => clone_git_repos;

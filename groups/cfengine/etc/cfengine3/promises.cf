@@ -20,6 +20,7 @@ body common control
         "bacula.cf",
         "dns.cf",
         "apache.cf",
+        "monitor.cf",
         "rsyslog.cf",
         "git_repos.cf",
         "monitoring.cf",

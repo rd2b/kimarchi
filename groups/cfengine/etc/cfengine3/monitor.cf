@@ -1,0 +1,28 @@
+bundle agent app_monitor {
+vars:
+    any::
+        "monitorsrcdir" string => "/data/cfexternals/monitor/";
+        "monitordir" string => "/usr/local/monitor/";
+
+    any::
+        "filestocopy" slist => {
+            "scripts/heartbeat.sh", 
+            "scripts/libmonitor.sh", 
+            "scripts/memory.sh" };
+        "utils" slist => { "curl" };
+
+files:
+    any::
+        "$(monitordir)/$(filestocopy)"
+        comment   => "copy $(filestocopy) to /etc",
+        perms     => promisemode("644"),
+        copy_from => secure_cp("$(monitorsrcdir)/$(filestocopy)","$(globals.serverhost)");
+
+packages:
+    CFpackages::
+        "$(utils)"
+        comment => "install $(utils)",
+                package_policy   => "add",
+                package_method   => generic;
+}
+
