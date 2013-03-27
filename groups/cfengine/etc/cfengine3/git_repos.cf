@@ -20,7 +20,7 @@ methods:
 
     cfmanual||cfmaster::
         "placeholder" usebundle => clone_git_repos_project(
-                "/data",
+                "/data/cfexternals",
                 "clone_git_repos.git_monitor[cfexternals]",
                 "root" );
 }
