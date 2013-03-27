@@ -7,7 +7,7 @@ vars:
         "git_repos[kimarchi][0]" string => "git@github.com:rd2b/kimarchi.git";
         "git_repos[github][1]" string => "git@github.com:rd2b/config.git";
 
-        "git_repos_monitor" string => "https://github.com/rd2b/monitor.git";
+        "git_monitor[monitor][0]" string => "https://github.com/rd2b/monitor.git";
 
         "projects"  slist => getindices("git_repos");
 
@@ -21,7 +21,7 @@ methods:
     cfmanual||cfmaster::
         "placeholder" usebundle => clone_git_repos_project(
                 "/data/monitor",
-                "$(git_repos_monitor)",
+                "clone_git_repos.git_monitor[monitor]",
                 "root" );
 }
 
