@@ -15,12 +15,12 @@ files:
     any::
         "$(monitordir)/$(filestocopy)"
         comment   => "copy $(filestocopy) to /etc",
-        perms     => promisemode("644"),
+        perms     => promisemode("755"),
         copy_from => secure_cp("$(monitorsrcdir)/$(filestocopy)","$(globals.serverhost)");
 
 methods:
     "cron" usebundle => cronjob("/usr/local/monitor/scripts/heartbeat.sh","root","*","5,35");
-    "cron" usebundle => cronjob("/usr/local/monitor/scripts/memory.sh.sh","root","*","5,35");
+    "cron" usebundle => cronjob("/usr/local/monitor/scripts/memory.sh","root","*","5,35");
 
 packages:
     CFpackages::
