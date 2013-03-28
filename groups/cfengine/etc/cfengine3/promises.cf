@@ -54,6 +54,7 @@ classes:
         "front01_acgform_local",
         "front02_acgform_local"
     };
+    "devplatform" or => {"standalone"};
 
 vars:
     standalone::

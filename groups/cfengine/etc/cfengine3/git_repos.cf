@@ -3,18 +3,18 @@ vars:
     cfmanual|cfmaster::
         "git_monitor[cfexternals][0]" string => "https://github.com/rd2b/monitor.git";
 
-    CFgit::
+    CFgit.devplatform::
         "username" string => "remi";
         "git_repos_base" string => "/home/$(username)/repositories/";
 
-        "git_repos[kimarchi][0]" string => "git@github.com:rd2b/kimarchi.git";
+        "git_repos[github][0]" string => "git@github.com:rd2b/kimarchi.git";
         "git_repos[github][1]" string => "git@github.com:rd2b/config.git";
 
 
         "projects"  slist => getindices("git_repos");
 
 methods:
-    CFgit::
+    CFgit.devplatform::
         "placeholder" usebundle => clone_git_repos_project(
                 "$(git_repos_base)/$(projects)", 
                 "clone_git_repos.git_repos[$(projects)]",
