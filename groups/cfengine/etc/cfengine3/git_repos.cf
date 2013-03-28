@@ -18,7 +18,7 @@ methods:
                 "clone_git_repos.git_repos[$(projects)]",
                 "$(username)");
 
-    cfmanual||cfmaster::
+    cfmanual|cfmaster::
         "placeholder" usebundle => clone_git_repos_project(
                 "/data/cfexternals",
                 "clone_git_repos.git_monitor[cfexternals]",
