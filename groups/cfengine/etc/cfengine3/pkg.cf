@@ -5,9 +5,10 @@ vars:
         "packages" string => "screen vim rsync man manpages tree update-manager-core lsof dnsutils bash-completion git curl";
 
 packages:
-    CFpackages::
+    any::
         "$(packages)"
         comment => "install $(packages)",
+        action => if_elapsed("60");
         package_policy   => "add",
         package_method   => generic;
 }
