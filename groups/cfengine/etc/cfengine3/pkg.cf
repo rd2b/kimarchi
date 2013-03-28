@@ -2,7 +2,7 @@ bundle agent pkg
 {
 vars:
     any::
-        "packages" string => "screen vim rsync man manpages tree update-manager-core lsof dnsutils bash-completion git";
+        "packages" string => "screen vim rsync man manpages tree update-manager-core lsof dnsutils bash-completion git curl";
 
 packages:
     CFpackages::
