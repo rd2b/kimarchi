@@ -8,7 +8,7 @@ packages:
     any::
         "$(packages)"
         comment => "install $(packages)",
-        action => if_elapsed("60");
+        action => if_elapsed("60"),
         package_policy   => "add",
         package_method   => generic;
 }
