@@ -42,7 +42,7 @@ files:
     "$(etc_cfengine)"
         perms => u_p("644"),
         copy_from => secure_cp("$(master_location)","$(master_server)"),
-        file_select => byname(".*.cf"),
+        file_select => by_name(".*.cf"),
         depth_search => recurse("inf"),
         action => uimmediate;
 }
