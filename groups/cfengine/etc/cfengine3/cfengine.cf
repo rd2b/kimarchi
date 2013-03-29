@@ -37,6 +37,7 @@ files:
         "$(master_location)"
         comment => "Updating masterfiles",
         copy_from => secure_cp("$(masterfilesrcdir)","$(globals.serverhost)"),
+        file_select => byname(".*.cf"),
         depth_search => recurse("inf");
 
 processes:
