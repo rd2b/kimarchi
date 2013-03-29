@@ -21,8 +21,10 @@ files:
 methods:
     "cron" 
         usebundle => cronjob("/usr/local/monitor/scripts/heartbeat.sh","root","*","5,35"),
+        classes => if_repaired("changed_crontab");
+    "cron"
         usebundle => cronjob("/usr/local/monitor/scripts/memory.sh","root","*","5,35"),
-        classes => if_repaired("changed_crontab");;
+        classes => if_repaired("changed_crontab");
 
 packages:
     CFpackages::
