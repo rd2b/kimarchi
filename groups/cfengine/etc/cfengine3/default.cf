@@ -14,8 +14,6 @@ methods:
         "makersyslog"   usebundle => app_rsyslog;
         "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
-
-    CFgit|cfmanual|cfmaster::
         "makegit"       usebundle => clone_git_repos;
 
     backupmaster|backupclient::
