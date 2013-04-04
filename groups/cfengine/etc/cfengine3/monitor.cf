@@ -20,10 +20,10 @@ files:
 
 methods:
     "cron" 
-        usebundle => cronjob("/usr/local/monitor/scripts/heartbeat.sh","root","*","*/5"),
+        usebundle => cronjob("/usr/local/monitor/scripts/heartbeat.sh","root","*","*/25"),
         classes => if_repaired("changed_crontab");
     "cron"
-        usebundle => cronjob("/usr/local/monitor/scripts/memory.sh","root","*","5,35"),
+        usebundle => cronjob("/usr/local/monitor/scripts/memory.sh","root","*","*/25"),
         classes => if_repaired("changed_crontab");
 
 packages:
