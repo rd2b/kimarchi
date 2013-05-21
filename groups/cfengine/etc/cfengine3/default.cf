@@ -37,7 +37,7 @@ files:
         "/etc/timezone"     edit_line => replace_or_add("Etc/UTC","$(timezone)");
         "/etc/localtime"  
             link_from => ln_s("/usr/share/zoneinfo/$(timezone)"),
-            move_obstructions => "true",;
+            move_obstructions => "true";
 
 
     any::
