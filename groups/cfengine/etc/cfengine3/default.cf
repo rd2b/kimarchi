@@ -7,6 +7,7 @@ vars:
     any::
         "dirstocopy"   slist  => { "/etc", "/usr/local/bin" };
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
+        "timezone" string => "Europe/Paris";
 
 methods:
     any::
@@ -33,6 +34,8 @@ files:
         "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
+        "/etc/timezone"     edit_line => replace_or_add("Etc/UTC","$(timezone)");
+
 
     any::
         "$(dirstocopy)"
