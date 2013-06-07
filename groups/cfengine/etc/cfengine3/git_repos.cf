@@ -40,20 +40,28 @@ classes:
             "$(basepath)/$(repo_data[$(repos_keys)][dirname])");
 
 files:
+# Creates dir if not exists:
     "$(basepath)/."
         create => "true",
-               perms => owner("$(user)");
+        perms => owner("$(user)");
 
+# Handles perm on my Repository folder:
     "$(basepath)/$(repo_data[$(repos_keys)][dirname])/."
         perms => owner("$(user)");
 
+# Handles perm in my Repository folder and subfoldders:
     "$(basepath)/$(repo_data[$(repos_keys)][dirname])"
         depth_search => recurse("inf"),
-                     perms => owner("$(user)");
+        perms => owner("$(user)");
 
 
 commands:
     "/usr/bin/git clone $($(repos)[$(repos_keys)])"
         contain => in_dir_and_setuid_sh("$(basepath)", "$(user)"),
-                ifvarclass => "!repo_dir_exists_$(repos_keys)";
+        ifvarclass => "!repo_dir_exists_$(repos_keys)";
+
+    "/usr/bin/git pull"
+        contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data[$(repos_keys)][dirname])", "$(user)"),
+        ifvarclass => "!repo_dir_exists_$(repos_keys)";
 }
+
