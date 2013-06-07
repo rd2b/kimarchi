@@ -18,13 +18,22 @@ apt-get install cfengine3
 git clone https://github.com/rd2b/kimarchi.git
 mv kimarchi github-repository
 ln -sf github-repository cf-repos
-git pull https://github.com/rd2b/cfengine-bacula.git
+git clone https://github.com/rd2b/cfengine-bacula.git
 # Initializing first files
-cp /datagroups/cfengine/etc/cfengine3/* /var/lib/cfengine3/masterfiles/
-cp /datagroups/cfengine/etc/cfengine3/* /etc/cfengine3/
+mkdir /var/lib/cfengine3/masterfiles/
+cp /data/cf-repos/groups/cfengine/etc/cfengine3/* /var/lib/cfengine3/masterfiles/
+cp cfengine-bacula/bacula.cf /var/lib/cfengine3/masterfiles/
+
+cp /data/cf-repos/groups/cfengine/etc/cfengine3/* /etc/cfengine3/
+cp cfengine-bacula/bacula.cf /etc/cfengine3/
+
 # Run cf-agent twice to make sure every promise gets updated
 # -DCFpackage updates some packages
+/etc/init.d/cfengine3 restart
 cf-agent -IK -DCFpackage
+
+cf-runagent --interactive -H127.0.0.1
+
 cf-agent -IK -DCFpackage
 
 ```
