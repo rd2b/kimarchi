@@ -1,43 +1,33 @@
 bundle agent clone_git_repos {
 vars:
     cfmanual|cfmaster::
-        "git_monitor[cfexternals][0]" string => "https://github.com/rd2b/monitor.git";
+        "git_monitor" string => "https://github.com/rd2b/monitor.git";
 
     CFgit.devplatform::
         "username" string => "remi";
         "git_repos_base" string => "/home/$(username)/repositories/";
 
-        "git_repos[github][0]" string => "git@github.com:rd2b/kimarchi.git";
-        "git_repos[github][1]" string => "git@github.com:rd2b/config.git";
-
-
-        "projects"  slist => getindices("git_repos");
+        "git_repos[0]" string => "git@github.com:rd2b/kimarchi.git";
+        "git_repos[1]" string => "git@github.com:rd2b/config.git";
 
 methods:
     CFgit.devplatform::
         "placeholder" usebundle => clone_git_repos_project(
-                "$(git_repos_base)/$(projects)", 
-                "clone_git_repos.git_repos[$(projects)]",
-                "$(username)");
+                "$(git_repos_base)", "$(git_repos)", "$(username)");
 
     cfmanual|cfmaster::
         "placeholder" usebundle => clone_git_repos_project(
-                "/data/cfexternals",
-                "clone_git_repos.git_monitor[cfexternals]",
-                "root" );
+                "/data/cfexternals", "$(git_monitor)", "root" );
 }
 
 bundle agent clone_git_repos_project(basepath, repos, user) {
 vars:
-
-    "repos_keys" slist => getindices("$(repos)");
-
-    "repo_data[$(repos_keys)][dirname]" string => execresult(
-            "/usr/bin/basename $($(repos)[$(repos_keys)]) .git", "noshell");
+    "repo_data" string => execresult(
+            "/usr/bin/basename $(repos) .git", "noshell");
 
 classes:
     "repo_dir_exists_$(repos_keys)" expression => isdir(
-            "$(basepath)/$(repo_data[$(repos_keys)][dirname])");
+            "$(basepath)/$(repo_data)");
 
 files:
 # Creates dir if not exists:
@@ -46,11 +36,11 @@ files:
         perms => owner("$(user)");
 
 # Handles perm on my Repository folder:
-    "$(basepath)/$(repo_data[$(repos_keys)][dirname])/."
+    "$(basepath)/$(repo_data)/."
         perms => owner("$(user)");
 
 # Handles perm in my Repository folder and subfoldders:
-    "$(basepath)/$(repo_data[$(repos_keys)][dirname])"
+    "$(basepath)/$(repo_data)"
         depth_search => recurse("inf"),
         perms => owner("$(user)");
 
@@ -61,7 +51,7 @@ commands:
         ifvarclass => "!repo_dir_exists_$(repos_keys)";
 
     "/usr/bin/git pull"
-        contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data[$(repos_keys)][dirname])", "$(user)"),
+        contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data)", "$(user)"),
         ifvarclass => "repo_dir_exists_$(repos_keys)";
 }
 
