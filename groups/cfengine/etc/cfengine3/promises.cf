@@ -2,10 +2,10 @@ body common control
 {
     bundlesequence  => { 
         "update",
-        "pkg",
         "crontabs",
         "default",
         "monitoring",
+        "pkg",
         "cleanup"
     };
 
