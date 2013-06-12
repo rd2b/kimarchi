@@ -1,15 +1,10 @@
 body common control
 {
     bundlesequence  => { 
-        "update",
-        "crontabs",
-        "default",
-        "monitoring",
-        "pkg",
-        "cleanup"
+        "@{globals.defaultseq}"
     };
 
-    inputs          => {
+    inputs => {
         "update.cf", 
         "pkg.cf",
         "crontab.cf",
@@ -31,6 +26,16 @@ body common control
 }
 
 bundle common globals{
+vars:
+    "defaultseq" => slist {
+        "update",
+        "crontabs",
+        "default",
+        "monitoring",
+        "pkg",
+        "cleanup"
+    };
+
 classes:
 # Mise en place des groupes de machines
     "standalone" not =>  "acgform_local" ;
