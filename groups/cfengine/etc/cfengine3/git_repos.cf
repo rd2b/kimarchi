@@ -26,7 +26,7 @@ vars:
             "/usr/bin/basename $(repos) .git", "noshell");
 
 classes:
-    "repo_dir_exists_$(repos_keys)" expression => isdir(
+    "repo_dir_exists_$(repos)" expression => isdir(
             "$(basepath)/$(repo_data)");
 
 files:
@@ -48,10 +48,10 @@ files:
 commands:
     "/usr/bin/git clone $($(repos)[$(repos_keys)])"
         contain => in_dir_and_setuid_sh("$(basepath)", "$(user)"),
-        ifvarclass => "!repo_dir_exists_$(repos_keys)";
+        ifvarclass => "!repo_dir_exists_$(repos))";
 
     "/usr/bin/git pull"
         contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data)", "$(user)"),
-        ifvarclass => "repo_dir_exists_$(repos_keys)";
+        ifvarclass => "repo_dir_exists_$(repos)";
 }
 
