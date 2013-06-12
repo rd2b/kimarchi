@@ -56,6 +56,6 @@ commands:
 
     "/usr/bin/git pull"
         contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data)", "$(user)"),
-        ifvarclass => "repo_dir_exists_$(repos_data)";
+        ifvarclass => "repo_dir_exists_$(repo_data)";
 }
 
