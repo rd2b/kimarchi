@@ -1,0 +1,6 @@
+
+body agent control {
+# Do not rely on DNS
+    skipidentify => "true";
+}
+

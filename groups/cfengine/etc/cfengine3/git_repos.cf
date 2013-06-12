@@ -2,6 +2,7 @@ bundle agent clone_git_repos {
 vars:
     cfmanual|cfmaster::
         "git_monitor" string => "https://github.com/rd2b/monitor.git";
+        "git_cfrepos" string => "https://github.com/rd2b/kimarchi.git";
 
     CFgit.devplatform::
         "username" string => "remi";
@@ -12,12 +13,15 @@ vars:
 
 methods:
     CFgit.devplatform::
-        "placeholder" usebundle => clone_git_repos_project(
+        "handlerepositories" usebundle => clone_git_repos_project(
                 "$(git_repos_base)", "$(git_repos)", "$(username)");
 
     cfmanual|cfmaster::
-        "placeholder" usebundle => clone_git_repos_project(
+        "handlegitmonitor" usebundle => clone_git_repos_project(
                 "/data/cfexternals", "$(git_monitor)", "root" );
+
+        "handlecfrepos" usebundle => clone_git_repos_project(
+                "/data", "$(git_monitor)", "root" );
 }
 
 bundle agent clone_git_repos_project(basepath, repos, user) {

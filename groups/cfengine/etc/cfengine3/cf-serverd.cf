@@ -20,7 +20,7 @@ body server control
         "192.168.122.0/24", 
         "::1" 
     };
-    skipverify          => { "192.168.122.0/24" };
+    skipverify          => { "::1", "127.0.0.1", "192.168.122.0/24" };
     allowusers          => { "root" };
 }
 

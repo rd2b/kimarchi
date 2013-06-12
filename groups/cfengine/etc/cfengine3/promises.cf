@@ -2,10 +2,10 @@ body common control
 {
     bundlesequence  => { 
         "update",
-        "pkg",
         "crontabs",
         "default",
         "monitoring",
+        "pkg",
         "cleanup"
     };
 
@@ -25,6 +25,7 @@ body common control
         "git_repos.cf",
         "monitoring.cf",
         "cleanup.cf",
+        "cf-agent.cf",
         "cf-serverd.cf"
     };
 }
@@ -65,10 +66,5 @@ vars:
         "group_path"    string => "/data/cf-repos";
         "etc_src"       string => "$(group_path)/default/etc";
         "usrlocalbin_src"   string => "$(group_path)/default/usr/local/bin";
-}
-
-body agent control {
-# Do not rely on DNS
-    skipidentify => "true";
 }
 
