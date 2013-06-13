@@ -27,7 +27,7 @@ body common control
 
 bundle common globals{
 vars:
-    "defaultseq" => slist {
+    "defaultseq" slist => {
         "update",
         "crontabs",
         "default",
