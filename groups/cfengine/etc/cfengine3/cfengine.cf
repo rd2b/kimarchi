@@ -21,7 +21,7 @@ vars:
     redhat::
         "master_location"   string => "/var/cfengine/masterfiles";              
 files:
-    ubuntu|debian::
+    (ubuntu|debian).cfmanual::
         "/etc/default/cfengine3"
                   comment   => "copy default/cfengine3 to /etc",
                   perms     => promisemode("644"),
@@ -33,7 +33,7 @@ files:
             edit_line => append_if_no_line("RUN_CFEXECD=1");
 
 
-    ubuntu|debian|redhat::
+    (ubuntu|debian|redhat).(cfmaster|cfmanual)::
         "$(master_location)"
         comment => "Updating masterfiles",
         copy_from => secure_cp("$(masterfilesrcdir)","$(globals.serverhost)"),
