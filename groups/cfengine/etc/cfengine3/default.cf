@@ -43,6 +43,20 @@ files:
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
 
+# Handling ssh authorized keys:
+        "/home/${myuser}/.ssh/authorized_keys"
+            handle => "remi_ssh_pub",
+            comment => "Install public ssh keys",
+            perms => mog("0644","${myuser}","${myuser}"),
+            edit_line => append_if_no_lines( "@{keys}" );
+
+       "/root/.ssh/authorized_keys"
+            handle => "remi_ssh_pub",
+            comment => "Install public ssh keys",
+            perms => mog("0644","root","root"),
+            edit_line => append_if_no_lines( "@{keys}" );
+
+
     debian::
         "/etc/timezone"     edit_line => replace_or_add("Etc/UTC","$(timezone)");
         "/etc/localtime"  
@@ -62,19 +76,6 @@ files:
             perms     => promisemode("600"),
             copy_from => secure_cp("$(globals.group_path)/$(mysqlsrcdirs)","$(globals.serverhost)"),
             depth_search => recurse("inf");
-
-        "/home/${myuser}/.ssh/authorized_keys"
-            handle => "remi_ssh_pub",
-            comment => "Install public ssh keys",
-            perms => mog("0644","${myuser}","${myuser}"),
-            edit_line => append_if_no_lines( "@{keys}" );
-
-       "/root/.ssh/authorized_keys"
-            handle => "remi_ssh_pub",
-            comment => "Install public ssh keys",
-            perms => mog("0644","root","root"),
-            edit_line => append_if_no_lines( "@{keys}" );
-
 
 
 processes:
