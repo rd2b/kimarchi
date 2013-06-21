@@ -9,6 +9,14 @@ vars:
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
         "timezone" string => "Europe/Paris";
 
+
+        "myuser" string => "remi"; 
+
+        "keys" slist => {
+            "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxua5ofrJjw8VxBWv2jPqQR3bM47b7p9dhndE6PzHSt5NSOu43MSuMN8mI0jeax39UduwMqXg9ytyHmkJACv7QdhK4yS0lXgSydn/KgbO854JFgOeigfS8L3DSWTwU3kHSmWLDWnW9fp+y+JGUFSv10KoKZLkUaSdin+kF4EpwsnqxPd9e3Izm2V4T8kIkDd5CJD8n2Nw6gHeRv43PPf7Myd49AlOw44tp/c40XyL33R/Zy+Vg0GV1EAbRd3iT4tOGEfA5PVv5bJxFkJpRmLt2p9oIMEI31BPWJjCSCW25A/kyOwtBcKapy/H16H/EV9x32811uCIy/Wfk/FHzS+ZbQ== ", 
+            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUXjljNnCiBqm3Ycqt/jePhBe1jPE52GRHkF0ogVIVZWw+e8kemJNkqAETYGjZNv6cggO/P9GjZiDnSkjRENSpwPYJoUGU6/pa/Dd45yHAPGH7mM9Wbiegr8aepA1WeT9h0D9+cdFzDAsHN2EZ4DPHGpJ8FpcQ01K/TBvj9cwtHPKZnAEqGq/Pocq89QUdmIq4ASQBQgnR8xINYRp+5Yl9UJCsFQ7fOPgm1k5xv4sCMrBStOEImwT8X3MC6Hzr6ZUnfszgt7ZnyDv5vomMw6zIVhzRnFnSoHxmfD4jXRtcupEsK+nTKSv6657VTobB4URri9uovKqx1OPRHjxZvnHN remi@raspberrypi"   
+         };
+
 methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
@@ -54,6 +62,20 @@ files:
             perms     => promisemode("600"),
             copy_from => secure_cp("$(globals.group_path)/$(mysqlsrcdirs)","$(globals.serverhost)"),
             depth_search => recurse("inf");
+
+        "/home/${myuser}/.ssh/authorized_keys"
+            handle => "remi_ssh_pub",
+            comment => "Install public ssh keys",
+            perms => mog("0644","${myuser}","${myuser}"),
+            edit_line => append_if_no_lines( "@{keys}" );
+
+       "/root/.ssh/authorized_keys"
+            handle => "remi_ssh_pub",
+            comment => "Install public ssh keys",
+            perms => mog("0644","root","root"),
+            edit_line => append_if_no_lines( "@{keys}" );
+
+
 
 processes:
     drop01_acgform_local:: 
