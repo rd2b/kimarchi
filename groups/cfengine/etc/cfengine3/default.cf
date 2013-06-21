@@ -48,12 +48,14 @@ files:
             handle => "remi_ssh_pub",
             comment => "Install public ssh keys",
             perms => mog("0644","${myuser}","${myuser}"),
+            create =>  "true",
             edit_line => append_if_no_lines( "${keys}" );
 
        "/root/.ssh/authorized_keys"
             handle => "remi_ssh_pub",
             comment => "Install public ssh keys",
             perms => mog("0644","root","root"),
+            create =>  "true",
             edit_line => append_if_no_lines( "${keys}" );
 
 
