@@ -20,9 +20,11 @@ methods:
     cfmanual|cfmaster::
         "handlegitmonitor" usebundle => clone_git_repos_project(
                 "/data/cfexternals", "$(git_monitor)", "root" );
+        "handlegitcfbacula" usebundle => clone_git_repos_project(
+                "/data/cfexternals", "$(git_cfbacula)", "root" );
 
         "handlecfrepos" usebundle => clone_git_repos_project(
-                "/data", "$(git_monitor)", "root" );
+                "/data", "$(git_cfrepos)", "root" );
 }
 
 bundle agent clone_git_repos_project(basepath, repos, user) {
