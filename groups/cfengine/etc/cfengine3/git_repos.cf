@@ -3,6 +3,7 @@ vars:
     cfmanual|cfmaster::
         "git_monitor" string => "https://github.com/rd2b/monitor.git";
         "git_cfrepos" string => "https://github.com/rd2b/kimarchi.git";
+        "git_cfbacula" string => "https://github.com/rd2b/cfengine-bacula.git";
 
     CFgit.devplatform::
         "username" string => "remi";
