@@ -36,8 +36,9 @@ packages:
     CFpackages::
         "$(utils)"
         comment => "install $(utils)",
-                package_policy   => "add",
-                package_method   => generic;
+        action => if_elapsed("240"),
+        package_policy   => "add",
+        package_method   => generic;
 
 commands:
     changed_crontab::

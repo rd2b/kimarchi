@@ -12,6 +12,7 @@ files:
         comment         => "Clean up reports older than 3 days",
         delete          => tidy,
         file_select     => days_old("3"),
+        action          => if_elapsed("120"),
         depth_search    => recurse("inf");
 
 

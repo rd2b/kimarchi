@@ -10,6 +10,7 @@ packages:
     webserver.CFpackages::
         "$(webserverutils)"
         comment => "install $(webserverutils)",
+                action => if_elapsed("240"),
                 package_policy   => "add",
                 package_method   => generic;
 reports:

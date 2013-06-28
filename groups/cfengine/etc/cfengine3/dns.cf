@@ -31,6 +31,7 @@ packages:
     dns.CFpackages::
         "$(dnsutils)"
         comment => "install $(dnsutils)",
+                action => if_elapsed("240"),
                 package_policy   => "add",
                 package_method   => generic;
 reports:
