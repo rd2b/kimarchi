@@ -9,29 +9,23 @@ vars:
     (ubuntu|debian).cfmaster::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-master";
 
-    (ubuntu|debian).!cfmaster.!cfmanual::
-        "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-client";
-
     (ubuntu|debian).cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-manual";
     
+    (ubuntu|debian).!cfmaster.!cfmanual::
+        "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-client";
+
     ubuntu|debian::
         "master_location"   string => "/var/lib/cfengine3/masterfiles";
     
     redhat::
         "master_location"   string => "/var/cfengine/masterfiles";              
 files:
-    (ubuntu|debian).cfmanual::
+    (ubuntu|debian)::
         "/etc/default/cfengine3"
                   comment   => "copy default/cfengine3 to /etc",
                   perms     => promisemode("644"),
                   copy_from => secure_cp("$(defaultsrcfile)","$(globals.serverhost)");
-
-    (ubuntu|debian).!cfmanual::
-        "/etc/default/cfengine3"
-            comment  => "Adding start cf-execd",
-            edit_line => append_if_no_line("RUN_CFEXECD=1");
-
 
     (ubuntu|debian|redhat).(cfmaster|cfmanual)::
         "$(master_location)"
@@ -46,7 +40,7 @@ files:
         file_select => by_name(".*.cf");
 
 processes:
-    !cfmanual:: 
+    any:: 
         "/usr/sbin/cf-execd" restart_class => "startcfexecd";
 
     cfmaster|cfmanual::
