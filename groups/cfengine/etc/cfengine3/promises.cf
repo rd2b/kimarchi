@@ -1,6 +1,7 @@
 body common control
 {
-    bundlesequence  => { 
+    bundlesequence  => {
+        "cf_null",
         "@{globals.defaultseq}"
     };
 
