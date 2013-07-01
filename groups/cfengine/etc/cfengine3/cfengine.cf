@@ -36,7 +36,7 @@ files:
 
         "$(master_location)/bacula.cf"
         comment => "Updating masterfiles",
-        copy_from => secure_cp("/data/cfexternals/cfengine-bacula/bacula.cf","$(globals.serverhost)"),
+        copy_from => secure_cp("/data/cfexternals/cfenginebacula/bacula.cf","$(globals.serverhost)"),
         file_select => by_name(".*.cf");
 
 processes:
