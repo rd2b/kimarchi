@@ -40,6 +40,7 @@ classes:
     "standalone" not =>  "acgform_local" ;
     "dns" or => { "dns01_acgform_local", "dns02_acgform_local" };
     "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
+    "dlnaserver" or => { "raspberrypi" }
     "backupmaster" or => { "back01_acgform_local" };
     "backupclient" or => {
         "cf01_acgform_local",
