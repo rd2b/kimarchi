@@ -26,12 +26,11 @@ body common control
         "monitoring.cf",
         "cleanup.cf",
         "cf-agent.cf",
-        "localhost.cf",
         "cf-serverd.cf"
     };
 
 # Permets d'avoir un fichier d'input manquant (localhost.cf par exemple) :
-    ignore_missing_inputs => "true";
+#    ignore_missing_inputs => "true";
 }
 
 bundle common globals{
