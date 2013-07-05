@@ -10,9 +10,9 @@
 
 # to start these three daemons you need the /etc/cfengine3/promises.cf
 # have a look at the examples in /usr/share/doc/cfengine3/examples
-RUN_CFMONITORD=1
+RUN_CFMONITORD=0
 RUN_CFSERVERD=1
-RUN_CFEXECD=1
+RUN_CFEXECD=0
 
 # Additional options that are passed to the daemons
 CFMONITORD_ARGS=""
