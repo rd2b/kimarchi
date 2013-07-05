@@ -65,6 +65,8 @@ files:
             link_from => ln_s("/usr/share/zoneinfo/$(timezone)"),
             move_obstructions => "true";
 
+        "/etc/inittab"
+            edit_line => comment_lines_matching("[2-6]:23:respawn:/sbin/getty [0-9]* tty.*");
 
     any::
         "$(dirstocopy)"
