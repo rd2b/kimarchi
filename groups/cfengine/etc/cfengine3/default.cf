@@ -66,6 +66,9 @@ files:
             create =>  "true",
             edit_line => append_if_no_lines( "${keys}" );
 
+    dlnaserver::
+        "/etc/minidlna.conf"
+            perms => mog("0644","minidlna","minidlna");
 
     debian::
         "/etc/timezone"     edit_line => replace_or_add("Etc/UTC","$(timezone)");
