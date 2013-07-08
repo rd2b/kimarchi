@@ -78,6 +78,11 @@ files:
             handle => "file_transmission_directory",
              perms => mog("0755","root","root");
 
+        "/home/Downloads"
+            create =>  "true";
+        "/home/Incomplete"
+            create =>  "true";
+
     torrentserver.transmission_stopped::
         "/etc/transmission-daemon/settings.json"
             handle => "file_transmission",
