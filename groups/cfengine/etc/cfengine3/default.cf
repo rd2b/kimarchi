@@ -69,6 +69,9 @@ files:
     dlnaserver::
         "/etc/minidlna.conf"
             perms => mog("0644","minidlna","minidlna");
+    torrentserver::
+        "/etc/transmission-daemon/settings.json"
+             perms => mog("0644","root","root");
 
     debian::
         "/etc/timezone"     edit_line => replace_or_add("Etc/UTC","$(timezone)");
