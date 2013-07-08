@@ -73,6 +73,10 @@ files:
             perms => mog("0644","minidlna","minidlna");
 
     torrentserver::
+        "/etc/transmission-daemon"
+            handle => "file_transmission_directory",
+             perms => mog("0755","root","root");
+
         "/etc/transmission-daemon/settings.json"
             handle => "file_transmission",
              perms => mog("0644","root","root");
