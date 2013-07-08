@@ -12,6 +12,7 @@ vars:
 
 
         "myuser" string => "remi"; 
+        "transmissionuser" string => "debian-transmission";
 
         "keys" slist => {
             "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxua5ofrJjw8VxBWv2jPqQR3bM47b7p9dhndE6PzHSt5NSOu43MSuMN8mI0jeax39UduwMqXg9ytyHmkJACv7QdhK4yS0lXgSydn/KgbO854JFgOeigfS8L3DSWTwU3kHSmWLDWnW9fp+y+JGUFSv10KoKZLkUaSdin+kF4EpwsnqxPd9e3Izm2V4T8kIkDd5CJD8n2Nw6gHeRv43PPf7Myd49AlOw44tp/c40XyL33R/Zy+Vg0GV1EAbRd3iT4tOGEfA5PVv5bJxFkJpRmLt2p9oIMEI31BPWJjCSCW25A/kyOwtBcKapy/H16H/EV9x32811uCIy/Wfk/FHzS+ZbQ== ", 
@@ -76,19 +77,22 @@ files:
     torrentserver::
         "/etc/transmission-daemon"
             handle => "file_transmission_directory",
-             perms => mog("0755","root","root");
+             perms => mog("0755","${transmissionuser}","${transmissionuser}");
 
         "/home/Downloads/"
+            perms => mog("0755","${transmissionuser}","${transmissionuser}"),
             create =>  "true";
+
         "/home/Incomplete/"
+            perms => mog("0755","${transmissionuser}","${transmissionuser}"),
             create =>  "true";
 
     torrentserver.transmission_stopped::
-        "/etc/transmission-daemon/settings.json"
+        "/etc/transmission-daemon/settings.jsoan"
             handle => "file_transmission",
             copy_from => secure_cp("$(globals.group_path)/$(torrentsrc)","$(globals.serverhost)"),
             classes => if_repaired("starttransmission"),
-            perms => mog("0644","root","root");
+            perms => mog("0644","${transmissionuser}","${transmissionuser}");
 
 
 
