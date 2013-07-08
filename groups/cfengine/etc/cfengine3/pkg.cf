@@ -20,4 +20,12 @@ packages:
         package_policy   => "add",
         package_method   => generic;
 
+    torrentserver::
+        "rtorrent"
+        comment => "install $(packages)",
+        action => if_elapsed("1200"),
+        package_policy   => "add",
+        package_method   => generic;
+
+
 }
