@@ -82,7 +82,7 @@ files:
         "/etc/transmission-daemon/settings.json"
             handle => "file_transmission",
             copy_from => secure_cp("$(globals.group_path)/$(torrentsrc)","$(globals.serverhost)"),
-            classes => if_repaired("starttransmission")
+            classes => if_repaired("starttransmission"),
             perms => mog("0644","root","root");
 
 
