@@ -78,9 +78,9 @@ files:
             handle => "file_transmission_directory",
              perms => mog("0755","root","root");
 
-        "/home/Downloads"
+        "/home/Downloads/"
             create =>  "true";
-        "/home/Incomplete"
+        "/home/Incomplete/"
             create =>  "true";
 
     torrentserver.transmission_stopped::
