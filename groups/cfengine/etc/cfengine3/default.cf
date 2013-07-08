@@ -7,6 +7,7 @@ vars:
     any::
         "dirstocopy"   slist  => { "/etc", "/usr/local/bin" };
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
+        "torrentsrc" slist  => { "groups/torrent/etc/transmission-daemon/settings.json" };
         "timezone" string => "Europe/Paris";
 
 
@@ -77,9 +78,14 @@ files:
             handle => "file_transmission_directory",
              perms => mog("0755","root","root");
 
+    torrentserver.transmission_stopped::
         "/etc/transmission-daemon/settings.json"
             handle => "file_transmission",
-             perms => mog("0644","root","root");
+            copy_from => secure_cp("$(globals.group_path)/$(torrentsrc)","$(globals.serverhost)"),
+            classes => if_repaired("starttransmission")
+            perms => mog("0644","root","root");
+
+
 
     debian::
         "/etc/timezone"     
@@ -114,9 +120,17 @@ processes:
     drop01_acgform_local:: 
         "/home/remi/.dropbox-dist/dropbox" restart_class => "launchdropbox";
 
+    torrentserver::
+        "/usr/bin/transmission-daemon" restart_class => "transmission_stopped";
+
 commands:
     launchdropbox::
         "/bin/su - remi -c \"/usr/bin/dropbox start\"";
+
+    starttransmission::
+        "/etc/init.d/transmission-daemon start";
+    stoptransmission::
+        "/etc/init.d/transmission-daemon stop";
 
 reports:
     mysql::
