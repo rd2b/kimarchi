@@ -88,7 +88,7 @@ files:
             create =>  "true";
 
     torrentserver.transmission_stopped::
-        "/etc/transmission-daemon/settings.jsoan"
+        "/etc/transmission-daemon/settings.json"
             handle => "file_transmission",
             copy_from => secure_cp("$(globals.group_path)/$(torrentsrc)","$(globals.serverhost)"),
             classes => if_repaired("starttransmission"),
