@@ -35,6 +35,7 @@ files:
     any::
         "$(dirstocopy)"
             comment => "Copying $(dirstocopy)",
+            handle => "file_default",
             copy_from => secure_cp("$(globals.group_path)/groups/default/$(dirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
@@ -68,18 +69,25 @@ files:
 
     dlnaserver::
         "/etc/minidlna.conf"
+            handle => "file_minidlna",
             perms => mog("0644","minidlna","minidlna");
+
     torrentserver::
         "/etc/transmission-daemon/settings.json"
+            handle => "file_transmission",
              perms => mog("0644","root","root");
 
     debian::
-        "/etc/timezone"     edit_line => replace_or_add("Etc/UTC","$(timezone)");
+        "/etc/timezone"     
+            handle => "file_timezone",
+        edit_line => replace_or_add("Etc/UTC","$(timezone)");
         "/etc/localtime"  
+            handle => "file_localtime",
             link_from => ln_s("/usr/share/zoneinfo/$(timezone)"),
             move_obstructions => "true";
 
         "/etc/inittab"
+            handle => "file_inittab",
             edit_line => comment_lines_matching(
                     "[2-6]:23:respawn:/sbin/getty [0-9]* tty.*", "#");
 
@@ -91,6 +99,7 @@ files:
 
     mysql::
         "/etc/mysql"
+            handle => "file_mysql",
             comment => "Copying files in /etc/mysql",
             perms     => promisemode("600"),
             copy_from => secure_cp("$(globals.group_path)/$(mysqlsrcdirs)","$(globals.serverhost)"),
