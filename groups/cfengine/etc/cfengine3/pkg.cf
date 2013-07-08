@@ -21,7 +21,7 @@ packages:
         package_method   => generic;
 
     torrentserver::
-        "rtorrent"
+        "transmission-cli transmission-daemon"
         comment => "install $(packages)",
         action => if_elapsed("1200"),
         package_policy   => "add",
