@@ -33,7 +33,8 @@ files:
             comment   => "Editing default/cfengine3 to /etc",
             perms     => promisemode("644"),
             create =>  "true",
-            edit_line => append_if_no_lines( "${defaultcfengineopt}");
+            edit_line => append_if_no_lines( "${defaultcfengineopt}"),
+            restart_class => "restartcfengine";
 
 
     (ubuntu|debian|redhat).(cfmaster|cfmanual)::
@@ -56,6 +57,9 @@ processes:
         "/usr/sbin/cf-serverd" restart_class => "startcfserverd";
 
 commands:
+    restartcfengine.(ubuntu|debian)::
+        "/etc/init.d/cfengine3 start";
+
     startcfexecd.(ubuntu|debian)::
         "/etc/init.d/cfengine3 start";
 
