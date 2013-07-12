@@ -8,21 +8,18 @@ vars:
 
     (ubuntu|debian).cfmaster::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-master";
-        "etcdefaultcfengine[RUN_CFMONITORD]"    string  =>  "0"; # Non utilisé
-        "etcdefaultcfengine[RUN_CFSERVERD]"     string  =>  "1";
-        "etcdefaultcfengine[RUN_CFEXECD]"       string  =>  "1";
+        "defaultcfengineopt" slist => { 
+            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
 
     (ubuntu|debian).cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-manual";
-        "etcdefaultcfengine[RUN_CFMONITORD]"    string  =>  "0"; # Non utilisé
-        "etcdefaultcfengine[RUN_CFSERVERD]"     string  =>  "1";
-        "etcdefaultcfengine[RUN_CFEXECD]"       string  =>  "1";
+        "defaultcfengineopt" slist => { 
+            "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
     
     (ubuntu|debian).!cfmaster.!cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-client";
-        "etcdefaultcfengine[RUN_CFMONITORD]"    string  =>  "0"; # Non utilisé
-        "etcdefaultcfengine[RUN_CFSERVERD]"     string  =>  "0";
-        "etcdefaultcfengine[RUN_CFEXECD]"       string  =>  "1";
+        "defaultcfengineopt" slist => { 
+            "RUN_CFMONITORD=0", "RUN_CFSERVERD=0", "RUN_CFEXECD=1" };
 
     ubuntu|debian::
         "master_location"   string => "/var/lib/cfengine3/masterfiles";
@@ -33,10 +30,10 @@ vars:
 files:
     (ubuntu|debian)::
         "/etc/default/cfengine3"
-                  comment   => "copy default/cfengine3 to /etc",
-                  perms     => promisemode("644"),
-                  edit_line => set_variable_values("$(etcdefaultcfengine)"),
-                  copy_from => secure_cp("$(defaultsrcfile)","$(globals.serverhost)");
+            comment   => "Editing default/cfengine3 to /etc",
+            perms     => promisemode("644"),
+            create =>  "true",
+            edit_line => append_if_no_lines( "${defaultcfengineopt}");
 
 
     (ubuntu|debian|redhat).(cfmaster|cfmanual)::
