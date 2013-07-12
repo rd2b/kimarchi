@@ -9,12 +9,12 @@ vars:
     (ubuntu|debian).cfmaster::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-master";
         "defaultcfengineopt" slist => { 
-            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
+            "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
 
     (ubuntu|debian).cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-manual";
         "defaultcfengineopt" slist => { 
-            "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
+            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
     
     (ubuntu|debian).!cfmaster.!cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-client";
