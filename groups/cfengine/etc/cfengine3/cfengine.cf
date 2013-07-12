@@ -14,7 +14,7 @@ vars:
     (ubuntu|debian).cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-manual";
         "defaultcfengineopt" slist => { 
-            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
+            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=0" };
     
     (ubuntu|debian).!cfmaster.!cfmanual::
         "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-client";
