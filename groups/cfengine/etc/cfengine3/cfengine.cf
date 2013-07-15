@@ -34,7 +34,7 @@ files:
             perms     => promisemode("644"),
             create =>  "true",
             edit_line => append_if_no_lines( "${defaultcfengineopt}"),
-            restart_class => "restartcfengine";
+            classes => if_repaired("restartcfengine");
 
 
     (ubuntu|debian|redhat).(cfmaster|cfmanual)::
