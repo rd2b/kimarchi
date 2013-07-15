@@ -25,6 +25,9 @@
 bundle agent update
 {
 vars:
+
+    "masterfilesrcdir" string => "$(globals.group_path)/groups/cfengine/etc/cfengine3/";
+
     !redhat::
         "master_location"   string => "/var/lib/cfengine3/masterfiles";
         "etc_cfengine"      string => "/etc/cfengine3";
@@ -35,8 +38,11 @@ vars:
 
     acgform_local::
         "master_server"     string => "192.168.122.12";
+
     !acgform_local::
         "master_server"     string => "127.0.0.1";
+        "defaultcfengineopt" slist => {
+            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=0" };
 
 files:
     "$(etc_cfengine)"
@@ -45,6 +51,14 @@ files:
         file_select => by_name(".*.cf"),
         depth_search => recurse("inf"),
         action => uimmediate;
+
+    (ubuntu|debian)::
+        "/etc/default/cfengine3"
+            comment   => "Editing default/cfengine3 to /etc",
+            perms     => promisemode("644"),
+            create =>  "true",
+            edit_line => append_if_no_lines( "${defaultcfengineopt}"),
+            restart_class => "restartcfengine";
 }
 
 ############################################
