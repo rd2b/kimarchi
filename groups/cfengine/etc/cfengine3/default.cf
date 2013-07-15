@@ -74,7 +74,9 @@ files:
     dlnaserver::
         "/etc/minidlna.conf"
             handle => "file_minidlna",
-            perms => mog("0644","minidlna","minidlna");
+            perms => mog("0644","minidlna","minidlna"),
+            classes => if_repaired("restart_minidlna");
+
 
     torrentserver::
         "/etc/transmission-daemon"
@@ -101,7 +103,8 @@ files:
     debian::
         "/etc/timezone"     
             handle => "file_timezone",
-        edit_line => replace_or_add("Etc/UTC","$(timezone)");
+            edit_line => replace_or_add("Etc/UTC","$(timezone)");
+
         "/etc/localtime"  
             handle => "file_localtime",
             link_from => ln_s("/usr/share/zoneinfo/$(timezone)"),
@@ -142,6 +145,9 @@ commands:
         "/etc/init.d/transmission-daemon start";
     stoptransmission::
         "/etc/init.d/transmission-daemon stop";
+
+    restart_minidlna::
+        "/etc/init.d/minidlna restart";
 
 reports:
     mysql::
