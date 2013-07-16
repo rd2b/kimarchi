@@ -14,6 +14,15 @@ vars:
             "lighttpd",
             "php5-cgi"
         };
+files:
+    tinytinyrss.installed_lighttpd::
+        "/etc/lighttpd/lighttpd.conf"
+            handle => "fix_lighttpd_conf",
+            comment => "Fix Lighttpd config file"
+            perms => mog("0644","root","root"),
+            edit_line => replace_line_end(
+                    "static-file.exclude-extensions", 
+                    '= ( ".pl", ".fcgi" )');
 
 packages:
     not_installed_lighttpd|not_installed_php5cgi::
