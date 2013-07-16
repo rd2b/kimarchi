@@ -1,7 +1,7 @@
 bundle agent app_ttrss {
 classes:
     tinytinyrss::
-        "installed_lighttpd" expression => fileexists("/usr/bin/lighttpd");
+        "installed_lighttpd" expression => fileexists("/usr/sbin/lighttpd");
         "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
         "not_installed_lighttpd" not => "installed_lighttpd";
         "not_installed_php5cgi" not => "installed_php5cgi";
