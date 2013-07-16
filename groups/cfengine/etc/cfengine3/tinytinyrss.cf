@@ -43,6 +43,7 @@ commands:
         "/usr/sbin/lighty-enable-mod fastcgi"
             classes => if_repaired("reload_lighttpd");
 
+    !enabled_fastcgi::
         "/usr/sbin/lighty-enable-mod fastcgi-php"
             classes => if_repaired("reload_lighttpd"); 
 }
