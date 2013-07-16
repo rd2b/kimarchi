@@ -39,6 +39,6 @@ commands:
 
     !enabled_php5cgi::
         "lighty-enable-mod fastcgi-php"
-            classes => cedfine("reload_lighttpd"); 
+            classes => cdefine("reload_lighttpd"); 
 }
 
