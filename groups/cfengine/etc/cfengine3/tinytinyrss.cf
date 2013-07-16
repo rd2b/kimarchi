@@ -54,12 +54,12 @@ commands:
 
 bundle agent tinytinyrss_tarball_is_present {
 vars:
-    "ttrss_tarbal" string => "/root/ttrss-latest.tar.gz";
+    "ttrss_tarball" string => "/root/ttrss-latest.tar.gz";
     "ttrss_url" string => "https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.8.tar.gz";
 
 classes:
       "ttrss_tarball_is_present" expression =>
-              fileexists("$(trss_tarbal)");
+              fileexists("$(ttrss_tarball)");
 
 reports:
         ttrss_tarball_is_present::
@@ -67,6 +67,6 @@ reports:
 
 commands:
           !ttrss_tarball_is_present::
-                  "/usr/bin/wget -q -O $(ttrss_tarbal) $(ttrss_url)"
+                  "/usr/bin/wget -q -O $(ttrss_tarball) $(ttrss_url)"
                       comment => "Downloading WordPress.";
 }
