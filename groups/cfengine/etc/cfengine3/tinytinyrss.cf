@@ -22,7 +22,8 @@ files:
             perms => mog("0644","root","root"),
             edit_line => replace_line_end(
                     "static-file.exclude-extensions", 
-                    '= ( ".pl", ".fcgi" )');
+                    '= ( ".pl", ".fcgi" )'),
+            classes => if_repaired("reload_lighttpdd"), 
 
 packages:
     not_installed_lighttpd|not_installed_php5cgi::
