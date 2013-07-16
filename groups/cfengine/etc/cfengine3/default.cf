@@ -36,6 +36,9 @@ methods:
     webserver:: 
         "makewebserver" usebundle => app_apache;
 
+    tinytinyrss::
+        "makettrss" usebundle => app_ttrss;
+
 files:
     any::
         "$(dirstocopy)"

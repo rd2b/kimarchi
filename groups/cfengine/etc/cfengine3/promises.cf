@@ -18,6 +18,7 @@ body common control
         "libdefault.cf",
         "cfengine.cf",
         "bacula.cf",
+        "tinytinyrss.cf",
         "dns.cf",
         "apache.cf",
         "monitor.cf",

@@ -1,0 +1,29 @@
+bundle agent app_ttrss {
+classes:
+    tinytinyrss::
+        "installed_lighttpd" expression => fileexists("/usr/bin/lighttpd");
+        "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
+        "not_installed_lighttpd" not => "installed_lighttpd";
+        "not_installed_php5cgi" not => "installed_php5cgi";
+
+
+
+vars:
+    tinytinyrss::
+        "lighttpdutils" slist => { 
+            "lighttpd",
+            "php5-cgi"
+        };
+
+packages:
+    not_installed_lighttpd|not_installed_php5cgi::
+        "$(lighttpdutils)"
+        comment => "install $(lighttpdutils)",
+                action => if_elapsed("240"),
+                package_policy   => "add",
+                package_method   => generic;
+commands:
+    reload_lighttpdd::
+        "/etc/init.d/lighttpd force-reload";
+}
+
