@@ -38,7 +38,7 @@ commands:
         "/etc/init.d/lighttpd force-reload";
 
     !enabled_php5cgi::
-        "lighty-enable-mod fastcgi-php";
+        "lighty-enable-mod fastcgi-php"
             classes => cedfine("reload_lighttpd"); 
 }
 
