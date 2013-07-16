@@ -5,15 +5,15 @@ classes:
         "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
         "not_installed_lighttpd" not => "installed_lighttpd";
         "not_installed_php5cgi" not => "installed_php5cgi";
-
-
+    
+    tinytinyrss.!enabled_php5cgi.installed_lighttpd::
+        "enabled_php5cgi" expression => fileexists("$(fascgi_conf)");
 
 vars:
     tinytinyrss::
-        "lighttpdutils" slist => { 
-            "lighttpd",
-            "php5-cgi"
-        };
+        "fascgi_conf" string => "/etc/lighttpd/conf-available/15-fastcgi-php.conf";
+        "lighttpdutils" slist => { "lighttpd", "php5-cgi" };
+
 files:
     tinytinyrss.installed_lighttpd::
         "/etc/lighttpd/lighttpd.conf"
@@ -23,7 +23,7 @@ files:
             edit_line => replace_line_end(
                     "static-file.exclude-extensions", 
                     '= ( ".pl", ".fcgi" )'),
-            classes => if_repaired("reload_lighttpdd"); 
+            classes => if_repaired("reload_lighttpd"); 
 
 packages:
     not_installed_lighttpd|not_installed_php5cgi::
@@ -32,8 +32,13 @@ packages:
                 action => if_elapsed("240"),
                 package_policy   => "add",
                 package_method   => generic;
+
 commands:
-    reload_lighttpdd::
+    reload_lighttpd::
         "/etc/init.d/lighttpd force-reload";
+
+    !enabled_php5cgi::
+        "lighty-enable-mod fastcgi-php";
+            classes => cedfine("reload_lighttpd"); 
 }
 
