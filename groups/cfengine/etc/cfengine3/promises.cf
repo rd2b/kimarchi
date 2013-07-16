@@ -43,6 +43,7 @@ classes:
     "torrentserver" or => { "torrent01", "torrent02" };
     "gitserver" or => { "raspberrypi", "ks01" };
     "backupmaster" or => { "back01_acgform_local" };
+    "tinytinyrss" or => { "prod01_acgform_local" };
     "backupclient" or => {
         "cf01_acgform_local",
         "db01_acgform_local", "db02_acgform_local",
