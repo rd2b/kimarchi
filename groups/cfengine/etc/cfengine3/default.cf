@@ -2,6 +2,7 @@ bundle agent default
 {
 classes:
 # Classes locales au bundle:
+      "handle_inittab" expression => fileexists("/etc/inittab");
 
 vars:
     any::
@@ -110,6 +111,7 @@ files:
             link_from => ln_s("/usr/share/zoneinfo/$(timezone)"),
             move_obstructions => "true";
 
+    debian.handle_inittab::
         "/etc/inittab"
             handle => "file_inittab",
             edit_line => comment_lines_matching(
