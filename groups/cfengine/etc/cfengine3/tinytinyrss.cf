@@ -39,11 +39,11 @@ commands:
     reload_lighttpd::
         "/etc/init.d/lighttpd force-reload";
 
-    !enabled_php5cgi::
+    !enabled_fastcgi::
         "/usr/sbin/lighty-enable-mod fastcgi"
             classes => if_repaired("reload_lighttpd");
 
-    !enabled_fastcgi::
+    !enabled_php5cgi::
         "/usr/sbin/lighty-enable-mod fastcgi-php"
             classes => if_repaired("reload_lighttpd"); 
 }
