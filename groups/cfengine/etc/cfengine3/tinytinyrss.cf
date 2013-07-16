@@ -11,7 +11,7 @@ classes:
 
 vars:
     tinytinyrss::
-        "fascgi_conf" string => "/etc/lighttpd/conf-available/15-fastcgi-php.conf";
+        "fascgi_conf" string => "/etc/lighttpd/conf-enabled/15-fastcgi-php.conf";
         "lighttpdutils" slist => { "lighttpd", "php5-cgi" };
 
 files:
@@ -38,7 +38,7 @@ commands:
         "/etc/init.d/lighttpd force-reload";
 
     !enabled_php5cgi::
-        "lighty-enable-mod fastcgi-php"
-            classes => cdefine("reload_lighttpd"); 
+        "/usr/sbin/lighty-enable-mod fastcgi-php"
+            classes => if_repaired("reload_lighttpd"); 
 }
 
