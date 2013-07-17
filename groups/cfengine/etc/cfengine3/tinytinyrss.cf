@@ -2,26 +2,28 @@ bundle agent app_ttrss {
 methods:
     tinytinyrss::
         "get_ttrss" usebundle => tinytinyrss_tarball_is_present;
+        "handle_lighttpd" usebundle => fix_lighttpd;
+}
 
+bundle agent fix_lighttpd {
 classes:
-    tinytinyrss::
-        "installed_lighttpd" expression => fileexists("/usr/sbin/lighttpd");
-        "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
-        "not_installed_lighttpd" not => "installed_lighttpd";
-        "not_installed_php5cgi" not => "installed_php5cgi";
+
+    "installed_lighttpd" expression => fileexists("/usr/sbin/lighttpd");
+    "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
+    "not_installed_lighttpd" not => "installed_lighttpd";
+    "not_installed_php5cgi" not => "installed_php5cgi";
     
-    tinytinyrss.installed_lighttpd::
+    installed_lighttpd::
         "enabled_php5cgi" expression => fileexists("$(fascgiphp_conf)");
         "enabled_fastcgi" expression => fileexists("$(fascgi_conf)");
 
 vars:
-    tinytinyrss::
         "fascgiphp_conf" string => "/etc/lighttpd/conf-enabled/15-fastcgi-php.conf";
         "fascgi_conf" string => "/etc/lighttpd/conf-enabled/10-fastcgi.conf";
         "lighttpdutils" slist => { "lighttpd", "php5-cgi" };
 
 files:
-    tinytinyrss.installed_lighttpd::
+    installed_lighttpd::
         "/etc/lighttpd/lighttpd.conf"
             handle => "fix_lighttpd_conf",
             comment => "Fix Lighttpd config file",
@@ -30,6 +32,7 @@ files:
                     "static-file.exclude-extensions", 
                     '= ( ".pl", ".fcgi" )'),
             classes => if_repaired("reload_lighttpd"); 
+
 
 packages:
     not_installed_lighttpd|not_installed_php5cgi::
@@ -50,6 +53,7 @@ commands:
     !enabled_php5cgi::
         "/usr/sbin/lighty-enable-mod fastcgi-php"
             classes => if_repaired("reload_lighttpd"); 
+
 }
 
 bundle agent tinytinyrss_tarball_is_present {
