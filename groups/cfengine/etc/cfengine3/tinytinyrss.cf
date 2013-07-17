@@ -81,7 +81,7 @@ bundle agent tinytinyrss_tarball_extract {
 vars:
     "ttrss_tarball" string => "/root/ttrss-latest.tar.gz";
     "ttrss_destination" string => "/var/www";
-    "ttrss_directory" string => "$(ttrss_destination)/ttrss";
+    "ttrss_directory" string => "$(ttrss_destination)/Tiny-Tiny-RSS-1.8";
 
 classes:
     "ttrss_directory_present"  expression => fileexists("$(ttrss_directory)/");
