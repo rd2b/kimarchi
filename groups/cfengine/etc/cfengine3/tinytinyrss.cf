@@ -39,7 +39,7 @@ classes:
 vars:
         "fascgiphp_conf" string => "/etc/lighttpd/conf-enabled/15-fastcgi-php.conf";
         "fascgi_conf" string => "/etc/lighttpd/conf-enabled/10-fastcgi.conf";
-        "lighttpdutils" slist => { "lighttpd", "php5-cgi", "php5-mysql" };
+        "lighttpdutils" slist => { "lighttpd", "php5-cgi", "php5-mysql", "php5-curl" };
 
 files:
     installed_lighttpd::
