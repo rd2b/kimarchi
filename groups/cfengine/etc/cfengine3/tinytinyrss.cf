@@ -4,7 +4,7 @@ methods:
     tinytinyrss::
         "get_ttrss"         usebundle => tinytinyrss_tarball_is_present;
         "extract_ttrss"     usebundle => tinytinyrss_tarball_extract;
-        "database_ttrss"    usebundle => configuration_of_mysql_db_for_ttrss
+        "database_ttrss"    usebundle => configuration_of_mysql_db_for_ttrss;
         "handle_lighttpd"   usebundle => fix_lighttpd;
 }
 
