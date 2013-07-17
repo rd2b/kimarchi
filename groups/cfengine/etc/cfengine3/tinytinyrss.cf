@@ -2,9 +2,10 @@
 bundle agent app_ttrss {
 methods:
     tinytinyrss::
-        "get_ttrss" usebundle => tinytinyrss_tarball_is_present;
-        "extract_ttrss" usebundle => tinytinyrss_tarball_extract;
-        "handle_lighttpd" usebundle => fix_lighttpd;
+        "get_ttrss"         usebundle => tinytinyrss_tarball_is_present;
+        "extract_ttrss"     usebundle => tinytinyrss_tarball_extract;
+        "database_ttrss"    usebundle => configuration_of_mysql_db_for_ttrss
+        "handle_lighttpd"   usebundle => fix_lighttpd;
 }
 
 bundle agent fix_lighttpd {
@@ -98,7 +99,7 @@ commands:
 
 }
 
-bundle agent configuration_of_mysql_db_for_wordpress
+bundle agent configuration_of_mysql_db_for_ttrss
 {
 vars:
     "database" string => "ttrss";
