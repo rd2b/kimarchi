@@ -104,6 +104,11 @@ classes:
     "ttrss_directory_present"  expression => fileexists("$(ttrss_directory)/");
     "ttrss_tarball_present"  expression => fileexists("$(ttrss_tarball)");
 
+files:
+    "$(ttrss_directory)"
+        perms => mog("0644","www-data","www-data"),
+        depth_search => recurse("inf");
+
 reports:
     ttrss_directory_present::
         "Ttrss directory is present.";
