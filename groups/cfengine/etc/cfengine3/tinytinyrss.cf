@@ -97,3 +97,20 @@ commands:
             comment => "Unrolling tarball to $(ttrss_destination).";
 
 }
+
+bundle agent configuration_of_mysql_db_for_wordpress
+{
+vars:
+    "database" string => "ttrss";
+    "user" string => "myttrssuser";
+    "password" string => "TinyRSS@PassWord";
+
+commands:
+    "/usr/bin/mysql -u root -e \"
+              CREATE DATABASE IF NOT EXISTS ttrss;
+          GRANT ALL PRIVILEGES ON $(database).*
+                  TO '$(user)'@localhost
+                      IDENTIFIED BY '$(password)';
+              FLUSH PRIVILEGES;\"
+                    ";
+}
