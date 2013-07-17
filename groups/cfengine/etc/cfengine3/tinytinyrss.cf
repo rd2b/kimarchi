@@ -6,6 +6,23 @@ methods:
         "extract_ttrss"     usebundle => tinytinyrss_tarball_extract;
         "database_ttrss"    usebundle => configuration_of_mysql_db_for_ttrss;
         "handle_lighttpd"   usebundle => fix_lighttpd;
+        "handle_mysql"   usebundle => fix_mysql;
+}
+
+bundle agent fix_mysql {
+classes:
+
+    "installed_mysql" expression => fileexists("/usr/bin/mysql");
+vars:
+    "mysqlutils" slist => { "mysql" };
+
+packages:
+    !installed_mysql::
+        "$(mysqlutils)"
+        comment => "install $(mysqlutils)",
+                action => if_elapsed("240"),
+                package_policy   => "add",
+                package_method   => generic;
 }
 
 bundle agent fix_lighttpd {
@@ -13,8 +30,6 @@ classes:
 
     "installed_lighttpd" expression => fileexists("/usr/sbin/lighttpd");
     "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
-    "not_installed_lighttpd" not => "installed_lighttpd";
-    "not_installed_php5cgi" not => "installed_php5cgi";
     
     installed_lighttpd::
         "enabled_php5cgi" expression => fileexists("$(fascgiphp_conf)");
@@ -23,7 +38,7 @@ classes:
 vars:
         "fascgiphp_conf" string => "/etc/lighttpd/conf-enabled/15-fastcgi-php.conf";
         "fascgi_conf" string => "/etc/lighttpd/conf-enabled/10-fastcgi.conf";
-        "lighttpdutils" slist => { "lighttpd", "php5-cgi" };
+        "lighttpdutils" slist => { "lighttpd", "php5-cgi", "php5-mysql" };
 
 files:
     installed_lighttpd::
@@ -38,7 +53,7 @@ files:
 
 
 packages:
-    not_installed_lighttpd|not_installed_php5cgi::
+    !(installed_lighttpd.installed_php5cgi)::
         "$(lighttpdutils)"
         comment => "install $(lighttpdutils)",
                 action => if_elapsed("240"),
