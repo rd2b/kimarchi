@@ -1,7 +1,9 @@
+# Voir : http://sysadvent.blogspot.fr/2011/12/day-15-automating-wordpress-with.html
 bundle agent app_ttrss {
 methods:
     tinytinyrss::
         "get_ttrss" usebundle => tinytinyrss_tarball_is_present;
+        "extract_ttrss" usebundle => tinytinyrss_tarball_extract;
         "handle_lighttpd" usebundle => fix_lighttpd;
 }
 
@@ -73,4 +75,25 @@ commands:
           !ttrss_tarball_is_present::
                   "/usr/bin/wget -q -O $(ttrss_tarball) $(ttrss_url)"
                       comment => "Downloading WordPress.";
+}
+
+bundle agent tinytinyrss_tarball_extract {
+vars:
+    "ttrss_tarball" string => "/root/ttrss-latest.tar.gz";
+    "ttrss_destination" string => "/var/www";
+    "ttrss_directory" string => "$(ttrss_destination)/ttrss";
+
+classes:
+    "ttrss_directory_present"  expression => fileexists("$(ttrss_directory)/");
+    "ttrss_tarball_present"  expression => fileexists("$(ttrss_tarball)");
+
+reports:
+    ttrss_directory_present::
+        "Ttrss directory is present.";
+
+commands:
+    !ttrss_directory_present.ttrss_tarball_present::
+        "/bin/tar -C $(ttrss_destination) -xvzf $(ttrss_tarball)"
+            comment => "Unrolling tarball to $(ttrss_destination).";
+
 }
