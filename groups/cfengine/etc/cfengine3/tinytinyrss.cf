@@ -30,6 +30,7 @@ classes:
 
     "installed_lighttpd" expression => fileexists("/usr/sbin/lighttpd");
     "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
+    "installed_php5mysql" expression => fileexists("/usr/share/doc/php5-mysql/copyright");
     
     installed_lighttpd::
         "enabled_php5cgi" expression => fileexists("$(fascgiphp_conf)");
@@ -53,7 +54,7 @@ files:
 
 
 packages:
-    !(installed_lighttpd.installed_php5cgi)::
+    !(installed_lighttpd.installed_php5cgi.installed_php5mysql)::
         "$(lighttpdutils)"
         comment => "install $(lighttpdutils)",
                 action => if_elapsed("240"),
