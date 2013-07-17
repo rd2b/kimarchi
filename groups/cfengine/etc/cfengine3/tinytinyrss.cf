@@ -14,7 +14,7 @@ classes:
 
     "installed_mysql" expression => fileexists("/usr/bin/mysql");
 vars:
-    "mysqlutils" slist => { "mysql" };
+    "mysqlutils" slist => { "mysql-server" };
 
 packages:
     !installed_mysql::
