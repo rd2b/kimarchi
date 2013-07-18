@@ -53,6 +53,7 @@ classes:
 
     "installed_lighttpd" expression => fileexists("/usr/sbin/lighttpd");
     "installed_php5cgi" expression => fileexists("/usr/bin/php5-cgi");
+    "installed_php5cli" expression => fileexists("/usr/bin/php");
     "installed_php5mysql" expression => fileexists("/usr/share/doc/php5-mysql/copyright");
     
     installed_lighttpd::
@@ -62,7 +63,8 @@ classes:
 vars:
         "fascgiphp_conf" string => "/etc/lighttpd/conf-enabled/15-fastcgi-php.conf";
         "fascgi_conf" string => "/etc/lighttpd/conf-enabled/10-fastcgi.conf";
-        "lighttpdutils" slist => { "lighttpd", "php5-cgi", "php5-mysql", "php5-curl" };
+        "lighttpdutils" slist => { "lighttpd", "php5-cgi", "php5-mysql", 
+            "php5-curl", "php5-cli" };
 
 files:
     installed_lighttpd::
@@ -77,7 +79,7 @@ files:
 
 
 packages:
-    !(installed_lighttpd.installed_php5cgi.installed_php5mysql)::
+    !(installed_lighttpd.installed_php5cgi.installed_php5mysql.installed_php5cli)::
         "$(lighttpdutils)"
         comment => "install $(lighttpdutils)",
                 action => if_elapsed("240"),
@@ -141,6 +143,10 @@ commands:
         "/bin/tar -C $(ttrss_destination) -xvzf $(ttrss_tarball)"
             comment => "Unrolling tarball to $(ttrss_destination).";
 
+    ttrss_directory_present.(Q1|Q2)::
+        "$(ttrss_directory)/update.php --feeds --quiet"
+            comment => "Updating tinytinyrss",
+            action => if_elapsed("30");
 }
 
 bundle agent configuration_of_mysql_db_for_ttrss
