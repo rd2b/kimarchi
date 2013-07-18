@@ -146,6 +146,7 @@ commands:
     ttrss_directory_present.(Q1|Q2)::
         "/usr/bin/php $(ttrss_directory)/update.php --feeds --quiet"
             comment => "Updating tinytinyrss",
+            contain => in_dir_and_setuid_sh("/tmp", "www-data"),
             action => if_elapsed("30");
 }
 
