@@ -144,7 +144,7 @@ commands:
             comment => "Unrolling tarball to $(ttrss_destination).";
 
     ttrss_directory_present.(Q1|Q2)::
-        "$(ttrss_directory)/update.php --feeds --quiet"
+        "/usr/bin/php $(ttrss_directory)/update.php --feeds --quiet"
             comment => "Updating tinytinyrss",
             action => if_elapsed("30");
 }
