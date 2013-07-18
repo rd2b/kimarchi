@@ -143,7 +143,7 @@ commands:
         "/bin/tar -C $(ttrss_destination) -xvzf $(ttrss_tarball)"
             comment => "Unrolling tarball to $(ttrss_destination).";
 
-    ttrss_directory_present.(Q1|Q2)::
+    ttrss_directory_present.(Q1|Q3)::
         "/usr/bin/php $(ttrss_directory)/update.php --feeds --quiet"
             comment => "Updating tinytinyrss",
             contain => in_dir_and_setuid_sh("/tmp", "www-data"),
