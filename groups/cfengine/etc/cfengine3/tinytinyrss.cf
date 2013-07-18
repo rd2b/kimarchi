@@ -1,12 +1,35 @@
 # Voir : http://sysadvent.blogspot.fr/2011/12/day-15-automating-wordpress-with.html
 bundle agent app_ttrss {
+classes:
+    "need_lighttpd" or => {"tinytinyrss"};
+    "need_mysql" or => {"tinytinyrss"};
+
 methods:
     tinytinyrss::
         "get_ttrss"         usebundle => tinytinyrss_tarball_is_present;
         "extract_ttrss"     usebundle => tinytinyrss_tarball_extract;
         "database_ttrss"    usebundle => configuration_of_mysql_db_for_ttrss;
-        "handle_lighttpd"   usebundle => fix_lighttpd;
+    
+    need_mysql::
         "handle_mysql"   usebundle => fix_mysql;
+
+    need_lighttpd::
+        "handle_lighttpd"   usebundle => fix_lighttpd;
+
+
+files:
+    tinytinyrss.need_lighttpd::
+        "/etc/lighttpd/conf-enabled/99-redirect-rss.conf"
+            handle => "fix_lighttpd_ttrss_redirect",
+            comment => "Append Lighttpd redirect",
+            perms => mog("0644","root","root"),
+            create => "true",
+            edit_line => append_if_no_lines('url.redirect = ("^/$" => "Tiny-Tiny-RSS-1.8/" )'),
+            classes => if_repaired("reload_lighttpd"); 
+
+commands:
+    reload_lighttpd::
+        "/etc/init.d/lighttpd force-reload";
 }
 
 bundle agent fix_mysql {
