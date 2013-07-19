@@ -50,7 +50,7 @@ files:
         file_select => by_name(".*.cf");
 
 processes:
-    any:: 
+    !cfmanual:: 
         "/usr/sbin/cf-execd" restart_class => "startcfexecd";
 
     cfmaster|cfmanual::
