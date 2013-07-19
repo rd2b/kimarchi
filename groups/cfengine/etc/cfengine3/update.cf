@@ -55,7 +55,7 @@ files:
     (ubuntu|debian)::
         "/etc/default/cfengine3"
             comment   => "Editing default/cfengine3 to /etc",
-            perms     => promisemode("644"),
+            perms     => u_p("644"),
             create =>  "true",
             edit_line => append_if_no_lines( "${defaultcfengineopt}"),
             classes => if_repaired("restartcfengine");
