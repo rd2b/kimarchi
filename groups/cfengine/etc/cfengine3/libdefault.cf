@@ -11,3 +11,22 @@ body contain in_dir_and_setuid_sh(dir,owner)
     useshell => "true";
 }
 
+bundle agent download_tarball(tarballurl, tarballdst ){
+# Gets a tarball or any file from a given url
+# ex : 
+#        tarballurl = "https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.8.tar.gz"
+#        tarballdst = "/root/ttrss-latest.tar.gz"
+
+classes:
+    "tarball_is_present" expression => fileexists("$(tarballdst)");
+
+reports:
+    tarball_is_present::
+        "Tarball is on disk.";
+
+commands:
+    !tarball_is_present::
+        "/usr/bin/wget -q -O $(tarballdst) $(tarballurl)"
+        comment => "Downloading Tarball from $(tarballurl).";
+}
+
