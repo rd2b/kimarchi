@@ -136,7 +136,7 @@ files:
 
 
 processes:
-    drop01_acgform_local:: 
+    dropbox:: 
         "/home/remi/.dropbox-dist/dropbox" restart_class => "launchdropbox";
 
     torrentserver::
