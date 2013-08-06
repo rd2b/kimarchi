@@ -22,6 +22,14 @@ vars:
             "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7XXwTAQKhbH1t9sT39gvrYwEdGfwu5Ow3Q57Zdj/JODToTLenSHDyJLL07kISVka41/Q2yQvZtPfQJv1t/M/+xe4Wr6X4LtfXN3C2hB3t3kzHtnchrLZngtr2VRD6F2O35K/y+9i59zDy6O/maCXc3OzWCuL0quv3/JsQtl/Ra1Vw+MKE7zY9n+ChZyXoIwCQasNsCxJMlY0xclZgz812HzswOKjshKK2KySVupvkhq8UOa/gK54w9F1F6qfzUHWKMeWlnSapfhMmAqXEMe8uHEtjySby05+TcN25BR8xxT+2LORVEIMuo5OsmeNhkjVB1qqJ7k/rQvg+PEQAvVmILr9TF8xOQ451btiBpDyA3s585iJBBs3ptnRO0MbvqV3FVf19yhE8cpZl2vboY6kFsbRLLQzp2m66p7o5BXubrSOUAVeGclZ3/2j6vddp7iGwl9uXXuhSAA+Jah1m/NfcL8s5SCA7+CAcBxlk9f5d6G8tdY3Ui29YJ2dTADc+1iuH02VMFb7HuGA5a97xwtTXUDXIWJ6jNmwutBLkZFmBsBaE1GdSA2qbGrx7e9wQG+PsC5waMn4w66tDU9xBJGse+63Ddm1yr+BCkTQfl00ZjBpww2RfX8r78wBACYPJg0HL5LD20EBV/F9aLmb6XLafj7AMVA5ihHsnRZev0V1IAw=="
          };
 
+    btsync::
+        "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
+    btsync.linux_x86_64::
+        "btsync_url" string => "http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz";
+    btsync.linux_armv6l::
+        "btsync_url" string => "http://btsync.s3-website-us-east-1.amazonaws.com/btsync_arm.tar.gz";
+
+
 methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
@@ -38,6 +46,10 @@ methods:
 
     tinytinyrss::
         "makettrss" usebundle => app_ttrss;
+
+    btsync::
+        "get_btsync" usebundle => download_tarball(
+                "$(btsync_url)", "$(ttrss_tarball)");  
 
 files:
     any::

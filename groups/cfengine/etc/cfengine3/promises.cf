@@ -46,6 +46,9 @@ classes:
     "backupmaster" or => { "back01_acgform_local" };
     "tinytinyrss" or => { "prod01_acgform_local" };
     "dropbox" or => { "drop01_acgform_local" };
+    "btsync" or => { 
+        "btsync01_acgform_local", 
+        "btsync02_acgform_local" };
     "backupclient" or => {
         "cf01_acgform_local",
         "db01_acgform_local", "db02_acgform_local",
