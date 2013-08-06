@@ -1,12 +1,17 @@
 # Voir : http://sysadvent.blogspot.fr/2011/12/day-15-automating-wordpress-with.html
 bundle agent app_ttrss {
+vars:
+    tinytinyrss::
+        "ttrss_tarball" string => "/root/ttrss-latest.tar.gz";
+        "ttrss_url" string => "https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.8.tar.gz";
 classes:
     "need_lighttpd" or => {"tinytinyrss"};
     "need_mysql" or => {"tinytinyrss"};
 
 methods:
     tinytinyrss::
-        "get_ttrss"         usebundle => tinytinyrss_tarball_is_present;
+        "get_ttrss"         usebundle => download_tarball(
+                "$(ttrss_url)", "$(ttrss_tarball)");
         "extract_ttrss"     usebundle => tinytinyrss_tarball_extract;
         "database_ttrss"    usebundle => configuration_of_mysql_db_for_ttrss;
     
@@ -100,23 +105,23 @@ commands:
 
 }
 
-bundle agent tinytinyrss_tarball_is_present {
-vars:
-    "ttrss_tarball" string => "/root/ttrss-latest.tar.gz";
-    "ttrss_url" string => "https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.8.tar.gz";
+bundle agent download_tarball(tarballurl, tarballdst ){
+# Gets a tarball or any file from a given url
+# ex : 
+#        tarballurl = "https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.8.tar.gz"
+#        tarballdst = "/root/ttrss-latest.tar.gz"
 
 classes:
-      "ttrss_tarball_is_present" expression =>
-              fileexists("$(ttrss_tarball)");
+      "tarball_is_present" expression => fileexists("$(tarballdst)");
 
 reports:
-        ttrss_tarball_is_present::
-                "TinytinyRSS tarball is on disk.";
+        tarball_is_present::
+                "Tarball is on disk.";
 
 commands:
-          !ttrss_tarball_is_present::
-                  "/usr/bin/wget -q -O $(ttrss_tarball) $(ttrss_url)"
-                      comment => "Downloading WordPress.";
+          !tarball_is_present::
+                  "/usr/bin/wget -q -O $(tarballdst) $(tarballurl)"
+                      comment => "Downloading Tarball from $(tarballurl).";
 }
 
 bundle agent tinytinyrss_tarball_extract {
