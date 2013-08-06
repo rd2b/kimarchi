@@ -49,7 +49,7 @@ methods:
 
     btsync::
         "get_btsync" usebundle => download_tarball(
-                "$(btsync_url)", "$(ttrss_tarball)");  
+                "$(btsync_url)", "$(btsync_tarball)");  
 
 files:
     any::
