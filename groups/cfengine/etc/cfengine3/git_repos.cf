@@ -24,7 +24,7 @@ methods:
                 "/data/cfexternals", "$(git_cfbacula)", "root" );
 
         "handlecfrepos" usebundle => clone_git_repos_project(
-                "/data", "$(git_cfrepos)", "root" );
+                "/data/cfexternals", "$(git_cfrepos)", "root" );
 }
 
 bundle agent clone_git_repos_project(basepath, repos, user) {

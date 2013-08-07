@@ -49,6 +49,13 @@ files:
         copy_from => secure_cp("/data/cfexternals/cfenginebacula/bacula.cf","$(globals.serverhost)"),
         file_select => by_name(".*.cf");
 
+    # Recuperation du depot principal:
+    cfmaster|cfmanual::
+        "/data/cf-repos"
+        handle => "update_link_repository",
+        link_from => ln_s("/data/cfexternals/kimarchi"),
+        move_obstructions => "true";
+
 processes:
     !cfmanual:: 
         "/usr/sbin/cf-execd" restart_class => "startcfexecd";
