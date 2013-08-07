@@ -44,8 +44,7 @@ bundle server access_rules() {
                 "/var/lib/cfengine3/masterfiles",
                 "/var/cfengine/masterfiles",
                 "/tmp",
-                "/data/cfexternals",
-                "/data/github-repository"
+                "/data/cfexternals"
             };
 
   access:
