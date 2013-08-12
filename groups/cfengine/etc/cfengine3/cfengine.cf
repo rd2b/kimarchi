@@ -24,7 +24,7 @@ vars:
     ubuntu|debian::
         "master_location"   string => "/var/lib/cfengine3/masterfiles";
     
-    redhat::
+    redhat|gentoo::
         "master_location"   string => "/var/cfengine/masterfiles";              
 
 files:

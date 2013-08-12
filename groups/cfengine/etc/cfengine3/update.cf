@@ -28,11 +28,11 @@ vars:
 
     "masterfilesrcdir" string => "$(globals.group_path)/groups/cfengine/etc/cfengine3/";
 
-    !redhat::
+    debian|ubuntu::
         "master_location"   string => "/var/lib/cfengine3/masterfiles";
         "etc_cfengine"      string => "/etc/cfengine3";
 
-    redhat::
+    redhat|gentoo::
         "master_location"   string => "/var/cfengine/masterfiles";
         "etc_cfengine"      string => "/etc/cfengine";
 
