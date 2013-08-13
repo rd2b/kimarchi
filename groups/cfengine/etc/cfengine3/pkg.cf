@@ -7,7 +7,7 @@ vars:
     debian::
         "packages[update-manager-core]" string => "/usr/bin/do-release-upgrade";
         "packages[bash-completion]" string => "/usr/share/doc/bash-completion/changelog.Debian.gz";
-        "packages[manpages]" string => "/usr/share/doc/manpages-fr/changelog.Debian.gz";
+        "packages[manpages]" string => "/usr/share/doc/manpages/changelog.Debian.gz";
 
     dlnaserver::
         "packages[minidlna]" string => "/usr/bin/minidlna";
@@ -21,15 +21,15 @@ vars:
         "packages[libapache2-mod-php5]" string => "/usr/share/doc/libapache2-mod-php5/changelog.Debian.gz";
 
     any::
-        "packages[screen]" string => "/usr/sbin/screen";
-        "packages[vim]" string => "/usr/sbin/vim";
-        "packages[rsync]" string => "/usr/bin/rsync";
-        "packages[man]" string => "/usr/bin/man";
-        "packages[tree]" string => "/usr/bin/tree";
-        "packages[lsof]" string => "/usr/bin/lsof";
+        "packages[screen]"  string => "/usr/bin/screen";
+        "packages[vim]"     string => "/usr/bin/vim.basic";
+        "packages[rsync]"   string => "/usr/bin/rsync";
+        "packages[man]"     string => "/usr/bin/man";
+        "packages[tree]"    string => "/usr/bin/tree";
+        "packages[lsof]"    string => "/usr/bin/lsof";
+        "packages[git]"     string => "/usr/bin/git";
+        "packages[curl]"    string => "/usr/bin/curl";
         "packages[dnsutils]" string => "/usr/bin/dig";
-        "packages[git]" string => "/usr/bin/git";
-        "packages[curl]" string => "/usr/bin/curl";
 
         "packagesnames" slist => getindices("packages");
 
