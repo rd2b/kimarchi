@@ -1,17 +1,30 @@
 bundle agent pkg
 {
 vars:
-    any::
-        "packages" string => "screen vim rsync man manpages tree update-manager-core lsof dnsutils bash-completion git curl";
+   
+    debian::
+        "packages[update-manager-core]" string => "/usr/bin/do-release-upgrade";
+        "packages[bash-completion]" string => "/usr/share/doc/bash-completion/changelog.Debian.gz";
+        "packages[manpages]" string => "/usr/share/doc/manpages-fr/changelog.Debian.gz";
 
+    any::
+        "packages[screen]" string => "/usr/sbin/screen";
+        "packages[vim]" string => "/usr/sbin/vim";
+        "packages[rsync]" string => "/usr/bin/rsync";
+        "packages[man]" string => "/usr/bin/man";
+        "packages[tree]" string => "/usr/bin/tree";
+        "packages[lsof]" string => "/usr/bin/lsof";
+        "packages[dnsutils]" string => "/usr/bin/host";
+        "packages[git]" string => "/usr/bin/git";
+        "packages[curl]" string => "/usr/bin/curl";
+
+        "packagesnames" slist => getindices("packages");
+
+method:
+    "installpackages" usebundle => pkg_install_if_no_file(
+            "$(packagesnames)", "$(packages[$(packagesnames)])");
 
 packages:
-    CFpackages::
-        "$(packages)"
-        comment => "install $(packages)",
-        action => if_elapsed("60"),
-        package_policy   => "add",
-        package_method   => generic;
 
     dlnaserver::
         "minidlna"
@@ -28,4 +41,20 @@ packages:
         package_method   => generic;
 
 
+}
+
+bundle agent pkg_install_if_no_file(package, file)
+{
+# Checks if a file exists
+# Install a package if not
+classes:
+    "file_exists" expression => fileexists("$(file)");
+
+package:
+    !file_exists::
+        "$(package)"
+        comment => "install $(package)",
+        action => if_elapsed("240"),
+        package_policy   => "add",
+        package_method   => generic;
 }
