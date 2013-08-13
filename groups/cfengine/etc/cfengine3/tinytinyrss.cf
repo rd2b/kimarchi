@@ -17,7 +17,7 @@ methods:
     
     need_mysql::
         "handle_mysql"   usebundle => pkg_install_if_no_file(
-                "mysql-server", "/usr/bin/mysql";
+                "mysql-server", "/usr/bin/mysql");
 
     need_lighttpd::
         "handle_lighttpd"   usebundle => fix_lighttpd;
