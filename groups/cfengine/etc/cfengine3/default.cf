@@ -42,9 +42,6 @@ methods:
     backupmaster|backupclient::
         "makebackup"    usebundle => app_bacula;
 
-    webserver:: 
-        "makewebserver" usebundle => app_apache;
-
     tinytinyrss::
         "makettrss" usebundle => app_ttrss;
 

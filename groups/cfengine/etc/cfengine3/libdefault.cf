@@ -30,3 +30,19 @@ commands:
         comment => "Downloading Tarball from $(tarballurl).";
 }
 
+
+bundle agent pkg_install_if_no_file(package, file)
+{
+# Checks if a file exists
+# Install a package if not
+classes:
+    "file_exists" expression => fileexists("$(file)");
+
+packages:
+    !file_exists::
+        "$(package)"
+        comment => "install $(package)",
+        action => if_elapsed("240"),
+        package_policy   => "add",
+        package_method   => generic;
+}

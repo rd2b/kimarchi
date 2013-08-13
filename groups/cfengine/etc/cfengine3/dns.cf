@@ -7,7 +7,6 @@ vars:
         "dnsfilestocopy" slist => { 
             "/etc/bind/acgform.local", 
             "/etc/bind/named.conf.local" };
-    "dnsutils" slist => { "bind9", "host" };
 
     acgform_local.!dns::
         "resolvconf" string => "$(dnsdir)/etc/acgform-resolv.conf";
@@ -27,13 +26,6 @@ files:
         copy_from => secure_cp("$(resolvconf)","$(globals.serverhost)");
 
 
-packages:
-    dns.CFpackages::
-        "$(dnsutils)"
-        comment => "install $(dnsutils)",
-                action => if_elapsed("240"),
-                package_policy   => "add",
-                package_method   => generic;
 reports:
     dns::
         "I am a DNS Master";
