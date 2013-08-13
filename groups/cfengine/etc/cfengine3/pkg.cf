@@ -7,6 +7,13 @@ vars:
         "packages[bash-completion]" string => "/usr/share/doc/bash-completion/changelog.Debian.gz";
         "packages[manpages]" string => "/usr/share/doc/manpages-fr/changelog.Debian.gz";
 
+    dlnaserver::
+        "packages[minidlna]" string => "/usr/bin/minidlna";
+
+    torrentserver::
+        "packages[transmission-cli]" string => "/usr/bin/transmission-cli";
+        "packages[transmission-daemon]" string => "/usr/bin/transmission-daemon";
+
     any::
         "packages[screen]" string => "/usr/sbin/screen";
         "packages[vim]" string => "/usr/sbin/vim";
@@ -23,23 +30,6 @@ vars:
 methods:
     "installpackages" usebundle => pkg_install_if_no_file(
             "$(packagesnames)", "$(packages[$(packagesnames)])");
-
-packages:
-
-    dlnaserver::
-        "minidlna"
-        comment => "install $(packages)",
-        action => if_elapsed("1200"),
-        package_policy   => "add",
-        package_method   => generic;
-
-    torrentserver::
-        "transmission-cli transmission-daemon"
-        comment => "install $(packages)",
-        action => if_elapsed("1200"),
-        package_policy   => "add",
-        package_method   => generic;
-
 
 }
 
