@@ -50,7 +50,7 @@ bundle agent pkg_install_if_no_file(package, file)
 classes:
     "file_exists" expression => fileexists("$(file)");
 
-package:
+packages:
     !file_exists::
         "$(package)"
         comment => "install $(package)",
