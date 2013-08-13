@@ -16,7 +16,8 @@ methods:
         "database_ttrss"    usebundle => configuration_of_mysql_db_for_ttrss;
     
     need_mysql::
-        "handle_mysql"   usebundle => fix_mysql;
+        "handle_mysql"   usebundle => pkg_install_if_no_file(
+                "mysql-server", "/usr/bin/mysql";
 
     need_lighttpd::
         "handle_lighttpd"   usebundle => fix_lighttpd;
@@ -37,23 +38,22 @@ commands:
         "/etc/init.d/lighttpd force-reload";
 }
 
-bundle agent fix_mysql {
-classes:
-
-    "installed_mysql" expression => fileexists("/usr/bin/mysql");
-vars:
-    "mysqlutils" slist => { "mysql-server" };
-
-packages:
-    !installed_mysql::
-        "$(mysqlutils)"
-        comment => "install $(mysqlutils)",
-                action => if_elapsed("240"),
-                package_policy   => "add",
-                package_method   => generic;
-}
-
 bundle agent fix_lighttpd {
+vars:
+    any::
+        "packages[lighttpd]"    string => "/usr/sbin/lighttpd";
+        "packages[php5-cgi]"    string => "/usr/bin/php5-cgi";
+        "packages[php5-mysql]"  string => "/usr/share/doc/php5-mysql/copyright";
+        "packages[php5-curl]"   string => "/usr/share/doc/php5-curl/copyright";
+        "packages[php5-cli]"    string => "/usr/bin/php";
+        
+        "packagesnames" slist => getindices("packages");
+
+methods:
+    any::
+        "installpackages" usebundle => pkg_install_if_no_file(
+                "$(packagesnames)", "$(packages[$(packagesnames)])");
+
 classes:
 
     "installed_lighttpd" expression => fileexists("/usr/sbin/lighttpd");
@@ -66,10 +66,8 @@ classes:
         "enabled_fastcgi" expression => fileexists("$(fascgi_conf)");
 
 vars:
-        "fascgiphp_conf" string => "/etc/lighttpd/conf-enabled/15-fastcgi-php.conf";
-        "fascgi_conf" string => "/etc/lighttpd/conf-enabled/10-fastcgi.conf";
-        "lighttpdutils" slist => { "lighttpd", "php5-cgi", "php5-mysql", 
-            "php5-curl", "php5-cli" };
+    "fascgiphp_conf" string => "/etc/lighttpd/conf-enabled/15-fastcgi-php.conf";
+    "fascgi_conf" string => "/etc/lighttpd/conf-enabled/10-fastcgi.conf";
 
 files:
     installed_lighttpd::
@@ -81,15 +79,6 @@ files:
                     "static-file.exclude-extensions", 
                     '= ( ".pl", ".fcgi" )'),
             classes => if_repaired("reload_lighttpd"); 
-
-
-packages:
-    !(installed_lighttpd.installed_php5cgi.installed_php5mysql.installed_php5cli)::
-        "$(lighttpdutils)"
-        comment => "install $(lighttpdutils)",
-                action => if_elapsed("240"),
-                package_policy   => "add",
-                package_method   => generic;
 
 commands:
     reload_lighttpd::
