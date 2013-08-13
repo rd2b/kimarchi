@@ -20,7 +20,7 @@ vars:
 
         "packagesnames" slist => getindices("packages");
 
-method:
+methods:
     "installpackages" usebundle => pkg_install_if_no_file(
             "$(packagesnames)", "$(packages[$(packagesnames)])");
 
