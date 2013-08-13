@@ -49,3 +49,4 @@ packages:
 reports:
     !file_exists::
         "File $(file) does not exists, installing $(package).";
+}
