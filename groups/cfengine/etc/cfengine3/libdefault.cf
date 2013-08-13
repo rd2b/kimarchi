@@ -45,4 +45,7 @@ packages:
         action => if_elapsed("240"),
         package_policy   => "add",
         package_method   => generic;
-}
+    
+reports:
+    !file_exists::
+        "File $(file) does not exists, installing $(package).";
