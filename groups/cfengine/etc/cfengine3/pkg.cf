@@ -1,6 +1,10 @@
 bundle agent pkg
 {
 vars:
+
+    acform_local|raspberrypi|ks01|ks02::
+        "packages[ssmtp]" string => "/usr/sbin/ssmtp";
+
     dns::
         "packages[bind9]" string => "/usr/sbin/named";
 
