@@ -2,6 +2,9 @@ bundle agent pkg
 {
 vars:
 
+    drop01::
+        "packages[mysql-client]" string => "/usr/bin/mysql";
+
     acgform_local|raspberrypi|ks01|ks02::
         "packages[ssmtp]" string => "/usr/sbin/ssmtp";
 
