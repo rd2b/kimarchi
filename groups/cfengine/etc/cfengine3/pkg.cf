@@ -17,6 +17,12 @@ vars:
     debian::
         "packages[bash-completion]" string => "/usr/share/doc/bash-completion/changelog.Debian.gz";
         "packages[manpages]" string => "/usr/share/doc/manpages/changelog.Debian.gz";
+        "packages[vim]"     string => "/usr/bin/vim.basic";
+        "packages[lsof]"    string => "/usr/bin/lsof";
+
+    redhat::
+        "packages[vim]"     string => "/usr/bin/vim";
+        "packages[lsof]"    string => "/usr/sbin/lsof";
 
     dlnaserver::
         "packages[minidlna]" string => "/usr/bin/minidlna";
@@ -31,11 +37,9 @@ vars:
 
     any::
         "packages[screen]"  string => "/usr/bin/screen";
-        "packages[vim]"     string => "/usr/bin/vim.basic";
         "packages[rsync]"   string => "/usr/bin/rsync";
         "packages[man]"     string => "/usr/bin/man";
         "packages[tree]"    string => "/usr/bin/tree";
-        "packages[lsof]"    string => "/usr/bin/lsof";
         "packages[git]"     string => "/usr/bin/git";
         "packages[curl]"    string => "/usr/bin/curl";
         "packages[dnsutils]" string => "/usr/bin/dig";
