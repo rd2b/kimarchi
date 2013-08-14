@@ -17,7 +17,7 @@ methods:
         "handlerepositories" usebundle => clone_git_repos_project(
                 "$(git_repos_base)", "$(git_repos)", "$(username)");
 
-    cfmanual|cfmaster::
+    (cfmanual|cfmaster).!offline::
         "handlegitmonitor" usebundle => clone_git_repos_project(
                 "/data/cfexternals", "$(git_monitor)", "root" );
         "handlegitcfbacula" usebundle => clone_git_repos_project(

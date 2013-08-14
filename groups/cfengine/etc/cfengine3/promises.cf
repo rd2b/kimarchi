@@ -67,6 +67,8 @@ classes:
         "front02_acgform_local"
     };
     "devplatform" or => {"standalone"};
+    "laptop" or => {"net01"};
+    "offline" or => {"laptop"};
 
 vars:
     standalone::
