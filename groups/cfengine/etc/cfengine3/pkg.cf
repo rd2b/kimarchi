@@ -4,8 +4,10 @@ vars:
     dns::
         "packages[bind9]" string => "/usr/sbin/named";
 
-    debian::
+    ubuntu::
         "packages[update-manager-core]" string => "/usr/bin/do-release-upgrade";
+
+    debian::
         "packages[bash-completion]" string => "/usr/share/doc/bash-completion/changelog.Debian.gz";
         "packages[manpages]" string => "/usr/share/doc/manpages/changelog.Debian.gz";
 
