@@ -70,6 +70,10 @@ classes:
     "laptop" or => {"net01"};
     "offline" or => {"laptop"};
 
+    # To pseudo randomize acces:
+    "once_per_hour" expression => splaytime("${sys.host}", "hourly");
+    "once_per_day" expression => splaytime("${sys.host}", "daily");
+
 vars:
     standalone::
         "serverhost"    string => "127.0.0.1";
