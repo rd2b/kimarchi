@@ -71,8 +71,8 @@ classes:
     "offline" or => {"laptop"};
 
     # To pseudo randomize acces:
-    "once_per_hour" expression => splaytime("${sys.host}", "hourly");
-    "once_per_day" expression => splaytime("${sys.host}", "daily");
+    "once_per_hour" expression => splayclass("${sys.host}", "hourly");
+    "once_per_day" expression => splayclass("${sys.host}", "daily");
 
 vars:
     standalone::
