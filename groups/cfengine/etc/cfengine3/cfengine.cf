@@ -37,7 +37,7 @@ files:
             classes => if_repaired("restartcfengine");
 
 
-    (ubuntu|debian|redhat).(cfmaster|cfmanual)::
+    (ubuntu|debian|redhat|gentoo).(cfmaster|cfmanual)::
         "$(master_location)"
         comment => "Updating masterfiles",
         copy_from => secure_cp("$(masterfilesrcdir)","$(globals.serverhost)"),
