@@ -65,7 +65,7 @@ files:
 
 # Handling ssh authorized keys:
         "/home/${myuser}/.ssh/authorized_keys"
-            handle => "remi_ssh_pub",
+            handle => "${myuser}/_ssh_pub",
             comment => "Install public ssh keys",
             perms => mog("0644","${myuser}","${myuser}"),
             create =>  "true",
@@ -148,14 +148,14 @@ files:
 
 processes:
     dropbox:: 
-        "/home/remi/.dropbox-dist/dropbox" restart_class => "launchdropbox";
+        "/home/${myuser}/.dropbox-dist/dropbox" restart_class => "launchdropbox";
 
     torrentserver::
         "/usr/bin/transmission-daemon" restart_class => "transmission_stopped";
 
 commands:
     launchdropbox::
-        "/bin/su - remi -c \"/usr/bin/dropbox start\"";
+        "/bin/su - ${myuser} -c \"/usr/bin/dropbox start\"";
 
     starttransmission::
         "/etc/init.d/transmission-daemon start";
