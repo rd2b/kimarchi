@@ -57,7 +57,7 @@ commands:
         contain => in_dir_and_setuid_sh("$(basepath)", "$(user)"),
         ifvarclass => "!repo_dir_exists_$(repo_data)";
 
-    once_per_hour::
+    once_per_hour|cfmanual::
         "/usr/bin/git pull"
             contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data)", "$(user)"),
             action => if_elapsed("120"),
