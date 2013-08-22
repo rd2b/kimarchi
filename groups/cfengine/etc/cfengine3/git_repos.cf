@@ -17,7 +17,7 @@ methods:
         "handlerepositories" usebundle => clone_git_repos_project(
                 "$(git_repos_base)", "$(git_repos)", "$(username)");
 
-    (cfmanual|cfmaster).!offline.once_per_hour::
+    (cfmanual|cfmaster).!offline::
         "handlegitmonitor" usebundle => clone_git_repos_project(
                 "/data/cfexternals", "$(git_monitor)", "root" );
         "handlegitcfbacula" usebundle => clone_git_repos_project(
@@ -57,9 +57,10 @@ commands:
         contain => in_dir_and_setuid_sh("$(basepath)", "$(user)"),
         ifvarclass => "!repo_dir_exists_$(repo_data)";
 
-    "/usr/bin/git pull"
-        contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data)", "$(user)"),
-        action => if_elapsed("120"),
-        ifvarclass => "repo_dir_exists_$(repo_data)";
+    once_per_hour::
+        "/usr/bin/git pull"
+            contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data)", "$(user)"),
+            action => if_elapsed("120"),
+            ifvarclass => "repo_dir_exists_$(repo_data)";
 }
 
