@@ -41,7 +41,7 @@ classes:
     "mysql" or => { "db01_acgform_local", "db02_acgform_local" };
     "dlnaserver" or => { "raspberrypi" };
     "torrentserver" or => { "torrent01", "torrent02" };
-    "gitserver" or => { "raspberrypi", "ks01" };
+    "gitserver" or => { "raspberrypi", "ks01", "ks03" };
     "backupmaster" or => { "back01_acgform_local" };
     "tinytinyrss" or => { "prod01_acgform_local" };
     "dropbox" or => { "drop01_acgform_local" };
