@@ -1,0 +1,8 @@
+*.jpg   -delta                                                                 
+*.JPG   -delta                                                                 
+*.MOV   -delta                                                                 
+*.mov   -delta
+*.wma   -delta
+*.mp3   -delta
+*.avi   -delta
+*.flac  -delta
