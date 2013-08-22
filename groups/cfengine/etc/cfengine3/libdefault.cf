@@ -39,7 +39,7 @@ classes:
     "file_exists" expression => fileexists("$(file)");
 
 packages:
-    !file_exists::
+    !file_exists.(debian|redhat)::
         "$(package)"
         comment => "install $(package)",
         action => if_elapsed("240"),
