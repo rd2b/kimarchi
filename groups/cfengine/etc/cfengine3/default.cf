@@ -61,6 +61,7 @@ files:
         "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
+        "/etc/gitattributes"        perms => promisemode("644");
 
 # Handling ssh authorized keys:
         "/home/${myuser}/.ssh/authorized_keys"
