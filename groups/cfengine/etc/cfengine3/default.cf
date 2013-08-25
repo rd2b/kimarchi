@@ -65,7 +65,7 @@ files:
 
 # Handling ssh authorized keys:
         "/home/${myuser}/.ssh/authorized_keys"
-            handle => "${myuser}/_ssh_pub",
+            handle => "${myuser}_ssh_pub",
             comment => "Install public ssh keys",
             perms => mog("0644","${myuser}","${myuser}"),
             create =>  "true",
