@@ -22,4 +22,4 @@ gnome-base/gvfs udisks
                                                                                 
 kde-base/kdelibs    semantic-desktop    
 
-media-sound/pulseaudio equalizer ssl X
+media-sound/pulseaudio equalizer ssl X gnome
