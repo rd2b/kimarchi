@@ -19,6 +19,7 @@ vars:
         "packages[manpages]" string => "/usr/share/doc/manpages/changelog.Debian.gz";
         "packages[vim]"     string => "/usr/bin/vim.basic";
         "packages[lsof]"    string => "/usr/bin/lsof";
+        "packages[openssh-blacklist]"    string => "/usr/share/doc/openssh-blacklist/copyright";
 
     redhat::
         "packages[vim]"     string => "/usr/bin/vim";
