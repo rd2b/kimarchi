@@ -27,6 +27,15 @@ vars:
 
 # Liste de deny explicites:
         "hosts_deny" slist => { "sshd : 218." };
+# Liste d'allows
+        "hosts_allow" slist => {
+            "sshd : 176.31", 
+            "sshd : 91.121", 
+            "sshd : 37.187",
+            "sshd : 78.240",
+            "sshd : 88.160",
+            "sshd : 192.168"
+        };
 
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
@@ -73,6 +82,8 @@ files:
 
         "/etc/hosts.deny"
             edit_line => append_if_no_lines( "${hosts_deny}");
+        "/etc/hosts.allow"
+            edit_line => append_if_no_lines( "${hosts_allow}");
 
 # Handling ssh authorized keys:
         "/home/${myuser}/.ssh/authorized_keys"
