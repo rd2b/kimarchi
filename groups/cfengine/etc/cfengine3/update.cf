@@ -45,11 +45,18 @@ vars:
 
     !acgform_local::
         "master_server"     string => "127.0.0.1";
+
+    !acgform_local.!laptop::
+        "defaultcfengineopt" slist => {
+            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
+        "defaultcfengineopt_invalid" slist => {
+            "RUN_CFMONITORD=1", "RUN_CFSERVERD=0", "RUN_CFEXECD=0" };
+
+    laptop::
         "defaultcfengineopt" slist => {
             "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=0" };
         "defaultcfengineopt_invalid" slist => {
             "RUN_CFMONITORD=1", "RUN_CFSERVERD=0", "RUN_CFEXECD=1" };
-
 files:
     "$(etc_cfengine)"
         perms => u_p("644"),
