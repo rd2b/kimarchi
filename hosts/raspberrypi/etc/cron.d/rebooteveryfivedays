@@ -1,3 +1,3 @@
 # Reboot every 5 days:                                                          
-05 04 */5 * *   root    reboot 
+05 04 */5 * *   root    /sbin/reboot 
 
