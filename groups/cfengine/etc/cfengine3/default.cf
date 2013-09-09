@@ -25,6 +25,9 @@ vars:
             "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1/A9sAwjqxEuxS9GL6MwU5bsDvFJUg4rlQu6q5pV68FPVKl1d3QKrQQn3vhOsp+PdELq0DtDOXQxhJcRzUCCNPLOXDVyRk3LlDkG7PWh++dasJ7gFsgsKGSd6TzQaqU8s0gOSdoOZr1AAR+tvHqAUC/MMAiB390XI+aQCjvszRbEaQDbC30nh+P91MBeokUr2vPA6x0jQfOh9B24wJnqoRiymiW3BWwSJ4ACoQuUiao9UJuGv+eyO5k6GsmJM7FNhQ1nsK3JWGu8W08EEgJZfisqGOUH/LlXsP1AeDcdOF1DRwm4sjZwSkCV3CYXmey0auS0F/f1zLyh3wzlQ0xicQ=="
          };
 
+# Liste de deny explicites:
+        "hosts_deny" slist => { "sshd : 218." };
+
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
     btsync.linux_x86_64::
@@ -68,6 +71,8 @@ files:
         "/etc/ssh/sshd_config"
             edit_line => append_if_no_lines( "${sshoptions}");
 
+        "/etc/hosts.deny"
+            edit_line => append_if_no_lines( "${hosts_deny}");
 
 # Handling ssh authorized keys:
         "/home/${myuser}/.ssh/authorized_keys"
