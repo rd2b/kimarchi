@@ -10,6 +10,7 @@ vars:
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
         "torrentsrc" slist  => { "groups/torrent/etc/transmission-daemon/settings.json" };
         "timezone" string => "Europe/Paris";
+        "sshoptions" slist => { "MaxStartups 10:30:60" };
 
 
         "myuser" string => "remi"; 
@@ -63,6 +64,10 @@ files:
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
         "/etc/gitattributes"        perms => promisemode("644");
+
+        "/etc/ssh/sshd_config"
+            edit_line => append_if_no_lines( "${sshoptions}");
+
 
 # Handling ssh authorized keys:
         "/home/${myuser}/.ssh/authorized_keys"
