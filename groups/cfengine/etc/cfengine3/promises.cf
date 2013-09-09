@@ -6,8 +6,8 @@ body common control
         "default",
         "monitoring",
         "pkg",
-        "cleanup"
-        "update",
+        "cleanup",
+        "update"
     };
 
     inputs => {
