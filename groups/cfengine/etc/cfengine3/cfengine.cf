@@ -6,21 +6,6 @@ vars:
     ubuntu|debian::
         "defaultdirfile" string => "$(globals.group_path)/groups/cfengine/etc/default/";
 
-    (ubuntu|debian).cfmaster::
-        "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-master";
-        "defaultcfengineopt" slist => { 
-            "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
-
-    (ubuntu|debian).cfmanual::
-        "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-manual";
-        "defaultcfengineopt" slist => { 
-            "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=0" };
-    
-    (ubuntu|debian).!cfmaster.!cfmanual::
-        "defaultsrcfile" string => "$(defaultdirfile)/cfengine3-client";
-        "defaultcfengineopt" slist => { 
-            "RUN_CFMONITORD=0", "RUN_CFSERVERD=0", "RUN_CFEXECD=1" };
-
     ubuntu|debian::
         "master_location"   string => "/var/lib/cfengine3/masterfiles";
     
@@ -28,14 +13,6 @@ vars:
         "master_location"   string => "/var/cfengine/masterfiles";              
 
 files:
-    (ubuntu|debian)::
-        "/etc/default/cfengine3"
-            comment   => "Editing default/cfengine3 to /etc",
-            perms     => promisemode("644"),
-            create =>  "true",
-            edit_line => append_if_no_lines( "${defaultcfengineopt}"),
-            classes => if_repaired("restartcfengine");
-
 
     (ubuntu|debian|redhat|gentoo).(cfmaster|cfmanual)::
         "$(master_location)"
