@@ -40,11 +40,15 @@ vars:
         "master_server"     string => "192.168.122.12";
         "defaultcfengineopt" slist => {
             "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
+        "defaultcfengineopt_invalid" slist => {
+            "RUN_CFMONITORD=0", "RUN_CFSERVERD=0", "RUN_CFEXECD=0" };
 
     !acgform_local::
         "master_server"     string => "127.0.0.1";
         "defaultcfengineopt" slist => {
             "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=0" };
+        "defaultcfengineopt_invalid" slist => {
+            "RUN_CFMONITORD=1", "RUN_CFSERVERD=0", "RUN_CFEXECD=1" };
 
 files:
     "$(etc_cfengine)"
@@ -61,6 +65,11 @@ files:
             create =>  "true",
             edit_line => append_if_no_lines( "${defaultcfengineopt}"),
             classes => if_repaired("restartcfengine");
+
+        "/etc/default/cfengine3"
+            edit_line => comment_lines_matching(
+                    "${defaultcfengineopt_invalid}", "#");
+
 }
 
 ############################################
