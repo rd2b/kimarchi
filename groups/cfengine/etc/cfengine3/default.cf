@@ -10,33 +10,10 @@ vars:
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
         "torrentsrc" slist  => { "groups/torrent/etc/transmission-daemon/settings.json" };
         "timezone" string => "Europe/Paris";
-        "sshoptions" slist => { "MaxStartups 10:30:60" };
 
 
         "myuser" string => "remi"; 
         "transmissionuser" string => "debian-transmission";
-
-        "keys" slist => {
-            "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxua5ofrJjw8VxBWv2jPqQR3bM47b7p9dhndE6PzHSt5NSOu43MSuMN8mI0jeax39UduwMqXg9ytyHmkJACv7QdhK4yS0lXgSydn/KgbO854JFgOeigfS8L3DSWTwU3kHSmWLDWnW9fp+y+JGUFSv10KoKZLkUaSdin+kF4EpwsnqxPd9e3Izm2V4T8kIkDd5CJD8n2Nw6gHeRv43PPf7Myd49AlOw44tp/c40XyL33R/Zy+Vg0GV1EAbRd3iT4tOGEfA5PVv5bJxFkJpRmLt2p9oIMEI31BPWJjCSCW25A/kyOwtBcKapy/H16H/EV9x32811uCIy/Wfk/FHzS+ZbQ== ", 
-            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUXjljNnCiBqm3Ycqt/jePhBe1jPE52GRHkF0ogVIVZWw+e8kemJNkqAETYGjZNv6cggO/P9GjZiDnSkjRENSpwPYJoUGU6/pa/Dd45yHAPGH7mM9Wbiegr8aepA1WeT9h0D9+cdFzDAsHN2EZ4DPHGpJ8FpcQ01K/TBvj9cwtHPKZnAEqGq/Pocq89QUdmIq4ASQBQgnR8xINYRp+5Yl9UJCsFQ7fOPgm1k5xv4sCMrBStOEImwT8X3MC6Hzr6ZUnfszgt7ZnyDv5vomMw6zIVhzRnFnSoHxmfD4jXRtcupEsK+nTKSv6657VTobB4URri9uovKqx1OPRHjxZvnHN remi@raspberrypi",
-            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCxJ6Cv0buzeiTKNyVdorYncXwzD93IB1jaM2jzlpNnjtfJjeVRQ6GdX/QTCAwiYJQZYB0bXgT6MaZCKUr80AXf8XxeDbdGQ8vA2nteMpFgOvwzxuq3AbaSftysPV5TYdvVnmoNKu4cA+i0fU1Z4wO3gm422kOGaF74BilWA1GB9313VDhF6dgbyNu+XT7EeOwR/IOpfdV6TDB70Q+JKhB6kJcp+8dwdWPjXY1/wOVWmve0mpMx+XjGOwhYcWoTcpkALL0D0bKFety6fBMcmmkBQjVEjSWdlbfMR66PxLXUXzoPuJipAe8tUjZ+m93JccPdURnEkpl89QZiievoMFH",
-            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7XXwTAQKhbH1t9sT39gvrYwEdGfwu5Ow3Q57Zdj/JODToTLenSHDyJLL07kISVka41/Q2yQvZtPfQJv1t/M/+xe4Wr6X4LtfXN3C2hB3t3kzHtnchrLZngtr2VRD6F2O35K/y+9i59zDy6O/maCXc3OzWCuL0quv3/JsQtl/Ra1Vw+MKE7zY9n+ChZyXoIwCQasNsCxJMlY0xclZgz812HzswOKjshKK2KySVupvkhq8UOa/gK54w9F1F6qfzUHWKMeWlnSapfhMmAqXEMe8uHEtjySby05+TcN25BR8xxT+2LORVEIMuo5OsmeNhkjVB1qqJ7k/rQvg+PEQAvVmILr9TF8xOQ451btiBpDyA3s585iJBBs3ptnRO0MbvqV3FVf19yhE8cpZl2vboY6kFsbRLLQzp2m66p7o5BXubrSOUAVeGclZ3/2j6vddp7iGwl9uXXuhSAA+Jah1m/NfcL8s5SCA7+CAcBxlk9f5d6G8tdY3Ui29YJ2dTADc+1iuH02VMFb7HuGA5a97xwtTXUDXIWJ6jNmwutBLkZFmBsBaE1GdSA2qbGrx7e9wQG+PsC5waMn4w66tDU9xBJGse+63Ddm1yr+BCkTQfl00ZjBpww2RfX8r78wBACYPJg0HL5LD20EBV/F9aLmb6XLafj7AMVA5ihHsnRZev0V1IAw==",
-            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgAsBKcBpP0E+vnsHB5c67dcgXEu/xvqBKmdVvCNzwvFpozdlD5+UHL3jMxtavLVUZefiiZuZ8iJmS5M5pEnFR7y+l9mzSX9b9t5VOJGc++OC7G/COXLX0IxHHo8F51mQ/dPY6WbwNUK1BWetgzenmGEPFNGihTAAv/TUy1WmsG6DmopvSkVmeGz54mTvfJe2CUY2SL1XAibWLfY3W8B6M94lpnAqxbuJGqZpEpkxqgu09xgzSn3Ofyakv6rkqE41j1N27pQuNKx+I4j6fIAjiGIYDHUKVPQcv+W+uWykAjFp7cFKIIxmqxV+cqjrk0+rPhrUXRRudpMXlsD0DJe4p",
-            "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1/A9sAwjqxEuxS9GL6MwU5bsDvFJUg4rlQu6q5pV68FPVKl1d3QKrQQn3vhOsp+PdELq0DtDOXQxhJcRzUCCNPLOXDVyRk3LlDkG7PWh++dasJ7gFsgsKGSd6TzQaqU8s0gOSdoOZr1AAR+tvHqAUC/MMAiB390XI+aQCjvszRbEaQDbC30nh+P91MBeokUr2vPA6x0jQfOh9B24wJnqoRiymiW3BWwSJ4ACoQuUiao9UJuGv+eyO5k6GsmJM7FNhQ1nsK3JWGu8W08EEgJZfisqGOUH/LlXsP1AeDcdOF1DRwm4sjZwSkCV3CYXmey0auS0F/f1zLyh3wzlQ0xicQ=="
-         };
-
-# Liste de deny explicites:
-        "hosts_deny" slist => { "sshd : 218." };
-# Liste d'allows
-        "hosts_allow" slist => {
-            "sshd : 176.31", 
-            "sshd : 91.121", 
-            "sshd : 37.187",
-            "sshd : 78.240",
-            "sshd : 88.160",
-            "sshd : 192.168",
-            "sshd : 193.252"
-        };
 
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
@@ -72,42 +49,9 @@ files:
             copy_from => secure_cp("$(globals.group_path)/groups/default/$(dirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
-        "/etc/ssh/ssh_host_dsa_key" perms => promisemode("600");
-        "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
         "/etc/gitattributes"        perms => promisemode("644");
-
-        "/etc/ssh/sshd_config"
-            edit_line => append_if_no_lines( "${sshoptions}");
-
-        "/etc/hosts.deny"
-            edit_line => append_if_no_lines( "${hosts_deny}");
-        "/etc/hosts.allow"
-            edit_line => append_if_no_lines( "${hosts_allow}");
-
-# Handling ssh authorized keys:
-        "/home/${myuser}/.ssh/authorized_keys"
-            handle => "${myuser}_ssh_pub",
-            comment => "Install public ssh keys",
-            perms => mog("0644","${myuser}","${myuser}"),
-            create =>  "true",
-            edit_line => append_if_no_lines( "${keys}" );
-
-       "/root/.ssh/authorized_keys"
-            handle => "root_ssh_pub",
-            comment => "Install root public ssh keys",
-            perms => mog("0644","root","root"),
-            create =>  "true",
-            edit_line => append_if_no_lines( "${keys}" );
-
-    gitserver::
-        "/home/git/.ssh/authorized_keys"
-            handle => "git_ssh_pub",
-            comment => "Install public ssh keys",
-            perms => mog("0644","git","git"),
-            create =>  "true",
-            edit_line => append_if_no_lines( "${keys}" );
 
     dlnaserver::
         "/etc/minidlna.conf"
