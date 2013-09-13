@@ -16,7 +16,11 @@ vars:
          };
 
 # Liste de deny explicites:
-        "hosts_deny" slist => { "sshd : 218." };
+        "hosts_deny" slist => { 
+            "sshd : 218.",
+            "sshd : 121.",
+            "sshd : ALL"
+        };
 # Liste d'allows
         "hosts_allow" slist => {
             "sshd : 176.31", 
