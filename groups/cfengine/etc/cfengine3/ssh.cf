@@ -24,13 +24,14 @@ vars:
 # Liste d'allows
         "hosts_allow" slist => {
             "sshd : 127.0.0.1", 
-            "sshd : 176.31", 
-            "sshd : 91.121", 
-            "sshd : 37.187",
-            "sshd : 78.240",
-            "sshd : 88.160",
-            "sshd : 192.168",
-            "sshd : 193.252"
+            "sshd : 127.0.1.1", 
+            "sshd : 176.31.", 
+            "sshd : 91.121.", 
+            "sshd : 37.187.",
+            "sshd : 78.240.",
+            "sshd : 88.160.",
+            "sshd : 192.168.",
+            "sshd : 193.252."
         };
 
 files:
