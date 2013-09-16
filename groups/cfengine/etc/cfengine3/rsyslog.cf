@@ -40,11 +40,6 @@ commands:
     installed_rsyslog.launchrsyslog::
         "/sbin/start rsyslog";
 
-reports:
-    installed_rsyslog.loghost::
-        "I am a loghost";
-    installed_rsyslog.standalone::
-        "I am an alone logger";
 
 }
 
