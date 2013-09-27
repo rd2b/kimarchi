@@ -37,6 +37,8 @@ methods:
         "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
         "makegit"       usebundle => clone_git_repos;
+
+    !laptop::
         "get_scanip" usebundle => download_tarball(
                 "$(scanip_url)", "$(scanip_file)");  
 
@@ -147,7 +149,7 @@ commands:
         action => if_elapsed("120"),
         comment => "Unrolling tarball to $(scanip_destination).";
 
-    ks03::
+    ks01|ks02|ks03::
         "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
             action => if_elapsed("120");
 
