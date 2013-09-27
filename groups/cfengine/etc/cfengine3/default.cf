@@ -143,7 +143,7 @@ commands:
         "/etc/init.d/minidlna restart";
 
     any::
-    "/bin/gunzip $(scanip_file)"
+    "/bin/gunzip -f $(scanip_file)"
         action => if_elapsed("120"),
         comment => "Unrolling tarball to $(scanip_destination).";
 
