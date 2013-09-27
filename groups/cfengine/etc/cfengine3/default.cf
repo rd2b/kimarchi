@@ -18,9 +18,6 @@ vars:
         "myuser" string => "remi"; 
         "transmissionuser" string => "debian-transmission";
 
-    "blacklist" int => readstringlist(
-            "$(scanip_destination)", "\s*#[^\n]*", ":", 10, 100000);
-
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
     btsync.linux_x86_64::
@@ -143,7 +140,7 @@ commands:
         "/etc/init.d/minidlna restart";
 
     any::
-    "/bin/tar -C $(scanip_destination) -xvzf $(scanip_file)"
+    "/bin/gunzip -c $(scanip_file) > $(scanip_destination)"
         comment => "Unrolling tarball to $(scanip_destination).";
 
 
