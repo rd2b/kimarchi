@@ -17,6 +17,9 @@ vars:
 
         "myuser" string => "remi"; 
         "transmissionuser" string => "debian-transmission";
+        
+        "blacklist" slist => readstringlist(                                          
+                "$(scanip_destination)", "\s*#[^\n]*", ":", 10, 100000);           
 
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
