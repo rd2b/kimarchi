@@ -10,13 +10,16 @@ vars:
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
         "torrentsrc" slist  => { "groups/torrent/etc/transmission-daemon/settings.json" };
         "timezone" string => "Europe/Paris";
-        "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz"
-        "scanip_file" string => "/root/base.txt.gz"
-        "scanip_destination" string => "/root/scanip.txt"
+        "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz";
+        "scanip_file" string => "/root/base.txt.gz";
+        "scanip_destination" string => "/root/scanip.txt";
 
 
         "myuser" string => "remi"; 
         "transmissionuser" string => "debian-transmission";
+
+    "blacklist" int => readstringlist(
+            "$(scanip_destination)", "\s*#[^\n]*", ":", 10, 100000);
 
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
