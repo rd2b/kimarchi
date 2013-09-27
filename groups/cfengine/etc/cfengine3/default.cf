@@ -61,7 +61,7 @@ files:
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
         "/etc/gitattributes"        perms => promisemode("644");
-        "$(scanip_destination)"     perms => promisemod("644");
+        "$(scanip_destination)"     perms => promisemode("644");
 
     dlnaserver::
         "/etc/minidlna.conf"
