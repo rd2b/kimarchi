@@ -150,7 +150,7 @@ commands:
         comment => "Unrolling tarball to $(scanip_destination).";
 
     ks01|ks02|ks03::
-        "/sbin/iptables -A INPUT -s $(blacklist) -j LOG --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
+        "/sbin/iptables -A INPUT -s $(blacklist) -j LOG -m limit --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
             action => if_elapsed("120");
 
         "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
