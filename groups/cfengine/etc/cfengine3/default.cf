@@ -10,6 +10,8 @@ vars:
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
         "torrentsrc" slist  => { "groups/torrent/etc/transmission-daemon/settings.json" };
         "timezone" string => "Europe/Paris";
+        "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz"
+        "scanip_file" string => "/root/base.txt.gz"
 
 
         "myuser" string => "remi"; 
@@ -23,6 +25,7 @@ vars:
         "btsync_url" string => "http://btsync.s3-website-us-east-1.amazonaws.com/btsync_arm.tar.gz";
 
 
+
 methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
@@ -30,6 +33,8 @@ methods:
         "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
         "makegit"       usebundle => clone_git_repos;
+        "get_scanip" usebundle => download_tarball(
+                "$(scanip_url)", "$(scanip_file)");  
 
     backupmaster|backupclient::
         "makebackup"    usebundle => app_bacula;
