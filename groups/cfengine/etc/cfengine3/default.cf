@@ -147,6 +147,9 @@ commands:
         action => if_elapsed("120"),
         comment => "Unrolling tarball to $(scanip_destination).";
 
+    ks03::
+        "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
+            action => if_elapsed("120");
 
 reports:
     mysql::
