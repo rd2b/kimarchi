@@ -12,6 +12,7 @@ vars:
         "timezone" string => "Europe/Paris";
         "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz"
         "scanip_file" string => "/root/base.txt.gz"
+        "scanip_destination" string => "/root/scanip.txt"
 
 
         "myuser" string => "remi"; 
@@ -57,6 +58,7 @@ files:
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
         "/etc/gitattributes"        perms => promisemode("644");
+        "$(scanip_destination)"     perms => promisemod("644");
 
     dlnaserver::
         "/etc/minidlna.conf"
@@ -136,6 +138,11 @@ commands:
 
     restart_minidlna::
         "/etc/init.d/minidlna restart";
+
+    any::
+    "/bin/tar -C $(scanip_destination) -xvzf $(scanip_file)"
+        comment => "Unrolling tarball to $(scanip_destination).";
+
 
 reports:
     mysql::
