@@ -144,6 +144,7 @@ commands:
 
     any::
     "/bin/gunzip -c $(scanip_file) > $(scanip_destination)"
+        action => if_elapsed("120"),
         comment => "Unrolling tarball to $(scanip_destination).";
 
 
