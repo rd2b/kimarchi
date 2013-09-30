@@ -18,17 +18,12 @@ vars:
 files:
     iptables_enabled::
         "$(scanip_destination)"     perms => promisemode("644");
-#        "$(etc_iptables)"   
-#            perms => mog("0644", "root", "root"),
-#            create =>  "true",
-#            action => if_elapsed("120"),
-#            edit_line => append_if_no_lines( 
-#                    "-A INPUT -s ${blacklist} -j DROP");
+        "$(etc_iptables)" perms => mog("0644", "root", "root");
 
 
 commands:
 
-    iptables_enabled::
+    iptables_enabled.once_per_hour::
        "/bin/gunzip -f $(scanip_file)"
             comment => "Unrolling tarball to $(scanip_destination).";
 
@@ -38,9 +33,6 @@ commands:
             action => if_elapsed("120");
 
 #        "/sbin/iptables -A INPUT -s $(blacklist) -j LOG -m limit --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
-#            action => if_elapsed("120");
-
-#        "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
 #            action => if_elapsed("120");
 
 }
