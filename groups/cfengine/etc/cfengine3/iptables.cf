@@ -5,6 +5,7 @@ classes:
 
 vars:
     iptables_enabled::
+        "etc_iptables" string => "/etc/iptables.conf";
         "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz";
         "scanip_file" string => "/root/blacklist.txt.gz";
         "scanip_destination" string => "/root/blacklist.txt";
@@ -17,6 +18,11 @@ vars:
 files:
     iptables_enabled::
         "$(scanip_destination)"     perms => promisemode("644");
+        "$(etc_iptables)"   
+            perms => mog("0644", "root", "root")),
+            action => if_elapsed("120"),
+            edit_line => append_if_no_lines( "${blacklist}"));
+
 
 commands:
 
