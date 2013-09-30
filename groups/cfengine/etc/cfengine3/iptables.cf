@@ -38,7 +38,7 @@ commands:
             comment => "Unrolling tarball to $(scanip_destination).";
 
     iptables_enabled::
-        '/bin/sed -n "s/^\([0-9\.]*\)$/\/sbin\/ iptables -A INPUT -s \1 -j DROP/p" < $(scanip_destination) > $(iptables_blacklist)'
+        '/bin/sed -n "s/^\([0-9\.]*\)$/\/sbin\/iptables -A INPUT -s \1 -j DROP/p" < $(scanip_destination) > $(iptables_blacklist)'
             contain => in_shell,
             action => if_elapsed("120");
         '/bin/bash $(iptables_blacklist)'
