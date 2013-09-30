@@ -6,7 +6,7 @@ classes:
 vars:
     iptables_enabled::
         "etc_iptables" string => "/etc/iptables.conf";
-        "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz";
+        "scanip_url" string => "http://www.openbl.org/lists/base_30days.txt.gz";
         "scanip_file" string => "/root/blacklist.txt.gz";
         "scanip_destination" string => "/root/blacklist.txt";
 
