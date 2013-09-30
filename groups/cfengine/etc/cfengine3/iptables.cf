@@ -33,7 +33,6 @@ commands:
             comment => "Unrolling tarball to $(scanip_destination).";
 
     iptables_enabled.once_per_hour::
-       "/bin/gunzip -f $(scanip_file)"
         "/sbin/iptables -A INPUT -s $(blacklist) -j LOG -m limit --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
             action => if_elapsed("120");
 
