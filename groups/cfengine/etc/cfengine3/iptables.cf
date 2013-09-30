@@ -20,7 +20,7 @@ files:
 
 commands:
 
-    iptables_enabled::
+    iptables_enabled.once_per_hour::
        "/bin/gunzip -f $(scanip_file)"
             action => if_elapsed("120"),
             comment => "Unrolling tarball to $(scanip_destination).";
