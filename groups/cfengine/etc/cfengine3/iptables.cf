@@ -1,7 +1,7 @@
 bundle agent app_iptables
 {
 classes:
-    "iptables_enabled" or => ("ks01", "ks02", "ks03");
+    "iptables_enabled" or => {"ks01", "ks02", "ks03"};
 
 vars:
     iptables_enabled::
