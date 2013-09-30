@@ -33,10 +33,6 @@ methods:
         "makegit"       usebundle => clone_git_repos;
         "iptables_handler" usebundle => app_iptables;
 
-    !laptop::
-        "get_scanip" usebundle => download_tarball(
-                "$(scanip_url)", "$(scanip_file)");  
-
     backupmaster|backupclient::
         "makebackup"    usebundle => app_bacula;
 
