@@ -1,0 +1,36 @@
+bundle agent app_iptables
+{
+classes:
+    "iptables_enabled" or => ("ks01", "ks02", "ks03");
+
+vars:
+    iptables_enabled::
+        "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz";
+        "scanip_file" string => "/root/blacklist.txt.gz";
+        "scanip_destination" string => "/root/blacklist.txt";
+
+        "blacklist" slist => readstringlist(
+                "$(scanip_destination)",
+                "\s*#[^\n]*", "\n", 1000000, 1000000000);           
+
+
+files:
+    iptables_enabled::
+        "$(scanip_destination)"     perms => promisemode("644");
+
+commands:
+
+    iptables_enabled::
+       "/bin/gunzip -f $(scanip_file)"
+            action => if_elapsed("120"),
+            comment => "Unrolling tarball to $(scanip_destination).";
+
+        "/sbin/iptables -A INPUT -s $(blacklist) -j LOG -m limit --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
+            action => if_elapsed("120");
+
+        "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
+            action => if_elapsed("120");
+
+}
+
+

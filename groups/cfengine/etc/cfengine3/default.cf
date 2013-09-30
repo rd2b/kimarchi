@@ -10,16 +10,10 @@ vars:
         "mysqlsrcdirs" slist  => { "groups/db/etc/mysql", "hosts/$(sys.fqhost)/etc/mysql" };
         "torrentsrc" slist  => { "groups/torrent/etc/transmission-daemon/settings.json" };
         "timezone" string => "Europe/Paris";
-        "scanip_url" string => "http://www.openbl.org/lists/base.txt.gz";
-        "scanip_file" string => "/root/blacklist.txt.gz";
-        "scanip_destination" string => "/root/blacklist.txt";
-
 
         "myuser" string => "remi"; 
         "transmissionuser" string => "debian-transmission";
         
-        "blacklist" slist => readstringlist(                                          
-                "$(scanip_destination)", "\s*#[^\n]*", "\n", 1000000, 1000000000);           
 
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
@@ -37,6 +31,7 @@ methods:
         "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
         "makegit"       usebundle => clone_git_repos;
+        "iptables_handler" usebundle => app_iptables;
 
     !laptop::
         "get_scanip" usebundle => download_tarball(
@@ -63,7 +58,6 @@ files:
         "/etc/bash.bashrc"          perms => promisemode("644");
         "/etc/sudoers"              perms => promisemode("440");
         "/etc/gitattributes"        perms => promisemode("644");
-        "$(scanip_destination)"     perms => promisemode("644");
 
     dlnaserver::
         "/etc/minidlna.conf"
@@ -143,18 +137,6 @@ commands:
 
     restart_minidlna::
         "/etc/init.d/minidlna restart";
-
-    any::
-    "/bin/gunzip -f $(scanip_file)"
-        action => if_elapsed("120"),
-        comment => "Unrolling tarball to $(scanip_destination).";
-
-    ks01|ks02|ks03::
-        "/sbin/iptables -A INPUT -s $(blacklist) -j LOG -m limit --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
-            action => if_elapsed("120");
-
-        "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
-            action => if_elapsed("120");
 
 reports:
     mysql::
