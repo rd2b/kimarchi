@@ -22,7 +22,8 @@ files:
             perms => mog("0644", "root", "root"),
             create =>  "true",
             action => if_elapsed("120"),
-            edit_line => append_if_no_lines( "${blacklist}");
+            edit_line => append_if_no_lines( 
+                    "-A INPUT -s ${blacklist} -j DROP");
 
 
 commands:
