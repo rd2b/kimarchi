@@ -20,6 +20,7 @@ files:
         "$(scanip_destination)"     perms => promisemode("644");
         "$(etc_iptables)"   
             perms => mog("0644", "root", "root"),
+            create =>  "true",
             action => if_elapsed("120"),
             edit_line => append_if_no_lines( "${blacklist}");
 
