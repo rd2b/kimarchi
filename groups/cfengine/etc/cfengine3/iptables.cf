@@ -18,12 +18,12 @@ vars:
 files:
     iptables_enabled::
         "$(scanip_destination)"     perms => promisemode("644");
-        "$(etc_iptables)"   
-            perms => mog("0644", "root", "root"),
-            create =>  "true",
-            action => if_elapsed("120"),
-            edit_line => append_if_no_lines( 
-                    "-A INPUT -s ${blacklist} -j DROP");
+#        "$(etc_iptables)"   
+#            perms => mog("0644", "root", "root"),
+#            create =>  "true",
+#            action => if_elapsed("120"),
+#            edit_line => append_if_no_lines( 
+#                    "-A INPUT -s ${blacklist} -j DROP");
 
 
 commands:
@@ -32,12 +32,16 @@ commands:
        "/bin/gunzip -f $(scanip_file)"
             comment => "Unrolling tarball to $(scanip_destination).";
 
-    iptables_enabled.once_per_hour::
-        "/sbin/iptables -A INPUT -s $(blacklist) -j LOG -m limit --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
+    iptables_enabled::
+        'sed -n "s/\(.*\)/-A INPUT -s \1 -j DROP/p" < $(scanip_file) > $(etc_iptables)'
+            contain => in_shell(),
             action => if_elapsed("120");
 
-        "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
-            action => if_elapsed("120");
+#        "/sbin/iptables -A INPUT -s $(blacklist) -j LOG -m limit --limit 2/min --log-level 4 --log-prefix 'Iptable Drop: "
+#            action => if_elapsed("120");
+
+#        "/sbin/iptables -A INPUT -s $(blacklist) -j DROP"
+#            action => if_elapsed("120");
 
 }
 
