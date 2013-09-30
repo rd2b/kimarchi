@@ -21,7 +21,7 @@ files:
         "$(etc_iptables)"   
             perms => mog("0644", "root", "root"),
             action => if_elapsed("120"),
-            edit_line => append_if_no_lines( "${blacklist}"));
+            edit_line => append_if_no_lines( "${blacklist}");
 
 
 commands:
