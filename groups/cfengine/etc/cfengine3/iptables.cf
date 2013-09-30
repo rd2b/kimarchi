@@ -14,7 +14,7 @@ vars:
                 "$(scanip_destination)",
                 "\s*#[^\n]*", "\n", 1000000, 1000000000);           
 
-metrhods:
+methods:
     iptables_enabled::
         "get_scanip" usebundle => download_tarball(
                 "$(scanip_url)", "$(scanip_file)");
