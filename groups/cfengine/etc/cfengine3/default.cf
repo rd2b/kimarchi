@@ -11,9 +11,9 @@ vars:
         "torrentsrc" slist  => { "groups/torrent/etc/transmission-daemon/settings.json" };
         "timezone" string => "Europe/Paris";
 
-
         "myuser" string => "remi"; 
         "transmissionuser" string => "debian-transmission";
+        
 
     btsync::
         "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
@@ -23,6 +23,7 @@ vars:
         "btsync_url" string => "http://btsync.s3-website-us-east-1.amazonaws.com/btsync_arm.tar.gz";
 
 
+
 methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
@@ -30,6 +31,7 @@ methods:
         "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
         "makegit"       usebundle => clone_git_repos;
+        "iptables_handler" usebundle => app_iptables;
 
     backupmaster|backupclient::
         "makebackup"    usebundle => app_bacula;
