@@ -6,7 +6,7 @@ classes:
 vars:
     iptables_enabled::
         "iptables_dir" string => "/etc/iptables.d/.";
-        "iptables_blacklist" string => "/etc/iptables.d/05-blacklist.conf";
+        "iptables_blacklist" string => "/usr/local/sbin/blacklist-iptables.sh";
         "scanip_url" string => "http://www.openbl.org/lists/base_30days.txt.gz";
         "scanip_file" string => "/root/blacklist.txt.gz";
         "scanip_destination" string => "/root/blacklist.txt";
@@ -28,7 +28,7 @@ files:
 
         "$(scanip_destination)" create => "true", perms => promisemode("644");
         "$(scanip_file)"        create => "true", perms => promisemode("644");
-        "$(iptables_blacklist)"       create => "true", perms => mog("0644", "root", "root");
+        "$(iptables_blacklist)"       create => "true", perms => mog("0755", "root", "root");
 
 
 commands:
