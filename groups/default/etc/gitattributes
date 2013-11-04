@@ -6,3 +6,7 @@
 *.mp3   -delta
 *.avi   -delta
 *.flac  -delta
+*.wav  -delta                                                                   
+*.xlsx  -delta                                                                  
+*.docx  -delta                                                                  
+*.au    -delta  
