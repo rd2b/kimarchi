@@ -33,9 +33,6 @@ methods:
         "makegit"       usebundle => clone_git_repos;
         "iptables_handler" usebundle => app_iptables;
 
-    backupmaster|backupclient::
-        "makebackup"    usebundle => app_bacula;
-
     tinytinyrss::
         "makettrss" usebundle => app_ttrss;
 
