@@ -4,6 +4,8 @@
 # Defaults
 
 Defaults	!lecture,tty_tickets,!fqdn
+Defaults    env_reset                                                           
+Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Uncomment to allow members of group sudo to not need a password
 # %sudo ALL=NOPASSWD: ALL
