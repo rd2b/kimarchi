@@ -69,7 +69,7 @@ vars:
     standalone::
         "serverhost"    string => "127.0.0.1";
     acgform_local::
-        "serverhost"    string => "192.168.122.12";
+        "serverhost"    string => "10.0.0.2";
     any::
         "group_path"    string => "/data/cf-repos";
         "etc_src"       string => "$(group_path)/default/etc";

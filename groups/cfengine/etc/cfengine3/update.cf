@@ -37,7 +37,7 @@ vars:
         "etc_cfengine"      string => "/etc/cfengine";
 
     acgform_local::
-        "master_server"     string => "192.168.122.12";
+        "master_server"     string => "10.0.0.2";
         "defaultcfengineopt" slist => {
             "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
         "defaultcfengineopt_invalid" slist => {
