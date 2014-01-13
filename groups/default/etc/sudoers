@@ -23,5 +23,5 @@ root	ALL=(ALL) ALL
 %admin ALL=(ALL) NOPASSWD: ALL
 %wheel ALL=(ALL) NOPASSWD: ALL
 
-includedir /etc/sudoers.d
+#includedir /etc/sudoers.d
 
