@@ -26,8 +26,5 @@ files:
         copy_from => secure_cp("$(resolvconf)","$(globals.serverhost)");
 
 
-reports:
-    dns::
-        "I am a DNS Master";
 }
 

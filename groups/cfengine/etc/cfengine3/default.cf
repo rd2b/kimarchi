@@ -131,10 +131,6 @@ commands:
     restart_minidlna::
         "/etc/init.d/minidlna restart";
 
-reports:
-    mysql::
-        "I am mysql";
-
 }
 
 

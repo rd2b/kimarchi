@@ -53,13 +53,5 @@ commands:
     startcfserverd.redhat::
         "/etc/init.d/cf-serverd start";
 
-reports:
-    cfmaster::
-        "I am cfengine master";
-    cfmanual::
-        "I am standalone master";
-    !cfmaster.!cfmanual::
-        "I am cfengine slave";
-
 }
 
