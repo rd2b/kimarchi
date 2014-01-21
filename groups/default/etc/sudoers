@@ -8,7 +8,7 @@ Defaults    env_reset
 Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Uncomment to allow members of group sudo to not need a password
-# %sudo ALL=NOPASSWD: ALL
+%sudo ALL=NOPASSWD: ALL
 
 # Host alias specification
 
@@ -20,7 +20,7 @@ Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin
 root	ALL=(ALL) ALL
 
 # Members of the admin/wheel group may gain root privileges
-%admin ALL=(ALL) ALL
+#%admin ALL=(ALL) ALL
 %wheel ALL=(ALL) NOPASSWD: ALL
 
 #includedir /etc/sudoers.d
