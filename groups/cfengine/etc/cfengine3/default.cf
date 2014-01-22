@@ -150,7 +150,7 @@ commands:
             action => if_elapsed("60"),                                         
             ifvarclass => "user_$(users)_doesnotexist"; 
 
-        "/usr/sbin/usermod remi $(groups_remi)"
+        "/usr/sbin/usermod -a -G $(groups_remi) remi"
             action => if_elapsed("60");                           
 
 
