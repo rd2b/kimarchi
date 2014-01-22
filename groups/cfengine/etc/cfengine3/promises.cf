@@ -4,6 +4,7 @@ body common control
         "update",
         "crontabs",
         "default",
+        "manage_users",
         "ssh",
         "monitoring",
         "pkg",

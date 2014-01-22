@@ -4,6 +4,7 @@ classes:
 # Classes locales au bundle:
       "handle_inittab" expression => fileexists("/etc/inittab");
 
+
 vars:
     any::
         "dirstocopy"   slist  => { "/etc", "/usr/local/bin" };
@@ -131,6 +132,27 @@ commands:
     restart_minidlna::
         "/etc/init.d/minidlna restart";
 
+
+
 }
 
+bundle agent manage_users {
+vars:
+    "users" slist => { "remi" };
+    "groups_remi" slist => {"remi", "admin", "sudo"};
+
+classes:
+      "user_$(users)_doesnotexist" expression => userexists("$(users)");
+
+commands:
+    any::
+        "/usr/sbin/adduser $(users) "
+            action => if_elapsed("60"),                                         
+            ifvarclass => "user_$(users)_doesnotexist"; 
+
+        "/usr/sbin/usermod remi $(groups_remi)"
+            action => if_elapsed("60");                           
+
+
+}
 
