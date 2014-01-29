@@ -1,0 +1,31 @@
+bundle agent app_tinc
+{
+vars:
+    tinc_enabled::
+        "vpnname" string => "myvpn";
+        "tincd"   string => "/usr/sbin/tincd";
+
+        "privkey" string => "/etc/tinc/rsa_key.priv";
+
+classes:
+    "tinc_enabled" or => {"ks01", "ks03"};
+    
+    tinc_enabled::
+        "privkey_exists" expression => fileexists("$(privkey)"); 
+
+methods:
+    
+    tinc_enabled::
+        "handle_tincd"   usebundle => pkg_install_if_no_file(
+                                    "tinc", "$(tincd)"); 
+
+files:
+    tinc_enabled::
+        "${privkey}"  perms => promisemode("644");
+
+commands:
+    !privkey_exists::
+        "${tincd} -n ${vpnname} -K4096"
+}
+
+

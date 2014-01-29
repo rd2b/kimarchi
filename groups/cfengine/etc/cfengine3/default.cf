@@ -28,6 +28,7 @@ vars:
 methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
+        "maketinc"  usebundle => app_tinc;
         "makersyslog"   usebundle => app_rsyslog;
         "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
