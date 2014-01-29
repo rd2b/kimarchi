@@ -25,6 +25,7 @@ body common control
         "dns.cf",
         "monitor.cf",
         "rsyslog.cf",
+        "tinc.cf",
         "ssh.cf",
         "git_repos.cf",
         "monitoring.cf",
