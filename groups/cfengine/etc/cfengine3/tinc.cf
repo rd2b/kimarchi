@@ -25,7 +25,7 @@ files:
 
 commands:
     !privkey_exists::
-        "${tincd} -n ${vpnname} -K4096"
+        "${tincd} -n ${vpnname} -K4096";
 }
 
 
