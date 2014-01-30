@@ -24,7 +24,7 @@ files:
         "${privkey}"  perms => promisemode("644");
 
 commands:
-    !privkey_exists::
+    tinc_enabled.!privkey_exists::
         "${tincd} -n ${vpnname} -K4096";
 }
 
