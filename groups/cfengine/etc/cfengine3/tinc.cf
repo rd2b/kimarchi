@@ -8,7 +8,7 @@ vars:
         "privkey" string => "/etc/tinc/rsa_key.priv";
 
 classes:
-    "tinc_enabled" or => {"ks01", "ks03"};
+    "tinc_enabled" or => {"ks01", "ks03", "dns01"};
     
     tinc_enabled::
         "privkey_exists" expression => fileexists("$(privkey)"); 
