@@ -143,13 +143,13 @@ vars:
     "groups_remi" slist => {"remi", "admin", "sudo"};
 
 classes:
-      "user_$(users)_doesnotexist" expression => userexists("$(users)");
+      "adduser_$(users)" not => userexists("$(users)");
 
 commands:
     any::
         "/usr/sbin/adduser $(users) "
             action => if_elapsed("60"),                                         
-            ifvarclass => "user_$(users)_doesnotexist"; 
+            ifvarclass => "adduser_$(users)"; 
 
         "/usr/sbin/usermod -a -G $(groups_remi) remi"
             action => if_elapsed("60");                           
