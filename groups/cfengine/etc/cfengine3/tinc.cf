@@ -11,7 +11,7 @@ classes:
     "tinc_enabled" or => {"ks01", "ks03", "dns01"};
     
     tinc_enabled::
-        "privkey_exists" expression => fileexists("$(privkey)"); 
+        "generate_privkey" not => fileexists("$(privkey)"); 
 
 methods:
     
@@ -24,7 +24,7 @@ files:
         "${privkey}"  perms => promisemode("644");
 
 commands:
-    tinc_enabled.!privkey_exists::
+    generate_privkey::
         "${tincd} -n ${vpnname} -K4096";
 }
 
