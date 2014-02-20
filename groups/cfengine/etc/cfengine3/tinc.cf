@@ -5,7 +5,7 @@ vars:
         "vpnname" string => "myvpn";
         "tincd"   string => "/usr/sbin/tincd";
 
-        "privkey" string => "/etc/tinc/rsa_key.priv";
+        "privkey" string => "/etc/tinc/myvpn/rsa_key.priv";
 
 classes:
     "tinc_enabled" or => {"ks01", "ks03", "dns01"};
