@@ -11,41 +11,16 @@ $TTL    604800
 ;
 @       IN      NS      dns01.acgform.local.
 @       IN      NS      dns02.acgform.local.
-@       IN      A       192.168.122.10
-@       IN      A       192.168.122.20
-ns      IN      A       192.168.122.10
-dns01   IN      A       192.168.122.10
-dns02   IN      A       192.168.122.20
+@       IN      A       10.0.0.4
+ns      IN      A       10.0.0.4
+dns01   IN      A       10.0.0.4
+dns02   IN      A       10.0.0.4
 
-bast01	IN      A       192.168.122.11
-cf01	IN      A       192.168.122.12
-back01	IN      A       192.168.122.60
-
-
-dep01	IN	A	192.168.122.60
-drop01	IN	A	192.168.122.101
-log01	IN	A	192.168.122.62
-
-
-vm01	IN	A	192.168.122.101
-vm02	IN	A	192.168.122.102
-prod01	IN	A	192.168.122.103
-
-db01    IN      A       192.168.122.111
-db02    IN      A       192.168.122.112
-db03    IN      A       192.168.122.113
-
-front01	IN	A	192.168.122.121
-front02	IN	A	192.168.122.122
-
-www01	IN	A	192.168.122.151
-
-dev01	IN	A	192.168.122.201
-dev02	IN	A	192.168.122.202
-
-vip-db  IN      CNAME   db01.acgform.local.
-
-
-
+cf01	IN      A       10.0.0.2
+perso01	IN      A       10.0.0.3
+drop01	IN      A       10.0.0.5
+dev01	IN      A       10.0.0.6
+torrent01	IN      A       10.0.0.7
+log01	IN      A       10.0.0.8
 
 
