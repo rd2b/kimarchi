@@ -21,7 +21,7 @@ methods:
 
 files:
     tinc_enabled::
-        "${privkey}"  perms => promisemode("644");
+        "${privkey}"  perms => promisemode("600");
 
 commands:
     generate_privkey::
