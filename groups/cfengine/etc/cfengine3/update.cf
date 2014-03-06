@@ -74,8 +74,7 @@ files:
             classes => if_repaired("restartcfengine");
 
         "/etc/default/cfengine3"
-            edit_line => comment_lines_matching(
-                    "${defaultcfengineopt_invalid}", "#"),
+            edit_line => delete_lines_matching("${defaultcfengineopt_invalid}"),
             classes => if_repaired("restartcfengine");
 
 }
