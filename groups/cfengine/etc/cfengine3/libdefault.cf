@@ -20,9 +20,9 @@ bundle agent download_tarball(tarballurl, tarballdst ){
 classes:
     "tarball_is_present" expression => fileexists("$(tarballdst)");
 
-reports:
-    tarball_is_present::
-        "Tarball is on disk.";
+#reports:
+#    tarball_is_present::
+#        "Tarball is on disk.";
 
 commands:
     !tarball_is_present::
