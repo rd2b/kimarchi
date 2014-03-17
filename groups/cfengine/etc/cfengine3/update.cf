@@ -36,17 +36,17 @@ vars:
         "master_location"   string => "/var/cfengine/masterfiles";
         "etc_cfengine"      string => "/etc/cfengine";
 
-    acgform_local::
+    wxz_local::
         "master_server"     string => "10.0.0.2";
         "defaultcfengineopt" slist => {
             "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
         "defaultcfengineopt_invalid" slist => {
             "RUN_CFMONITORD=0", "RUN_CFSERVERD=0", "RUN_CFEXECD=0" };
 
-    !acgform_local::
+    !wxz_local::
         "master_server"     string => "127.0.0.1";
 
-    !acgform_local.!laptop::
+    !wxz_local.!laptop::
         "defaultcfengineopt" slist => {
             "RUN_CFMONITORD=0", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
         "defaultcfengineopt_invalid" slist => {

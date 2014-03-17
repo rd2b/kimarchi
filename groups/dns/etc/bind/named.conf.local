@@ -7,9 +7,9 @@
 //include "/etc/bind/zones.rfc1918";
 
 
-zone "acgform.local" {
+zone "wxz.local" {
              type master;
-             file "/etc/bind/acgform.local";
+             file "/etc/bind/wxz.local";
         };
 
 

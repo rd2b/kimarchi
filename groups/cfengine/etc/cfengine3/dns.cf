@@ -5,11 +5,11 @@ vars:
 
     dns::
         "dnsfilestocopy" slist => { 
-            "/etc/bind/acgform.local", 
+            "/etc/bind/wxz.local", 
             "/etc/bind/named.conf.local" };
 
-    acgform_local.!dns::
-        "resolvconf" string => "$(dnsdir)/etc/acgform-resolv.conf";
+    wxz_local.!dns::
+        "resolvconf" string => "$(dnsdir)/etc/wxz-resolv.conf";
 
 
 files:
@@ -19,9 +19,9 @@ files:
         perms     => promisemode("644"),
         copy_from => secure_cp("$(dnsdir)/$(dnsfilestocopy)","$(globals.serverhost)");
 
-    acgform_local.!dns:: 
+    wxz_local.!dns:: 
         "/etc/resolv.conf"
-        comment   => "copying /etc/resolv.conf for acgform",
+        comment   => "copying /etc/resolv.conf for wxz",
         perms     => promisemode("644"),
         copy_from => secure_cp("$(resolvconf)","$(globals.serverhost)");
 
