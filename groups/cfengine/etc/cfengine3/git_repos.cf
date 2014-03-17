@@ -6,8 +6,6 @@ vars:
     cfmanual|cfmaster::
         "git_monitor"   string => "https://github.com/rd2b/monitor.git";
         "git_cfrepos"   string => "https://github.com/rd2b/kimarchi.git";
-        "git_cfbacula"  string => "https://github.com/rd2b/cfenginebacula.git";
-
 
     (cfmanual|cfmaster).debian.x86_64.btrfs_is_present::
         "git_btrfsrotate" string => "https://github.com/rd2b/btrfsrotate.git";
@@ -27,8 +25,6 @@ methods:
     (cfmanual|cfmaster).!offline::
         "handlegitmonitor" usebundle => clone_git_repos_project(
                 "/data/cfexternals", "$(git_monitor)", "root" );
-        "handlegitcfbacula" usebundle => clone_git_repos_project(
-                "/data/cfexternals", "$(git_cfbacula)", "root" );
         "handlegitbtrfsrotate" usebundle => clone_git_repos_project(
                 "/data/cfexternals", "$(git_btrfsrotate)", "root" );
 

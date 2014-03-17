@@ -21,11 +21,6 @@ files:
         file_select => by_name(".*.cf"),
         depth_search => recurse("inf");
 
-        "$(master_location)/bacula.cf"
-        comment => "Updating masterfiles",
-        copy_from => secure_cp("/data/cfexternals/cfenginebacula/bacula.cf","$(globals.serverhost)"),
-        file_select => by_name(".*.cf");
-
     # Recuperation du depot principal:
     cfmaster|cfmanual::
         "/data/cf-repos"
