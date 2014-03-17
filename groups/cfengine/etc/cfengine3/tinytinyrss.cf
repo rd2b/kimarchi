@@ -109,9 +109,9 @@ files:
         perms => mog("0644","www-data","www-data"),
         depth_search => recurse("inf");
 
-reports:
-    ttrss_directory_present::
-        "Ttrss directory is present.";
+#reports:
+#    ttrss_directory_present::
+#        "Ttrss directory is present.";
 
 commands:
     !ttrss_directory_present.ttrss_tarball_present::
