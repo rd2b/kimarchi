@@ -7,7 +7,6 @@ vars:
             "scripts/heartbeat.sh", 
             "scripts/libmonitor.sh", 
             "scripts/memory.sh" };
-        "utils" slist => { "curl" };
         "config" slist => { "/etc/monitor/monitor.conf" };
 
 files:
@@ -31,14 +30,6 @@ methods:
     "cron"
         usebundle => cronjob("/usr/local/monitor/scripts/memory.sh","root","*","*/25"),
         classes => if_repaired("changed_crontab");
-
-packages:
-    CFpackages::
-        "$(utils)"
-        comment => "install $(utils)",
-        action => if_elapsed("240"),
-        package_policy   => "add",
-        package_method   => generic;
 
 commands:
     changed_crontab::
