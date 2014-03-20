@@ -16,7 +16,7 @@ vars:
                 "\s*#[^\n]*", "\n", 1000000, 1000000000);           
 
 methods:
-    iptables_enabled::
+    iptables_enabled.once_per_hour::
         "get_scanip" usebundle => download_tarball(
                 "$(scanip_url)", "$(scanip_file)");
 
