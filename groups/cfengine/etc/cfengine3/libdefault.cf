@@ -20,10 +20,6 @@ bundle agent download_tarball(tarballurl, tarballdst ){
 classes:
     "tarball_is_present" expression => fileexists("$(tarballdst)");
 
-#reports:
-#    tarball_is_present::
-#        "Tarball is on disk.";
-
 commands:
     !tarball_is_present::
         "/usr/bin/wget -q -O $(tarballdst) $(tarballurl)"
@@ -38,6 +34,10 @@ bundle agent pkg_install_if_no_file(package, file)
 classes:
     "file_exists" expression => fileexists("$(file)");
 
+reports:
+    !file_exists::
+        "File $(file) does not exists, installing $(package).";
+
 packages:
     !file_exists.(debian|redhat)::
         "$(package)"
@@ -45,8 +45,4 @@ packages:
         action => if_elapsed("240"),
         package_policy   => "add",
         package_method   => generic;
-    
-reports:
-    !file_exists::
-        "File $(file) does not exists, installing $(package).";
 }
