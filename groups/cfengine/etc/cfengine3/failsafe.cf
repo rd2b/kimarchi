@@ -27,9 +27,88 @@
 body common control
 
 {
-bundlesequence => { "update" };
+bundlesequence => { "failsafe" };
 
-inputs => { "update.cf", "cfengine_stdlib.cf" };
+inputs => { "cfengine_stdlib.cf" };
+}
+
+
+bundle agent failsafe
+{
+vars:
+
+    "masterfilesrcdir" string => "$(globals.group_path)/groups/cfengine/etc/cfengine3/";
+    
+    "defaultcfengineopt" slist => {
+        "RUN_CFMONITORD=1", "RUN_CFSERVERD=1", "RUN_CFEXECD=1" };
+    "defaultcfengineopt_invalid" slist => {
+        "RUN_CFMONITORD=0", "RUN_CFSERVERD=0", "RUN_CFEXECD=0" };
+
+
+# Debian and ubuntu have different locations:
+    debian|ubuntu::
+        "master_location"   string => "/var/lib/cfengine3/masterfiles";
+        "etc_cfengine"      string => "/etc/cfengine3";
+
+    redhat|gentoo::
+        "master_location"   string => "/var/cfengine/masterfiles";
+        "etc_cfengine"      string => "/etc/cfengine";
+
+    !wxz_local::
+        "master_server"     string => "127.0.0.1";
+
+    wxz_local::
+        "master_server"     string => "10.0.0.2";
+
+files:
+    "$(etc_cfengine)"
+        perms => u_p("644"),
+        copy_from => secure_cp("$(master_location)","$(master_server)"),
+        file_select => by_name(".*.cf"),
+        depth_search => recurse("inf"),
+        action => uimmediate;
+
+    (ubuntu|debian)::
+        "/etc/default/cfengine3"
+            comment   => "Editing default/cfengine3 to /etc",
+            perms     => u_p("644"),
+            create =>  "true",
+            edit_line => append_if_no_lines( "${defaultcfengineopt}"),
+            classes => if_repaired("restartcfengine");
+
+        "/etc/default/cfengine3"
+            edit_line => delete_lines_matching(".*${defaultcfengineopt_invalid}"),
+            classes => if_repaired("restartcfengine");
+
 }
 
 ############################################
+
+body perms u_p(p)
+{
+    mode  => "$(p)";
+}
+
+############################################
+
+body file_select cf3_files
+{
+    leaf_name => { "cf-.*" };
+
+    file_result => "leaf_name";
+}
+
+#########################################################
+
+body copy_from mycopy(from,server)
+{
+    source      => "$(from)";
+    compare     => "digest";
+}
+
+#########################################################
+
+body action uimmediate
+{
+    ifelapsed => "30";
+}
