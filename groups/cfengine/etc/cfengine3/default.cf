@@ -94,6 +94,13 @@ files:
             copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
+    wxz_local::
+        "$(dirstocopy)"
+            comment => "Copying $(dirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/groups/wxz_local/$(dirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
+
+
     mysql::
         "/etc/mysql"
             handle => "file_mysql",
@@ -106,9 +113,6 @@ files:
 processes:
     dropbox:: 
         "/home/${myuser}/.dropbox-dist/dropbox" restart_class => "launchdropbox";
-
-    torrentserver::
-        "/usr/bin/transmission-daemon" restart_class => "transmission_stopped";
 
 commands:
     launchdropbox::
