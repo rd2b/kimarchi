@@ -41,6 +41,9 @@ files:
         "/etc/ssh/ssh_host_rsa_key" perms => promisemode("600");
         "/etc/bash.bashrc"          perms => promisemode("644");
 
+        "/etc/hosts.deny"  perms => promisemode("644");
+        "/etc/hosts.allow" perms => promisemode("644");
+
         "/etc/ssh/sshd_config"
             edit_line => append_if_no_lines( "${sshoptions}");
 
