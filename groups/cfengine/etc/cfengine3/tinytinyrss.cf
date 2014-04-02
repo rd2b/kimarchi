@@ -23,15 +23,6 @@ methods:
         "handle_lighttpd"   usebundle => fix_lighttpd;
 
 
-files:
-    tinytinyrss.need_lighttpd::
-        "/etc/lighttpd/conf-enabled/99-redirect-rss.conf"
-            handle => "fix_lighttpd_ttrss_redirect",
-            comment => "Append Lighttpd redirect",
-            perms => mog("0644","root","root"),
-            create => "true",
-            edit_line => append_if_no_lines('url.redirect = ("^/$" => "Tiny-Tiny-RSS-1.8/" )'),
-            classes => if_repaired("reload_lighttpd"); 
 
 commands:
     reload_lighttpd::
