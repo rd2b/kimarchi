@@ -9,27 +9,19 @@ vars:
 
     (cfmanual|cfmaster).debian.x86_64.btrfs_is_present::
         "git_btrfsrotate" string => "https://github.com/rd2b/btrfsrotate.git";
+        "dir_externals" string => "/data/cfexternals";
 
-    CFgit.devplatform::
-        "username" string => "remi";
-        "git_repos_base" string => "/home/$(username)/repositories/";
 
-        "git_repos[0]" string => "git@github.com:rd2b/kimarchi.git";
-        "git_repos[1]" string => "git@github.com:rd2b/config.git";
+
 
 methods:
-    CFgit.devplatform.once_per_hour::
-        "handlerepositories" usebundle => clone_git_repos_project(
-                "$(git_repos_base)", "$(git_repos)", "$(username)");
-
-    (cfmanual|cfmaster).!offline::
+    (cfmanual|cfmaster).!laptop::
         "handlegitmonitor" usebundle => clone_git_repos_project(
-                "/data/cfexternals", "$(git_monitor)", "root" );
+                "${dir_externals}", "$(git_monitor)", "root" );
         "handlegitbtrfsrotate" usebundle => clone_git_repos_project(
-                "/data/cfexternals", "$(git_btrfsrotate)", "root" );
-
+                "${dir_externals}", "$(git_btrfsrotate)", "root" );
         "handlecfrepos" usebundle => clone_git_repos_project(
-                "/data/cfexternals", "$(git_cfrepos)", "root" );
+                "${dir_externals}", "$(git_cfrepos)", "root" );
 }
 
 bundle agent clone_git_repos_project(basepath, repos, user) {
@@ -62,7 +54,7 @@ commands:
         contain => in_dir_and_setuid_sh("$(basepath)", "$(user)"),
         ifvarclass => "!repo_dir_exists_$(repo_data)";
 
-    once_per_hour|cfmanual::
+    once_per_hour::
         "/usr/bin/git pull"
             contain => in_dir_and_setuid_sh("$(basepath)/$(repo_data)", "$(user)"),
             action => if_elapsed("60"),

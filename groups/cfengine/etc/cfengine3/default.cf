@@ -16,15 +16,6 @@ vars:
         "transmissionuser" string => "debian-transmission";
         
 
-    btsync::
-        "btsync_tarball" string => "/root/btsync_xxx.tar.gz";
-    btsync.linux_x86_64::
-        "btsync_url" string => "http://btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz";
-    btsync.linux_armv6l::
-        "btsync_url" string => "http://btsync.s3-website-us-east-1.amazonaws.com/btsync_arm.tar.gz";
-
-
-
 methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
@@ -35,12 +26,10 @@ methods:
         "makegit"       usebundle => clone_git_repos;
         "iptables_handler" usebundle => app_iptables;
 
+    btsync::
+        "makebtsync"       usebundle => app_btsync;
     tinytinyrss::
         "makettrss" usebundle => app_ttrss;
-
-    btsync::
-        "get_btsync" usebundle => download_tarball(
-                "$(btsync_url)", "$(btsync_tarball)");  
 
 files:
     any::
@@ -105,6 +94,13 @@ files:
             copy_from => secure_cp("$(globals.group_path)/hosts/${sys.fqhost}/$(dirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
 
+    wxz_local::
+        "$(dirstocopy)"
+            comment => "Copying $(dirstocopy)",
+            copy_from => secure_cp("$(globals.group_path)/groups/wxz_local/$(dirstocopy)","$(globals.serverhost)"),
+            depth_search => recurse("inf");
+
+
     mysql::
         "/etc/mysql"
             handle => "file_mysql",
@@ -117,9 +113,6 @@ files:
 processes:
     dropbox:: 
         "/home/${myuser}/.dropbox-dist/dropbox" restart_class => "launchdropbox";
-
-    torrentserver::
-        "/usr/bin/transmission-daemon" restart_class => "transmission_stopped";
 
 commands:
     launchdropbox::
