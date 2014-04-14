@@ -3,13 +3,14 @@ classes:
     "btrfs_is_present" expression => fileexists("/sbin/btrfs");
 
 vars:
+    "dir_externals" string => "/data/cfexternals";
+
     cfmanual|cfmaster::
         "git_monitor"   string => "https://github.com/rd2b/monitor.git";
         "git_cfrepos"   string => "https://github.com/rd2b/kimarchi.git";
 
     (cfmanual|cfmaster).debian.x86_64.btrfs_is_present::
         "git_btrfsrotate" string => "https://github.com/rd2b/btrfsrotate.git";
-        "dir_externals" string => "/data/cfexternals";
 
 
 
