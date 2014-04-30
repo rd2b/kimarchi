@@ -26,7 +26,6 @@ body common control
         "iptables.cf",
         "tinytinyrss.cf",
         "btsync.cf",
-        "tinc.cf",
         "ssh.cf",
         "git_repos.cf",
         "monitoring.cf",

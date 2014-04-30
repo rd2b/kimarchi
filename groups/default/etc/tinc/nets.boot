@@ -1,2 +1,0 @@
-# Starts at bootup:
-myvpn
