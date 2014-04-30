@@ -19,17 +19,17 @@ vars:
 methods:
     any::
         "makecfengine"  usebundle => app_cfengine;
-        "maketinc"  usebundle => app_tinc;
+#       "maketinc"  usebundle => app_tinc;
         "makersyslog"   usebundle => app_rsyslog;
-        "makednsmaster" usebundle => app_dns;
+#        "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
         "makegit"       usebundle => clone_git_repos;
         "iptables_handler" usebundle => app_iptables;
 
-    btsync::
-        "makebtsync"       usebundle => app_btsync;
-    tinytinyrss::
-        "makettrss" usebundle => app_ttrss;
+#    btsync::
+#        "makebtsync"       usebundle => app_btsync;
+#    tinytinyrss::
+#        "makettrss" usebundle => app_ttrss;
 
 files:
     any::
@@ -43,32 +43,32 @@ files:
         "/etc/sudoers"              perms => promisemode("440");
         "/etc/gitattributes"        perms => promisemode("644");
 
-    dlnaserver::
-        "/etc/minidlna.conf"
-            handle => "file_minidlna",
-            perms => mog("0644","minidlna","minidlna"),
-            classes => if_repaired("restart_minidlna");
+#    dlnaserver::
+#        "/etc/minidlna.conf"
+#            handle => "file_minidlna",
+#            perms => mog("0644","minidlna","minidlna"),
+#            classes => if_repaired("restart_minidlna");
 
 
-    torrentserver::
-        "/etc/transmission-daemon"
-            handle => "file_transmission_directory",
-             perms => mog("0755","${transmissionuser}","${transmissionuser}");
-
-        "/home/Downloads/"
-            perms => mog("0755","${transmissionuser}","${transmissionuser}"),
-            create =>  "true";
-
-        "/home/Incomplete/"
-            perms => mog("0755","${transmissionuser}","${transmissionuser}"),
-            create =>  "true";
-
-    torrentserver.transmission_stopped::
-        "/etc/transmission-daemon/settings.json"
-            handle => "file_transmission",
-            copy_from => secure_cp("$(globals.group_path)/$(torrentsrc)","$(globals.serverhost)"),
-            classes => if_repaired("starttransmission"),
-            perms => mog("0644","${transmissionuser}","${transmissionuser}");
+#    torrentserver::
+#        "/etc/transmission-daemon"
+#            handle => "file_transmission_directory",
+#             perms => mog("0755","${transmissionuser}","${transmissionuser}");
+#
+#        "/home/Downloads/"
+#            perms => mog("0755","${transmissionuser}","${transmissionuser}"),
+#            create =>  "true";
+#
+#        "/home/Incomplete/"
+#            perms => mog("0755","${transmissionuser}","${transmissionuser}"),
+#            create =>  "true";
+#
+#    torrentserver.transmission_stopped::
+#        "/etc/transmission-daemon/settings.json"
+#            handle => "file_transmission",
+#            copy_from => secure_cp("$(globals.group_path)/$(torrentsrc)","$(globals.serverhost)"),
+#            classes => if_repaired("starttransmission"),
+#            perms => mog("0644","${transmissionuser}","${transmissionuser}");
 
 
 
@@ -111,20 +111,20 @@ files:
 
 
 processes:
-    dropbox:: 
-        "/home/${myuser}/.dropbox-dist/dropbox" restart_class => "launchdropbox";
+#   dropbox:: 
+#        "/home/${myuser}/.dropbox-dist/dropbox" restart_class => "launchdropbox";
 
 commands:
-    launchdropbox::
-        "/bin/su - ${myuser} -c \"/usr/bin/dropbox start\"";
-
-    starttransmission::
-        "/etc/init.d/transmission-daemon start";
-    stoptransmission::
-        "/etc/init.d/transmission-daemon stop";
-
-    restart_minidlna::
-        "/etc/init.d/minidlna restart";
+#    launchdropbox::
+#        "/bin/su - ${myuser} -c \"/usr/bin/dropbox start\"";
+#
+#    starttransmission::
+#        "/etc/init.d/transmission-daemon start";
+#    stoptransmission::
+#        "/etc/init.d/transmission-daemon stop";
+#
+#    restart_minidlna::
+#        "/etc/init.d/minidlna restart";
 
 
 
@@ -141,11 +141,11 @@ classes:
 commands:
     any::
         "/usr/sbin/adduser $(users) "
-            action => if_elapsed("60"),                                         
+            action => if_elapsed("600"),                                         
             ifvarclass => "adduser_$(users)"; 
 
         "/usr/sbin/usermod -a -G $(groups_remi) remi"
-            action => if_elapsed("60");                           
+            action => if_elapsed("600");                           
 
 
 }
