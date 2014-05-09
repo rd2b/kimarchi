@@ -14,7 +14,7 @@ vars:
     !loghost.!standalone.acgform_local::
         "rsyslogfile"  string =>  "$(rsyslogdir)/client-rsyslog.conf";
 
-    standalone::
+    standalone.!loghost::
         "rsyslogfile"  string => "$(rsyslogdir)/standalone-rsyslog.conf";
 
 
