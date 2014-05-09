@@ -43,26 +43,19 @@ classes:
 # Mise en place des groupes de machines
     "wxz_local" or =>  { "wxz_local", "novalocal"} ;
     "standalone" not =>  "wxz_local" ;
-    "dns" or => { "dns01_wxz_local", "dns02_wxz_local" };
-    "mysql" or => { "db01_wxz_local", "db02_wxz_local" };
-    "dlnaserver" or => { "raspberrypi" };
+    "dns"           or => { "dns01", "dns02" };
+    "mysql"         or => { "db01", "db02" };
+    "dlnaserver"    or => { "raspberrypi" };
     "torrentserver" or => { "torrent01", "torrent02" };
-    "gitserver" or => { "raspberrypi", "ks01", "ks03" };
-    "tinytinyrss" or => { "prod01_wxz_local", "ks03" };
-    "dropbox" or => { "drop01_wxz_local" };
-    "btsync" or => { 
-        "btsync01_wxz_local", 
-        "btsync02_wxz_local" };
-    "loghost" or => { "log01_wxz_local" };
-    "cfmaster" or => { "cf01_wxz_local"};
-    "cfmanual" or => { "standalone" };
-    "webserver" or => {
-        "front01_wxz_local",
-        "front02_wxz_local"
-    };
-    "devplatform" or => {"standalone"};
-    "laptop" or => {"net01"};
-    "offline" or => {"laptop"};
+    "gitserver"     or => { "raspberrypi", "ks01", "ks03" };
+    "tinytinyrss"   or => { "prod01", "ks03" };
+    "dropbox"       or => { "drop01" };
+    "loghost"       or => { "log01" };
+    "cfmaster"      or => { "cf01"};
+    "cfmanual"      or => { "standalone" };
+    "devplatform"   or => {"standalone"};
+    "laptop"        or => {"net01"};
+    "offline"       or => {"laptop"};
 
     # To pseudo randomize acces:
     "once_per_hour" expression => splayclass("${sys.host}", "hourly");
