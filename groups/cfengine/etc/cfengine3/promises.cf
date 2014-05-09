@@ -41,7 +41,7 @@ body common control
 bundle common globals{
 classes:
 # Mise en place des groupes de machines
-    "wxz_local" or =>  { "wxz_local", "novalocal"} ;
+    "wxz_local" or =>  { "wxz_local", "novalocal", "acgform_local"} ;
     "standalone" not =>  "wxz_local" ;
     "dns"           or => { "dns01", "dns02" };
     "mysql"         or => { "db01", "db02" };
