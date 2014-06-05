@@ -24,7 +24,7 @@ methods:
 #        "makednsmaster" usebundle => app_dns;
         "makemonitoring" usebundle => app_monitor;
         "makegit"       usebundle => clone_git_repos;
-        "iptables_handler" usebundle => app_iptables;
+#        "iptables_handler" usebundle => app_iptables;
 
 #    btsync::
 #        "makebtsync"       usebundle => app_btsync;
