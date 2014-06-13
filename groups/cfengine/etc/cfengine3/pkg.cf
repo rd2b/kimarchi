@@ -45,7 +45,6 @@ vars:
         "packages[curl]"    string => "/usr/bin/curl";
         "packages[dnsutils]" string => "/usr/bin/dig";
         "packages[dnsutils]" string => "/usr/bin/dig";
-        "packages[tinc]"    string => "/usr/sbin/tincd";
 
         "packagesnames" slist => getindices("packages");
 
