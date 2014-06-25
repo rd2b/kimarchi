@@ -1,0 +1,6 @@
+AUTOSTART="home"                                                                
+
+# Optional arguments to openvpn's command line                                  
+OPTARGS=" --script-security 2 "                                                 
+
+OMIT_SENDSIGS=0    

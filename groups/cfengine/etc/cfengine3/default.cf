@@ -43,6 +43,11 @@ files:
         "/etc/sudoers"              perms => promisemode("440");
         "/etc/gitattributes"        perms => promisemode("644");
 
+        "/etc/default/openvpn"      perms => promisemode("644");
+        "/etc/openvpn/home.conf"     perms => promisemode("700");
+        "/etc/openvpn/init.sh"       perms => promisemode("755");
+        "/etc/openvpn/login.conf"    perms => promisemode("700");
+
 #    dlnaserver::
 #        "/etc/minidlna.conf"
 #            handle => "file_minidlna",
