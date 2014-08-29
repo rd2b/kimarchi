@@ -28,8 +28,8 @@ methods:
 
 #    btsync::
 #        "makebtsync"       usebundle => app_btsync;
-    tinytinyrss.ks03::
-        "makettrss" usebundle => app_ttrss;
+#    tinytinyrss.ks03::
+#        "makettrss" usebundle => app_ttrss;
 
 files:
     any::
