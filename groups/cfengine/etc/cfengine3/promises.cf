@@ -5,7 +5,7 @@ body common control
         "crontabs",
         "default",
         "manage_users",
-        "ssh",
+#        "ssh",
         "monitoring",
         "pkg",
         "cleanup",
@@ -21,14 +21,10 @@ body common control
         "default.cf",
         "cfengine.cf",
         "dns.cf",
-        "monitor.cf",
         "rsyslog.cf",
-        "iptables.cf",
         "tinytinyrss.cf",
-        "btsync.cf",
         "ssh.cf",
         "git_repos.cf",
-        "monitoring.cf",
         "cleanup.cf",
         "cf-agent.cf",
         "cf-serverd.cf"
@@ -43,14 +39,7 @@ classes:
 # Mise en place des groupes de machines
     "wxz_local" or =>  { "wxz_local", "novalocal", "acgform_local"} ;
     "standalone" not =>  "wxz_local" ;
-    "dns"           or => { "dns01", "dns02" };
-    "mysql"         or => { "db01", "db02" };
-    "dlnaserver"    or => { "raspberrypi" };
-    "torrentserver" or => { "torrent01", "torrent02" };
     "gitserver"     or => { "raspberrypi", "ks01", "ks03" };
-    "tinytinyrss"   or => { "prod01", "ks03" };
-    "dropbox"       or => { "drop01" };
-    "loghost"       or => { "log01" };
     "cfmaster"      or => { "cf01"};
     "cfmanual"      or => { "standalone" };
     "devplatform"   or => {"standalone"};
