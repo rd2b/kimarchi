@@ -6,7 +6,6 @@ body common control
         "default",
         "manage_users",
 #        "ssh",
-        "monitoring",
         "pkg",
         "cleanup",
         "update"

@@ -65,7 +65,7 @@ files:
             comment => "Copying $(dirstocopy)",
             copy_from => secure_cp("$(globals.group_path)/groups/wxz_local/$(dirstocopy)","$(globals.serverhost)"),
             depth_search => recurse("inf");
-
+}
 
 bundle agent manage_users {
 vars:
